@@ -50,7 +50,7 @@ html, body {
   height: 100%; }
 
 body, input {
-  font-family: sans-serif;
+  font-family: 'Merriweather', serif;
   font-size: 16pt; }
 
 #app header, #app > article {
