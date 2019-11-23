@@ -3,6 +3,7 @@
     <ol>
       <li><router-link :to="{ name: 'home' }" exact>Home</router-link></li>
       <li><router-link :to="{ name: 'search' }">Locate</router-link></li>
+      <li><router-link :to="{ name: 'live-map' }">Live Map</router-link></li>
     </ol>
   </nav>
 </template>

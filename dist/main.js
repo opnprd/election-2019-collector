@@ -3548,6 +3548,60 @@ var ElectionResult = (function (exports) {
       undefined
     );
 
+  /* script */
+
+  /* template */
+  var __vue_render__$4 = function() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _vm._m(0)
+  };
+  var __vue_staticRenderFns__$4 = [
+    function() {
+      var _vm = this;
+      var _h = _vm.$createElement;
+      var _c = _vm._self._c || _h;
+      return _c("article", [
+        _c("iframe", {
+          attrs: { src: "https://odileeds.org/projects/hexmaps/ge2019/ns" }
+        })
+      ])
+    }
+  ];
+  __vue_render__$4._withStripped = true;
+
+    /* style */
+    const __vue_inject_styles__$4 = function (inject) {
+      if (!inject) return
+      inject("data-v-4580469b_0", { source: "iframe[data-v-4580469b] {\n  width: 100%;\n  max-width: 700px;\n  height: 1050px;\n}\n\n/*# sourceMappingURL=live-map.vue.map */", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/live-map.vue","live-map.vue"],"names":[],"mappings":"AAMA;EACA,WAAA;EACA,gBAAA;EACA,cAAA;ACLA;;AAEA,uCAAuC","file":"live-map.vue","sourcesContent":["<template>\n  <article>\n    <iframe src=\"https://odileeds.org/projects/hexmaps/ge2019/ns\" ></iframe>\n  </article>\n</template>\n<style lang=\"scss\" scoped>\n  iframe {\n    width: 100%;\n    max-width: 700px;\n    height: 1050px;\n  }\n</style>\n","iframe {\n  width: 100%;\n  max-width: 700px;\n  height: 1050px;\n}\n\n/*# sourceMappingURL=live-map.vue.map */"]}, media: undefined });
+
+    };
+    /* scoped */
+    const __vue_scope_id__$4 = "data-v-4580469b";
+    /* module identifier */
+    const __vue_module_identifier__$4 = undefined;
+    /* functional template */
+    const __vue_is_functional_template__$4 = false;
+    /* style inject SSR */
+    
+    /* style inject shadow dom */
+    
+
+    
+    const __vue_component__$4 = normalizeComponent(
+      { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+      __vue_inject_styles__$4,
+      {},
+      __vue_scope_id__$4,
+      __vue_is_functional_template__$4,
+      __vue_module_identifier__$4,
+      false,
+      createInjector,
+      undefined,
+      undefined
+    );
+
   var router = new VueRouter({
     routes: [{
       name: 'home',
@@ -3561,13 +3615,17 @@ var ElectionResult = (function (exports) {
       name: 'record',
       path: '/constituency/:id',
       component: __vue_component__$1
+    }, {
+      name: 'live-map',
+      path: '/live',
+      component: __vue_component__$4
     }]
   });
 
   /* script */
 
   /* template */
-  var __vue_render__$4 = function() {
+  var __vue_render__$5 = function() {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
@@ -3591,38 +3649,48 @@ var ElectionResult = (function (exports) {
             ])
           ],
           1
+        ),
+        _vm._v(" "),
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: { name: "live-map" } } }, [
+              _vm._v("Live Map")
+            ])
+          ],
+          1
         )
       ])
     ])
   };
-  var __vue_staticRenderFns__$4 = [];
-  __vue_render__$4._withStripped = true;
+  var __vue_staticRenderFns__$5 = [];
+  __vue_render__$5._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$4 = function (inject) {
+    const __vue_inject_styles__$5 = function (inject) {
       if (!inject) return
-      inject("data-v-f190cfca_0", { source: "\nol[data-v-f190cfca] {\n  display: flex;\n}\nli[data-v-f190cfca] {\n  padding-bottom: 0.5em;\n}\na[data-v-f190cfca] {\n  padding: 0.5em;\n  border-radius: 10px 10px 0 0;\n  background: #c1002a;\n  color: #fff;\n  margin-right: 0.2em;\n}\n.router-link-active[data-v-f190cfca] {\n  background: #e2001a;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/navigation.vue"],"names":[],"mappings":";AASA;EACA,aAAA;AACA;AACA;EACA,qBAAA;AACA;AACA;EACA,cAAA;EACA,4BAAA;EACA,mBAAA;EACA,WAAA;EACA,mBAAA;AACA;AACA;EACA,mBAAA;AACA","file":"navigation.vue","sourcesContent":["<template>\n  <nav>\n    <ol>\n      <li><router-link :to=\"{ name: 'home' }\" exact>Home</router-link></li>\n      <li><router-link :to=\"{ name: 'search' }\">Locate</router-link></li>\n    </ol>\n  </nav>\n</template>\n<style scoped>\nol {\n  display: flex;\n}\nli {\n  padding-bottom: 0.5em;\n}\na {\n  padding: 0.5em;\n  border-radius: 10px 10px 0 0;\n  background: #c1002a;\n  color: #fff;\n  margin-right: 0.2em;\n}\n.router-link-active {\n  background: #e2001a;\n}\n</style>"]}, media: undefined });
+      inject("data-v-4ef087e7_0", { source: "\nol[data-v-4ef087e7] {\n  display: flex;\n}\nli[data-v-4ef087e7] {\n  padding-bottom: 0.5em;\n}\na[data-v-4ef087e7] {\n  padding: 0.5em;\n  border-radius: 10px 10px 0 0;\n  background: #c1002a;\n  color: #fff;\n  margin-right: 0.2em;\n}\n.router-link-active[data-v-4ef087e7] {\n  background: #e2001a;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/navigation.vue"],"names":[],"mappings":";AAUA;EACA,aAAA;AACA;AACA;EACA,qBAAA;AACA;AACA;EACA,cAAA;EACA,4BAAA;EACA,mBAAA;EACA,WAAA;EACA,mBAAA;AACA;AACA;EACA,mBAAA;AACA","file":"navigation.vue","sourcesContent":["<template>\n  <nav>\n    <ol>\n      <li><router-link :to=\"{ name: 'home' }\" exact>Home</router-link></li>\n      <li><router-link :to=\"{ name: 'search' }\">Locate</router-link></li>\n      <li><router-link :to=\"{ name: 'live-map' }\">Live Map</router-link></li>\n    </ol>\n  </nav>\n</template>\n<style scoped>\nol {\n  display: flex;\n}\nli {\n  padding-bottom: 0.5em;\n}\na {\n  padding: 0.5em;\n  border-radius: 10px 10px 0 0;\n  background: #c1002a;\n  color: #fff;\n  margin-right: 0.2em;\n}\n.router-link-active {\n  background: #e2001a;\n}\n</style>"]}, media: undefined });
 
     };
     /* scoped */
-    const __vue_scope_id__$4 = "data-v-f190cfca";
+    const __vue_scope_id__$5 = "data-v-4ef087e7";
     /* module identifier */
-    const __vue_module_identifier__$4 = undefined;
+    const __vue_module_identifier__$5 = undefined;
     /* functional template */
-    const __vue_is_functional_template__$4 = false;
+    const __vue_is_functional_template__$5 = false;
     /* style inject SSR */
     
     /* style inject shadow dom */
     
 
     
-    const __vue_component__$4 = normalizeComponent(
-      { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
-      __vue_inject_styles__$4,
+    const __vue_component__$5 = normalizeComponent(
+      { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
+      __vue_inject_styles__$5,
       {},
-      __vue_scope_id__$4,
-      __vue_is_functional_template__$4,
-      __vue_module_identifier__$4,
+      __vue_scope_id__$5,
+      __vue_is_functional_template__$5,
+      __vue_module_identifier__$5,
       false,
       createInjector,
       undefined,
@@ -3648,7 +3716,7 @@ var ElectionResult = (function (exports) {
               el: '#app',
               router: router,
               components: {
-                'app-navigation': __vue_component__$4
+                'app-navigation': __vue_component__$5
               },
               data: function data() {
                 return {
