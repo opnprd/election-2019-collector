@@ -26,7 +26,8 @@ export default {
 </script>
 <template>
   <article>
-    <h1>{{ constituency.name }} ({{ constituency.id }})</h1>
+    <h1>{{ constituency.name }}</h1>
+    <p>ID: {{ constituency.id }}</p>
     <form v-on:submit.prevent="storeResult">
       <candidate-profile v-for="{ name, party_name, id, image } in candidates"
         :key="id":name="name" :party="party_name" :image="image"></candidate-profile>

@@ -33,10 +33,6 @@ export default {
 </template>
 
 <style scoped>
-  p, label, li {
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
-  }
   ol {
     list-style-type: none;
   }

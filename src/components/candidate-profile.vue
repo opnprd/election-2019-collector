@@ -4,15 +4,16 @@ export default {
 }
 </script>
 <template>
-  <article>
-    <img :src="image">
+  <section>
+    <p class="image"><img :src="image"></p>
     <p>{{ name }}</p>
     <p>{{ party }}</p>
-  </article>
+  </section>
 </template>
 <style scoped>
-  article {
-    padding: 1rem;
+  section {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: grid;
     grid-template-columns: 5em auto;
     grid-template-rows: minmax(1em, auto);
@@ -24,9 +25,11 @@ export default {
     margin: 0;
     display: block;
   }
+  .image {
+    grid-row-start: span 2;
+  }
   img {
     width: 100%;
     height: auto;
-    grid-row-start: span 2;
   }
 </style>
