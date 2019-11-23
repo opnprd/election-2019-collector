@@ -1,6 +1,8 @@
 import { get } from './util/http';
 import { router } from './router.js';
 
+import './style.scss';
+
 export async function init({
   constituencyData
 }) {

@@ -2870,11 +2870,11 @@ var ElectionResult = (function (exports) {
     /* style */
     const __vue_inject_styles__ = function (inject) {
       if (!inject) return
-      inject("data-v-2e1297ea_0", { source: "\narticle[data-v-2e1297ea] {\n  padding: 1rem;\n  display: grid;\n  grid-template-columns: 5em 30em;\n  grid-gap: 1rem;\n}\np[data-v-2e1297ea], img[data-v-2e1297ea] {\n  padding: 0;\n  margin: 0;\n  display: block;\n}\nimg[data-v-2e1297ea] {\n  width: 100%;\n  height: auto;\n  grid-row-start: span 2;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/candidate-profile.vue"],"names":[],"mappings":";AAaA;EACA,aAAA;EACA,aAAA;EACA,+BAAA;EACA,cAAA;AACA;AACA;EACA,UAAA;EACA,SAAA;EACA,cAAA;AACA;AACA;EACA,WAAA;EACA,YAAA;EACA,sBAAA;AACA","file":"candidate-profile.vue","sourcesContent":["<script>\nexport default {\n  props: [ 'image', 'name', 'party' ]\n}\n</script>\n<template>\n  <article>\n    <img :src=\"image\">\n    <p>{{ name }}</p>\n    <p>{{ party }}</p>\n  </article>\n</template>\n<style scoped>\n  article {\n    padding: 1rem;\n    display: grid;\n    grid-template-columns: 5em 30em;\n    grid-gap: 1rem;\n  }\n  p, img {\n    padding: 0;\n    margin: 0;\n    display: block;\n  }\n  img {\n    width: 100%;\n    height: auto;\n    grid-row-start: span 2;\n  }\n</style>"]}, media: undefined });
+      inject("data-v-94e168e6_0", { source: "\narticle[data-v-94e168e6] {\n  padding: 1rem;\n  display: grid;\n  grid-template-columns: 5em auto;\n  grid-template-rows: 1fr;\n  grid-gap: 1rem;\n}\np[data-v-94e168e6], img[data-v-94e168e6] {\n  padding: 0;\n  margin: 0;\n  display: block;\n}\nimg[data-v-94e168e6] {\n  width: 100%;\n  height: auto;\n  grid-row-start: span 4;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/candidate-profile.vue"],"names":[],"mappings":";AAaA;EACA,aAAA;EACA,aAAA;EACA,+BAAA;EACA,uBAAA;EACA,cAAA;AACA;AACA;EACA,UAAA;EACA,SAAA;EACA,cAAA;AACA;AACA;EACA,WAAA;EACA,YAAA;EACA,sBAAA;AACA","file":"candidate-profile.vue","sourcesContent":["<script>\nexport default {\n  props: [ 'image', 'name', 'party' ]\n}\n</script>\n<template>\n  <article>\n    <img :src=\"image\">\n    <p>{{ name }}</p>\n    <p>{{ party }}</p>\n  </article>\n</template>\n<style scoped>\n  article {\n    padding: 1rem;\n    display: grid;\n    grid-template-columns: 5em auto;\n    grid-template-rows: 1fr;\n    grid-gap: 1rem;\n  }\n  p, img {\n    padding: 0;\n    margin: 0;\n    display: block;\n  }\n  img {\n    width: 100%;\n    height: auto;\n    grid-row-start: span 4;\n  }\n</style>"]}, media: undefined });
 
     };
     /* scoped */
-    const __vue_scope_id__ = "data-v-2e1297ea";
+    const __vue_scope_id__ = "data-v-94e168e6";
     /* module identifier */
     const __vue_module_identifier__ = undefined;
     /* functional template */
@@ -3420,7 +3420,7 @@ var ElectionResult = (function (exports) {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
-    return _c("section", [
+    return _c("article", [
       _c("label", { attrs: { for: "search" } }, [_vm._v("Search")]),
       _vm._v(" "),
       _c("input", {
@@ -3470,15 +3470,17 @@ var ElectionResult = (function (exports) {
   __vue_render__$2._withStripped = true;
 
     /* style */
-    const __vue_inject_styles__$2 = undefined;
+    const __vue_inject_styles__$2 = function (inject) {
+      if (!inject) return
+      inject("data-v-d3eb007c_0", { source: "\narticle[data-v-d3eb007c] {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n}\nol[data-v-d3eb007c] {\n  grid-column-start: span 2;\n  list-style-type: none;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/constituency-selector.vue"],"names":[],"mappings":";AAmCA;EACA,aAAA;EACA,8BAAA;AACA;AACA;EACA,yBAAA;EACA,qBAAA;AACA","file":"constituency-selector.vue","sourcesContent":["<script>\nimport { alphaSort } from '../util/array.js';\n\nexport default {\n  data() {\n    return {\n      constituencyLookup: this.$root.constituencies\n        .map(c => ({ value: c.id, label: c.name }))\n        .sort(alphaSort('label')),\n      searchTerm: null,\n    }\n  },\n  computed: {\n    matches() {\n      if (!this.searchTerm) return [];\n      const searchRegExp = new RegExp(this.searchTerm, 'i');\n      const matches = this.constituencyLookup.filter(c => c.label.search(searchRegExp) !== -1);\n      return matches;\n    }\n  }\n}\n</script>\n<template>\n  <article>\n    <label for=\"search\">Search</label>\n    <input id=\"search\" type=\"text\" v-model=\"searchTerm\"/>\n    <ol>\n      <li v-for=\"{value, label} in matches\" :key=\"value\" >\n        <router-link :to=\"{ name: 'record', params: { id: value }}\">{{ label }}</router-link>\n      </li>\n    </ol>\n  </article>\n</template>\n\n<style scoped>\narticle {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n}\nol {\n  grid-column-start: span 2;\n  list-style-type: none;\n}\n</style>"]}, media: undefined });
+
+    };
     /* scoped */
-    const __vue_scope_id__$2 = undefined;
+    const __vue_scope_id__$2 = "data-v-d3eb007c";
     /* module identifier */
     const __vue_module_identifier__$2 = undefined;
     /* functional template */
     const __vue_is_functional_template__$2 = false;
-    /* style inject */
-    
     /* style inject SSR */
     
     /* style inject shadow dom */
@@ -3493,7 +3495,7 @@ var ElectionResult = (function (exports) {
       __vue_is_functional_template__$2,
       __vue_module_identifier__$2,
       false,
-      undefined,
+      createInjector,
       undefined,
       undefined
     );

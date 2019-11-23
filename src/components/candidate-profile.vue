@@ -14,7 +14,8 @@ export default {
   article {
     padding: 1rem;
     display: grid;
-    grid-template-columns: 5em 30em;
+    grid-template-columns: 5em auto;
+    grid-template-rows: 1fr;
     grid-gap: 1rem;
   }
   p, img {
@@ -25,6 +26,6 @@ export default {
   img {
     width: 100%;
     height: auto;
-    grid-row-start: span 2;
+    grid-row-start: span 4;
   }
 </style>

@@ -21,7 +21,7 @@ export default {
 }
 </script>
 <template>
-  <section>
+  <article>
     <label for="search">Search</label>
     <input id="search" type="text" v-model="searchTerm"/>
     <ol>
@@ -29,5 +29,16 @@ export default {
         <router-link :to="{ name: 'record', params: { id: value }}">{{ label }}</router-link>
       </li>
     </ol>
-  </section>
+  </article>
 </template>
+
+<style scoped>
+article {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+ol {
+  grid-column-start: span 2;
+  list-style-type: none;
+}
+</style>
