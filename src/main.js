@@ -1,5 +1,5 @@
-import entryForm from './components/entry-form.vue';
 import { get } from './util/http';
+import { router } from './router.js';
 
 export async function init({
   constituencyData
@@ -9,11 +9,10 @@ export async function init({
   ] = await Promise.all([
     get(constituencyData),
   ]);
+
   const app = new Vue({
     el: '#app',
-    components: {
-      'entry-form': entryForm,
-    },
+    router,
     data() {
       return {
         constituencies

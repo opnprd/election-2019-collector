@@ -2552,6 +2552,32 @@ var ElectionResult = (function (exports) {
   );
   });
 
+  function get$1(url) {
+    var response, data;
+    return regeneratorRuntime.async(function get$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return regeneratorRuntime.awrap(fetch(url));
+
+          case 2:
+            response = _context.sent;
+            _context.next = 5;
+            return regeneratorRuntime.awrap(response.json());
+
+          case 5:
+            data = _context.sent;
+            return _context.abrupt("return", data);
+
+          case 7:
+          case "end":
+            return _context.stop();
+        }
+      }
+    });
+  }
+
   // `IsArray` abstract operation
   // https://tc39.github.io/ecma262/#sec-isarray
   var isArray = Array.isArray || function isArray(arg) {
@@ -2655,34 +2681,6 @@ var ElectionResult = (function (exports) {
   // https://tc39.github.io/ecma262/#sec-array.prototype-@@unscopables
   addToUnscopables(FIND);
 
-  var SPECIES$4 = wellKnownSymbol('species');
-
-  var arrayMethodHasSpeciesSupport = function (METHOD_NAME) {
-    // We can't use this feature detection in V8 since it causes
-    // deoptimization and serious performance degradation
-    // https://github.com/zloirock/core-js/issues/677
-    return v8Version >= 51 || !fails(function () {
-      var array = [];
-      var constructor = array.constructor = {};
-      constructor[SPECIES$4] = function () {
-        return { foo: 1 };
-      };
-      return array[METHOD_NAME](Boolean).foo !== 1;
-    });
-  };
-
-  var $map = arrayIteration.map;
-
-
-  // `Array.prototype.map` method
-  // https://tc39.github.io/ecma262/#sec-array.prototype.map
-  // with adding support of @@species
-  _export({ target: 'Array', proto: true, forced: !arrayMethodHasSpeciesSupport('map') }, {
-    map: function map(callbackfn /* , thisArg */) {
-      return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
-    }
-  });
-
   var sloppyArrayMethod = function (METHOD_NAME, argument) {
     var method = [][METHOD_NAME];
     return !method || !fails(function () {
@@ -2716,28 +2714,6 @@ var ElectionResult = (function (exports) {
         : nativeSort.call(toObject(this), aFunction$1(comparefn));
     }
   });
-
-  var defineProperty$1 = objectDefineProperty.f;
-
-  var FunctionPrototype = Function.prototype;
-  var FunctionPrototypeToString = FunctionPrototype.toString;
-  var nameRE = /^\s*function ([^ (]*)/;
-  var NAME = 'name';
-
-  // Function instances `.name` property
-  // https://tc39.github.io/ecma262/#sec-function-instances-name
-  if (descriptors && !(NAME in FunctionPrototype)) {
-    defineProperty$1(FunctionPrototype, NAME, {
-      configurable: true,
-      get: function () {
-        try {
-          return FunctionPrototypeToString.call(this).match(nameRE)[1];
-        } catch (error) {
-          return '';
-        }
-      }
-    });
-  }
 
   var script = {
     props: ['image', 'name', 'party']
@@ -2922,39 +2898,30 @@ var ElectionResult = (function (exports) {
       undefined
     );
 
-  var alphaSort = function alphaSort(key) {
+  function alphaSort(key) {
     return function (a, b) {
       if (a[key] < b[key]) return -1;
       if (a[key] > b[key]) return 1;
       return 0;
     };
-  };
+  }
 
   var script$1 = {
     components: {
       'candidate-profile': __vue_component__
     },
     data: function data() {
+      var _this = this;
+
       return {
-        constituencyLookup: this.$root.constituencies.map(function (c) {
-          return {
-            value: c.id,
-            label: c.name
-          };
-        }).sort(alphaSort('label')),
-        constituency: undefined
+        constituency: this.$root.constituencies.find(function (x) {
+          return x.id === _this.$route.params.id;
+        })
       };
     },
     computed: {
       candidates: function candidates() {
-        var _this = this;
-
-        // `this` points to the vm instance
-        if (!this.constituency) return [];
-        console.log(this.constituency.value);
-        return this.$root.constituencies.find(function (x) {
-          return x.id === _this.constituency.value;
-        }).candidates.sort(alphaSort('name'));
+        return this.constituency.candidates.sort(alphaSort('name'));
       }
     },
     methods: {
@@ -2973,67 +2940,40 @@ var ElectionResult = (function (exports) {
     var _vm = this;
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
-    return _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault();
-            return _vm.storeResult($event)
-          }
-        }
-      },
-      [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.constituency,
-                expression: "constituency"
-              }
-            ],
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value;
-                    return val
-                  });
-                _vm.constituency = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0];
-              }
+    return _c("article", [
+      _c("h1", [
+        _vm._v(
+          _vm._s(_vm.constituency.name) + " (" + _vm._s(_vm.constituency.id) + ")"
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault();
+              return _vm.storeResult($event)
             }
-          },
-          _vm._l(_vm.constituencyLookup, function(c) {
-            return _c("option", { key: c.value, domProps: { value: c } }, [
-              _vm._v(_vm._s(c.label))
-            ])
+          }
+        },
+        [
+          _vm._l(_vm.candidates, function(ref) {
+            var name = ref.name;
+            var party_name = ref.party_name;
+            var id = ref.id;
+            var image = ref.image;
+            return _c("candidate-profile", {
+              key: id,
+              attrs: { name: name, party: party_name, image: image }
+            })
           }),
-          0
-        ),
-        _vm._v(" "),
-        _vm._l(_vm.candidates, function(ref) {
-          var name = ref.name;
-          var party_name = ref.party_name;
-          var id = ref.id;
-          var image = ref.image;
-          return _c("candidate-profile", {
-            key: id,
-            attrs: { name: name, party: party_name, image: image }
-          })
-        }),
-        _vm._v(" "),
-        _c("input", { attrs: { type: "submit", value: "Save Result" } })
-      ],
-      2
-    )
+          _vm._v(" "),
+          _c("input", { attrs: { type: "submit", value: "Save Result" } })
+        ],
+        2
+      )
+    ])
   };
   var __vue_staticRenderFns__$1 = [];
   __vue_render__$1._withStripped = true;
@@ -3067,31 +3007,508 @@ var ElectionResult = (function (exports) {
       undefined
     );
 
-  function get$1(url) {
-    var response, data;
-    return regeneratorRuntime.async(function get$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return regeneratorRuntime.awrap(fetch(url));
+  var SPECIES$4 = wellKnownSymbol('species');
 
-          case 2:
-            response = _context.sent;
-            _context.next = 5;
-            return regeneratorRuntime.awrap(response.json());
+  var arrayMethodHasSpeciesSupport = function (METHOD_NAME) {
+    // We can't use this feature detection in V8 since it causes
+    // deoptimization and serious performance degradation
+    // https://github.com/zloirock/core-js/issues/677
+    return v8Version >= 51 || !fails(function () {
+      var array = [];
+      var constructor = array.constructor = {};
+      constructor[SPECIES$4] = function () {
+        return { foo: 1 };
+      };
+      return array[METHOD_NAME](Boolean).foo !== 1;
+    });
+  };
 
-          case 5:
-            data = _context.sent;
-            return _context.abrupt("return", data);
+  var $filter = arrayIteration.filter;
 
-          case 7:
-          case "end":
-            return _context.stop();
+
+  // `Array.prototype.filter` method
+  // https://tc39.github.io/ecma262/#sec-array.prototype.filter
+  // with adding support of @@species
+  _export({ target: 'Array', proto: true, forced: !arrayMethodHasSpeciesSupport('filter') }, {
+    filter: function filter(callbackfn /* , thisArg */) {
+      return $filter(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
+  var $map = arrayIteration.map;
+
+
+  // `Array.prototype.map` method
+  // https://tc39.github.io/ecma262/#sec-array.prototype.map
+  // with adding support of @@species
+  _export({ target: 'Array', proto: true, forced: !arrayMethodHasSpeciesSupport('map') }, {
+    map: function map(callbackfn /* , thisArg */) {
+      return $map(this, callbackfn, arguments.length > 1 ? arguments[1] : undefined);
+    }
+  });
+
+  var defineProperty$1 = objectDefineProperty.f;
+
+  var FunctionPrototype = Function.prototype;
+  var FunctionPrototypeToString = FunctionPrototype.toString;
+  var nameRE = /^\s*function ([^ (]*)/;
+  var NAME = 'name';
+
+  // Function instances `.name` property
+  // https://tc39.github.io/ecma262/#sec-function-instances-name
+  if (descriptors && !(NAME in FunctionPrototype)) {
+    defineProperty$1(FunctionPrototype, NAME, {
+      configurable: true,
+      get: function () {
+        try {
+          return FunctionPrototypeToString.call(this).match(nameRE)[1];
+        } catch (error) {
+          return '';
         }
       }
     });
   }
+
+  // makes subclassing work correct for wrapped built-ins
+  var inheritIfRequired = function ($this, dummy, Wrapper) {
+    var NewTarget, NewTargetPrototype;
+    if (
+      // it can work only with native `setPrototypeOf`
+      objectSetPrototypeOf &&
+      // we haven't completely correct pre-ES6 way for getting `new.target`, so use this
+      typeof (NewTarget = dummy.constructor) == 'function' &&
+      NewTarget !== Wrapper &&
+      isObject(NewTargetPrototype = NewTarget.prototype) &&
+      NewTargetPrototype !== Wrapper.prototype
+    ) objectSetPrototypeOf($this, NewTargetPrototype);
+    return $this;
+  };
+
+  var MATCH = wellKnownSymbol('match');
+
+  // `IsRegExp` abstract operation
+  // https://tc39.github.io/ecma262/#sec-isregexp
+  var isRegexp = function (it) {
+    var isRegExp;
+    return isObject(it) && ((isRegExp = it[MATCH]) !== undefined ? !!isRegExp : classofRaw(it) == 'RegExp');
+  };
+
+  // `RegExp.prototype.flags` getter implementation
+  // https://tc39.github.io/ecma262/#sec-get-regexp.prototype.flags
+  var regexpFlags = function () {
+    var that = anObject(this);
+    var result = '';
+    if (that.global) result += 'g';
+    if (that.ignoreCase) result += 'i';
+    if (that.multiline) result += 'm';
+    if (that.dotAll) result += 's';
+    if (that.unicode) result += 'u';
+    if (that.sticky) result += 'y';
+    return result;
+  };
+
+  var defineProperty$2 = objectDefineProperty.f;
+  var getOwnPropertyNames = objectGetOwnPropertyNames.f;
+
+
+
+
+
+
+
+  var MATCH$1 = wellKnownSymbol('match');
+  var NativeRegExp = global_1.RegExp;
+  var RegExpPrototype = NativeRegExp.prototype;
+  var re1 = /a/g;
+  var re2 = /a/g;
+
+  // "new" should create a new object, old webkit bug
+  var CORRECT_NEW = new NativeRegExp(re1) !== re1;
+
+  var FORCED$2 = descriptors && isForced_1('RegExp', (!CORRECT_NEW || fails(function () {
+    re2[MATCH$1] = false;
+    // RegExp constructor can alter flags and IsRegExp works correct with @@match
+    return NativeRegExp(re1) != re1 || NativeRegExp(re2) == re2 || NativeRegExp(re1, 'i') != '/a/i';
+  })));
+
+  // `RegExp` constructor
+  // https://tc39.github.io/ecma262/#sec-regexp-constructor
+  if (FORCED$2) {
+    var RegExpWrapper = function RegExp(pattern, flags) {
+      var thisIsRegExp = this instanceof RegExpWrapper;
+      var patternIsRegExp = isRegexp(pattern);
+      var flagsAreUndefined = flags === undefined;
+      return !thisIsRegExp && patternIsRegExp && pattern.constructor === RegExpWrapper && flagsAreUndefined ? pattern
+        : inheritIfRequired(CORRECT_NEW
+          ? new NativeRegExp(patternIsRegExp && !flagsAreUndefined ? pattern.source : pattern, flags)
+          : NativeRegExp((patternIsRegExp = pattern instanceof RegExpWrapper)
+            ? pattern.source
+            : pattern, patternIsRegExp && flagsAreUndefined ? regexpFlags.call(pattern) : flags)
+        , thisIsRegExp ? this : RegExpPrototype, RegExpWrapper);
+    };
+    var proxy = function (key) {
+      key in RegExpWrapper || defineProperty$2(RegExpWrapper, key, {
+        configurable: true,
+        get: function () { return NativeRegExp[key]; },
+        set: function (it) { NativeRegExp[key] = it; }
+      });
+    };
+    var keys$1 = getOwnPropertyNames(NativeRegExp);
+    var index = 0;
+    while (keys$1.length > index) proxy(keys$1[index++]);
+    RegExpPrototype.constructor = RegExpWrapper;
+    RegExpWrapper.prototype = RegExpPrototype;
+    redefine(global_1, 'RegExp', RegExpWrapper);
+  }
+
+  // https://tc39.github.io/ecma262/#sec-get-regexp-@@species
+  setSpecies('RegExp');
+
+  var nativeExec = RegExp.prototype.exec;
+  // This always refers to the native implementation, because the
+  // String#replace polyfill uses ./fix-regexp-well-known-symbol-logic.js,
+  // which loads this file before patching the method.
+  var nativeReplace = String.prototype.replace;
+
+  var patchedExec = nativeExec;
+
+  var UPDATES_LAST_INDEX_WRONG = (function () {
+    var re1 = /a/;
+    var re2 = /b*/g;
+    nativeExec.call(re1, 'a');
+    nativeExec.call(re2, 'a');
+    return re1.lastIndex !== 0 || re2.lastIndex !== 0;
+  })();
+
+  // nonparticipating capturing group, copied from es5-shim's String#split patch.
+  var NPCG_INCLUDED = /()??/.exec('')[1] !== undefined;
+
+  var PATCH = UPDATES_LAST_INDEX_WRONG || NPCG_INCLUDED;
+
+  if (PATCH) {
+    patchedExec = function exec(str) {
+      var re = this;
+      var lastIndex, reCopy, match, i;
+
+      if (NPCG_INCLUDED) {
+        reCopy = new RegExp('^' + re.source + '$(?!\\s)', regexpFlags.call(re));
+      }
+      if (UPDATES_LAST_INDEX_WRONG) lastIndex = re.lastIndex;
+
+      match = nativeExec.call(re, str);
+
+      if (UPDATES_LAST_INDEX_WRONG && match) {
+        re.lastIndex = re.global ? match.index + match[0].length : lastIndex;
+      }
+      if (NPCG_INCLUDED && match && match.length > 1) {
+        // Fix browsers whose `exec` methods don't consistently return `undefined`
+        // for NPCG, like IE8. NOTE: This doesn' work for /(.?)?/
+        nativeReplace.call(match[0], reCopy, function () {
+          for (i = 1; i < arguments.length - 2; i++) {
+            if (arguments[i] === undefined) match[i] = undefined;
+          }
+        });
+      }
+
+      return match;
+    };
+  }
+
+  var regexpExec = patchedExec;
+
+  _export({ target: 'RegExp', proto: true, forced: /./.exec !== regexpExec }, {
+    exec: regexpExec
+  });
+
+  var TO_STRING = 'toString';
+  var RegExpPrototype$1 = RegExp.prototype;
+  var nativeToString = RegExpPrototype$1[TO_STRING];
+
+  var NOT_GENERIC = fails(function () { return nativeToString.call({ source: 'a', flags: 'b' }) != '/a/b'; });
+  // FF44- RegExp#toString has a wrong name
+  var INCORRECT_NAME = nativeToString.name != TO_STRING;
+
+  // `RegExp.prototype.toString` method
+  // https://tc39.github.io/ecma262/#sec-regexp.prototype.tostring
+  if (NOT_GENERIC || INCORRECT_NAME) {
+    redefine(RegExp.prototype, TO_STRING, function toString() {
+      var R = anObject(this);
+      var p = String(R.source);
+      var rf = R.flags;
+      var f = String(rf === undefined && R instanceof RegExp && !('flags' in RegExpPrototype$1) ? regexpFlags.call(R) : rf);
+      return '/' + p + '/' + f;
+    }, { unsafe: true });
+  }
+
+  var SPECIES$5 = wellKnownSymbol('species');
+
+  var REPLACE_SUPPORTS_NAMED_GROUPS = !fails(function () {
+    // #replace needs built-in support for named groups.
+    // #match works fine because it just return the exec results, even if it has
+    // a "grops" property.
+    var re = /./;
+    re.exec = function () {
+      var result = [];
+      result.groups = { a: '7' };
+      return result;
+    };
+    return ''.replace(re, '$<a>') !== '7';
+  });
+
+  // Chrome 51 has a buggy "split" implementation when RegExp#exec !== nativeExec
+  // Weex JS has frozen built-in prototypes, so use try / catch wrapper
+  var SPLIT_WORKS_WITH_OVERWRITTEN_EXEC = !fails(function () {
+    var re = /(?:)/;
+    var originalExec = re.exec;
+    re.exec = function () { return originalExec.apply(this, arguments); };
+    var result = 'ab'.split(re);
+    return result.length !== 2 || result[0] !== 'a' || result[1] !== 'b';
+  });
+
+  var fixRegexpWellKnownSymbolLogic = function (KEY, length, exec, sham) {
+    var SYMBOL = wellKnownSymbol(KEY);
+
+    var DELEGATES_TO_SYMBOL = !fails(function () {
+      // String methods call symbol-named RegEp methods
+      var O = {};
+      O[SYMBOL] = function () { return 7; };
+      return ''[KEY](O) != 7;
+    });
+
+    var DELEGATES_TO_EXEC = DELEGATES_TO_SYMBOL && !fails(function () {
+      // Symbol-named RegExp methods call .exec
+      var execCalled = false;
+      var re = /a/;
+
+      if (KEY === 'split') {
+        // We can't use real regex here since it causes deoptimization
+        // and serious performance degradation in V8
+        // https://github.com/zloirock/core-js/issues/306
+        re = {};
+        // RegExp[@@split] doesn't call the regex's exec method, but first creates
+        // a new one. We need to return the patched regex when creating the new one.
+        re.constructor = {};
+        re.constructor[SPECIES$5] = function () { return re; };
+        re.flags = '';
+        re[SYMBOL] = /./[SYMBOL];
+      }
+
+      re.exec = function () { execCalled = true; return null; };
+
+      re[SYMBOL]('');
+      return !execCalled;
+    });
+
+    if (
+      !DELEGATES_TO_SYMBOL ||
+      !DELEGATES_TO_EXEC ||
+      (KEY === 'replace' && !REPLACE_SUPPORTS_NAMED_GROUPS) ||
+      (KEY === 'split' && !SPLIT_WORKS_WITH_OVERWRITTEN_EXEC)
+    ) {
+      var nativeRegExpMethod = /./[SYMBOL];
+      var methods = exec(SYMBOL, ''[KEY], function (nativeMethod, regexp, str, arg2, forceStringMethod) {
+        if (regexp.exec === regexpExec) {
+          if (DELEGATES_TO_SYMBOL && !forceStringMethod) {
+            // The native String method already delegates to @@method (this
+            // polyfilled function), leasing to infinite recursion.
+            // We avoid it by directly calling the native @@method method.
+            return { done: true, value: nativeRegExpMethod.call(regexp, str, arg2) };
+          }
+          return { done: true, value: nativeMethod.call(str, regexp, arg2) };
+        }
+        return { done: false };
+      });
+      var stringMethod = methods[0];
+      var regexMethod = methods[1];
+
+      redefine(String.prototype, KEY, stringMethod);
+      redefine(RegExp.prototype, SYMBOL, length == 2
+        // 21.2.5.8 RegExp.prototype[@@replace](string, replaceValue)
+        // 21.2.5.11 RegExp.prototype[@@split](string, limit)
+        ? function (string, arg) { return regexMethod.call(string, this, arg); }
+        // 21.2.5.6 RegExp.prototype[@@match](string)
+        // 21.2.5.9 RegExp.prototype[@@search](string)
+        : function (string) { return regexMethod.call(string, this); }
+      );
+      if (sham) createNonEnumerableProperty(RegExp.prototype[SYMBOL], 'sham', true);
+    }
+  };
+
+  // `SameValue` abstract operation
+  // https://tc39.github.io/ecma262/#sec-samevalue
+  var sameValue = Object.is || function is(x, y) {
+    // eslint-disable-next-line no-self-compare
+    return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
+  };
+
+  // `RegExpExec` abstract operation
+  // https://tc39.github.io/ecma262/#sec-regexpexec
+  var regexpExecAbstract = function (R, S) {
+    var exec = R.exec;
+    if (typeof exec === 'function') {
+      var result = exec.call(R, S);
+      if (typeof result !== 'object') {
+        throw TypeError('RegExp exec method returned something other than an Object or null');
+      }
+      return result;
+    }
+
+    if (classofRaw(R) !== 'RegExp') {
+      throw TypeError('RegExp#exec called on incompatible receiver');
+    }
+
+    return regexpExec.call(R, S);
+  };
+
+  // @@search logic
+  fixRegexpWellKnownSymbolLogic('search', 1, function (SEARCH, nativeSearch, maybeCallNative) {
+    return [
+      // `String.prototype.search` method
+      // https://tc39.github.io/ecma262/#sec-string.prototype.search
+      function search(regexp) {
+        var O = requireObjectCoercible(this);
+        var searcher = regexp == undefined ? undefined : regexp[SEARCH];
+        return searcher !== undefined ? searcher.call(regexp, O) : new RegExp(regexp)[SEARCH](String(O));
+      },
+      // `RegExp.prototype[@@search]` method
+      // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@search
+      function (regexp) {
+        var res = maybeCallNative(nativeSearch, regexp, this);
+        if (res.done) return res.value;
+
+        var rx = anObject(regexp);
+        var S = String(this);
+
+        var previousLastIndex = rx.lastIndex;
+        if (!sameValue(previousLastIndex, 0)) rx.lastIndex = 0;
+        var result = regexpExecAbstract(rx, S);
+        if (!sameValue(rx.lastIndex, previousLastIndex)) rx.lastIndex = previousLastIndex;
+        return result === null ? -1 : result.index;
+      }
+    ];
+  });
+
+  var script$2 = {
+    data: function data() {
+      return {
+        constituencyLookup: this.$root.constituencies.map(function (c) {
+          return {
+            value: c.id,
+            label: c.name
+          };
+        }).sort(alphaSort('label')),
+        searchTerm: null
+      };
+    },
+    computed: {
+      matches: function matches() {
+        if (!this.searchTerm) return [];
+        var searchRegExp = new RegExp(this.searchTerm, 'i');
+        var matches = this.constituencyLookup.filter(function (c) {
+          return c.label.search(searchRegExp) !== -1;
+        });
+        return matches;
+      }
+    }
+  };
+
+  /* script */
+  const __vue_script__$2 = script$2;
+
+  /* template */
+  var __vue_render__$2 = function() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c("section", [
+      _c("label", { attrs: { for: "search" } }, [_vm._v("Search")]),
+      _vm._v(" "),
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.searchTerm,
+            expression: "searchTerm"
+          }
+        ],
+        attrs: { id: "search", type: "text" },
+        domProps: { value: _vm.searchTerm },
+        on: {
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.searchTerm = $event.target.value;
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "ol",
+        _vm._l(_vm.matches, function(ref) {
+          var value = ref.value;
+          var label = ref.label;
+          return _c(
+            "li",
+            { key: value },
+            [
+              _c(
+                "router-link",
+                { attrs: { to: { name: "record", params: { id: value } } } },
+                [_vm._v(_vm._s(label))]
+              )
+            ],
+            1
+          )
+        }),
+        0
+      )
+    ])
+  };
+  var __vue_staticRenderFns__$2 = [];
+  __vue_render__$2._withStripped = true;
+
+    /* style */
+    const __vue_inject_styles__$2 = undefined;
+    /* scoped */
+    const __vue_scope_id__$2 = undefined;
+    /* module identifier */
+    const __vue_module_identifier__$2 = undefined;
+    /* functional template */
+    const __vue_is_functional_template__$2 = false;
+    /* style inject */
+    
+    /* style inject SSR */
+    
+    /* style inject shadow dom */
+    
+
+    
+    const __vue_component__$2 = normalizeComponent(
+      { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+      __vue_inject_styles__$2,
+      __vue_script__$2,
+      __vue_scope_id__$2,
+      __vue_is_functional_template__$2,
+      __vue_module_identifier__$2,
+      false,
+      undefined,
+      undefined,
+      undefined
+    );
+
+  var router = new VueRouter({
+    routes: [{
+      name: 'search',
+      path: '/select',
+      component: __vue_component__$2
+    }, {
+      name: 'record',
+      path: '/constituency/:id',
+      component: __vue_component__$1
+    }]
+  });
 
   function init(_ref) {
     var constituencyData, _ref2, _ref3, constituencies, app;
@@ -3110,9 +3527,7 @@ var ElectionResult = (function (exports) {
             constituencies = _ref3[0];
             app = new Vue({
               el: '#app',
-              components: {
-                'entry-form': __vue_component__$1
-              },
+              router: router,
               data: function data() {
                 return {
                   constituencies: constituencies
