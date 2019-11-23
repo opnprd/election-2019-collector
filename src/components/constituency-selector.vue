@@ -22,7 +22,7 @@ export default {
 </script>
 <template>
   <article>
-    <label for="search">Search</label>
+    <p>Begin typing a constituency name</p>
     <input id="search" type="text" v-model="searchTerm"/>
     <ol>
       <li v-for="{value, label} in matches" :key="value" >
@@ -33,12 +33,18 @@ export default {
 </template>
 
 <style scoped>
-article {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-ol {
-  grid-column-start: span 2;
-  list-style-type: none;
-}
+  p, label, li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+  ol {
+    list-style-type: none;
+  }
+  input {
+    width: 100%;
+    border: 0;
+    outline: 0.5rem solid hsl(347, 100%, 38%);
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
 </style>

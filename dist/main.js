@@ -2870,11 +2870,11 @@ var ElectionResult = (function (exports) {
     /* style */
     const __vue_inject_styles__ = function (inject) {
       if (!inject) return
-      inject("data-v-94e168e6_0", { source: "\narticle[data-v-94e168e6] {\n  padding: 1rem;\n  display: grid;\n  grid-template-columns: 5em auto;\n  grid-template-rows: 1fr;\n  grid-gap: 1rem;\n}\np[data-v-94e168e6], img[data-v-94e168e6] {\n  padding: 0;\n  margin: 0;\n  display: block;\n}\nimg[data-v-94e168e6] {\n  width: 100%;\n  height: auto;\n  grid-row-start: span 4;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/candidate-profile.vue"],"names":[],"mappings":";AAaA;EACA,aAAA;EACA,aAAA;EACA,+BAAA;EACA,uBAAA;EACA,cAAA;AACA;AACA;EACA,UAAA;EACA,SAAA;EACA,cAAA;AACA;AACA;EACA,WAAA;EACA,YAAA;EACA,sBAAA;AACA","file":"candidate-profile.vue","sourcesContent":["<script>\nexport default {\n  props: [ 'image', 'name', 'party' ]\n}\n</script>\n<template>\n  <article>\n    <img :src=\"image\">\n    <p>{{ name }}</p>\n    <p>{{ party }}</p>\n  </article>\n</template>\n<style scoped>\n  article {\n    padding: 1rem;\n    display: grid;\n    grid-template-columns: 5em auto;\n    grid-template-rows: 1fr;\n    grid-gap: 1rem;\n  }\n  p, img {\n    padding: 0;\n    margin: 0;\n    display: block;\n  }\n  img {\n    width: 100%;\n    height: auto;\n    grid-row-start: span 4;\n  }\n</style>"]}, media: undefined });
+      inject("data-v-3c3ee99c_0", { source: "\narticle[data-v-3c3ee99c] {\n  padding: 1rem;\n  display: grid;\n  grid-template-columns: 5em auto;\n  grid-template-rows: minmax(1em, auto);\n  grid-column-gap: 1rem;\n  grid-row-gap: 0.5rem;\n}\np[data-v-3c3ee99c], img[data-v-3c3ee99c] {\n  padding: 0;\n  margin: 0;\n  display: block;\n}\nimg[data-v-3c3ee99c] {\n  width: 100%;\n  height: auto;\n  grid-row-start: span 2;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/candidate-profile.vue"],"names":[],"mappings":";AAaA;EACA,aAAA;EACA,aAAA;EACA,+BAAA;EACA,qCAAA;EACA,qBAAA;EACA,oBAAA;AACA;AACA;EACA,UAAA;EACA,SAAA;EACA,cAAA;AACA;AACA;EACA,WAAA;EACA,YAAA;EACA,sBAAA;AACA","file":"candidate-profile.vue","sourcesContent":["<script>\nexport default {\n  props: [ 'image', 'name', 'party' ]\n}\n</script>\n<template>\n  <article>\n    <img :src=\"image\">\n    <p>{{ name }}</p>\n    <p>{{ party }}</p>\n  </article>\n</template>\n<style scoped>\n  article {\n    padding: 1rem;\n    display: grid;\n    grid-template-columns: 5em auto;\n    grid-template-rows: minmax(1em, auto);\n    grid-column-gap: 1rem;\n    grid-row-gap: 0.5rem;\n  }\n  p, img {\n    padding: 0;\n    margin: 0;\n    display: block;\n  }\n  img {\n    width: 100%;\n    height: auto;\n    grid-row-start: span 2;\n  }\n</style>"]}, media: undefined });
 
     };
     /* scoped */
-    const __vue_scope_id__ = "data-v-94e168e6";
+    const __vue_scope_id__ = "data-v-3c3ee99c";
     /* module identifier */
     const __vue_module_identifier__ = undefined;
     /* functional template */
@@ -3421,7 +3421,7 @@ var ElectionResult = (function (exports) {
     var _h = _vm.$createElement;
     var _c = _vm._self._c || _h;
     return _c("article", [
-      _c("label", { attrs: { for: "search" } }, [_vm._v("Search")]),
+      _c("p", [_vm._v("Begin typing a constituency name")]),
       _vm._v(" "),
       _c("input", {
         directives: [
@@ -3472,11 +3472,11 @@ var ElectionResult = (function (exports) {
     /* style */
     const __vue_inject_styles__$2 = function (inject) {
       if (!inject) return
-      inject("data-v-d3eb007c_0", { source: "\narticle[data-v-d3eb007c] {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n}\nol[data-v-d3eb007c] {\n  grid-column-start: span 2;\n  list-style-type: none;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/constituency-selector.vue"],"names":[],"mappings":";AAmCA;EACA,aAAA;EACA,8BAAA;AACA;AACA;EACA,yBAAA;EACA,qBAAA;AACA","file":"constituency-selector.vue","sourcesContent":["<script>\nimport { alphaSort } from '../util/array.js';\n\nexport default {\n  data() {\n    return {\n      constituencyLookup: this.$root.constituencies\n        .map(c => ({ value: c.id, label: c.name }))\n        .sort(alphaSort('label')),\n      searchTerm: null,\n    }\n  },\n  computed: {\n    matches() {\n      if (!this.searchTerm) return [];\n      const searchRegExp = new RegExp(this.searchTerm, 'i');\n      const matches = this.constituencyLookup.filter(c => c.label.search(searchRegExp) !== -1);\n      return matches;\n    }\n  }\n}\n</script>\n<template>\n  <article>\n    <label for=\"search\">Search</label>\n    <input id=\"search\" type=\"text\" v-model=\"searchTerm\"/>\n    <ol>\n      <li v-for=\"{value, label} in matches\" :key=\"value\" >\n        <router-link :to=\"{ name: 'record', params: { id: value }}\">{{ label }}</router-link>\n      </li>\n    </ol>\n  </article>\n</template>\n\n<style scoped>\narticle {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n}\nol {\n  grid-column-start: span 2;\n  list-style-type: none;\n}\n</style>"]}, media: undefined });
+      inject("data-v-bb11def0_0", { source: "\np[data-v-bb11def0], label[data-v-bb11def0], li[data-v-bb11def0] {\n  margin-top: 0.5em;\n  margin-bottom: 0.5em;\n}\nol[data-v-bb11def0] {\n  list-style-type: none;\n}\ninput[data-v-bb11def0] {\n  width: 100%;\n  border: 0;\n  outline: 0.5rem solid hsl(347, 100%, 38%);\n  padding: 0.5rem;\n  box-sizing: border-box;\n}\n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/constituency-selector.vue"],"names":[],"mappings":";AAmCA;EACA,iBAAA;EACA,oBAAA;AACA;AACA;EACA,qBAAA;AACA;AACA;EACA,WAAA;EACA,SAAA;EACA,yCAAA;EACA,eAAA;EACA,sBAAA;AACA","file":"constituency-selector.vue","sourcesContent":["<script>\nimport { alphaSort } from '../util/array.js';\n\nexport default {\n  data() {\n    return {\n      constituencyLookup: this.$root.constituencies\n        .map(c => ({ value: c.id, label: c.name }))\n        .sort(alphaSort('label')),\n      searchTerm: null,\n    }\n  },\n  computed: {\n    matches() {\n      if (!this.searchTerm) return [];\n      const searchRegExp = new RegExp(this.searchTerm, 'i');\n      const matches = this.constituencyLookup.filter(c => c.label.search(searchRegExp) !== -1);\n      return matches;\n    }\n  }\n}\n</script>\n<template>\n  <article>\n    <p>Begin typing a constituency name</p>\n    <input id=\"search\" type=\"text\" v-model=\"searchTerm\"/>\n    <ol>\n      <li v-for=\"{value, label} in matches\" :key=\"value\" >\n        <router-link :to=\"{ name: 'record', params: { id: value }}\">{{ label }}</router-link>\n      </li>\n    </ol>\n  </article>\n</template>\n\n<style scoped>\n  p, label, li {\n    margin-top: 0.5em;\n    margin-bottom: 0.5em;\n  }\n  ol {\n    list-style-type: none;\n  }\n  input {\n    width: 100%;\n    border: 0;\n    outline: 0.5rem solid hsl(347, 100%, 38%);\n    padding: 0.5rem;\n    box-sizing: border-box;\n  }\n</style>"]}, media: undefined });
 
     };
     /* scoped */
-    const __vue_scope_id__$2 = "data-v-d3eb007c";
+    const __vue_scope_id__$2 = "data-v-bb11def0";
     /* module identifier */
     const __vue_module_identifier__$2 = undefined;
     /* functional template */
@@ -3512,6 +3512,61 @@ var ElectionResult = (function (exports) {
     }]
   });
 
+  /* script */
+
+  /* template */
+  var __vue_render__$3 = function() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c("nav", [
+      _c("ol", [
+        _c(
+          "li",
+          [
+            _c("router-link", { attrs: { to: { name: "search" } } }, [
+              _vm._v("Locate")
+            ])
+          ],
+          1
+        )
+      ])
+    ])
+  };
+  var __vue_staticRenderFns__$3 = [];
+  __vue_render__$3._withStripped = true;
+
+    /* style */
+    const __vue_inject_styles__$3 = function (inject) {
+      if (!inject) return
+      inject("data-v-39f8ee2c_0", { source: "\nol[data-v-39f8ee2c] {\n  display: flex;\n}\nli[data-v-39f8ee2c] {\n  padding: 0.8em;\n  border-radius: 10px 10px 0 0;\n  background: hsl(347, 100%, 38%);\n  color: #fff;\n}\na[data-v-39f8ee2c] {\n  color: inherit;\n}        \n", map: {"version":3,"sources":["/Users/gilesdring/src/odileeds/election2019/update-election-data/src/components/navigation.vue"],"names":[],"mappings":";AAUA;EACA,aAAA;AACA;AACA;EACA,cAAA;EACA,4BAAA;EACA,+BAAA;EACA,WAAA;AACA;AACA;EACA,cAAA;AACA","file":"navigation.vue","sourcesContent":["<template>\n  <nav>\n    <ol>\n      <li>\n        <router-link :to=\"{ name: 'search' }\">Locate</router-link>\n      </li>\n    </ol>\n  </nav>\n</template>\n<style scoped>\nol {\n  display: flex;\n}\nli {\n  padding: 0.8em;\n  border-radius: 10px 10px 0 0;\n  background: hsl(347, 100%, 38%);\n  color: #fff;\n}\na {\n  color: inherit;\n}        \n</style>"]}, media: undefined });
+
+    };
+    /* scoped */
+    const __vue_scope_id__$3 = "data-v-39f8ee2c";
+    /* module identifier */
+    const __vue_module_identifier__$3 = undefined;
+    /* functional template */
+    const __vue_is_functional_template__$3 = false;
+    /* style inject SSR */
+    
+    /* style inject shadow dom */
+    
+
+    
+    const __vue_component__$3 = normalizeComponent(
+      { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+      __vue_inject_styles__$3,
+      {},
+      __vue_scope_id__$3,
+      __vue_is_functional_template__$3,
+      __vue_module_identifier__$3,
+      false,
+      createInjector,
+      undefined,
+      undefined
+    );
+
   function init(_ref) {
     var constituencyData, _ref2, _ref3, constituencies, app;
 
@@ -3530,6 +3585,9 @@ var ElectionResult = (function (exports) {
             app = new Vue({
               el: '#app',
               router: router,
+              components: {
+                'app-navigation': __vue_component__$3
+              },
               data: function data() {
                 return {
                   constituencies: constituencies
