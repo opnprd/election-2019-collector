@@ -36,6 +36,11 @@ export default {
   ol {
     list-style-type: none;
   }
+  li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.2em;
+  }
   input {
     width: 100%;
     border: 0;

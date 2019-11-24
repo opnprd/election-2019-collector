@@ -13,13 +13,14 @@ ol {
 }
 li {
   padding-bottom: 0.5em;
+  box-sizing: border-box;
 }
 a {
-  padding: 0.5em;
+  padding: 0.5rem;
   border-radius: 10px 10px 0 0;
   background: #c1002a;
   color: #fff;
-  margin-right: 0.2em;
+  margin-right: 0.25em;
 }
 .router-link-active {
   background: #e2001a;
