@@ -2846,7 +2846,6 @@ var ElectionResult = (function (exports) {
           }
       }
   }
-  //# sourceMappingURL=index.mjs.map
 
   /* script */
   const __vue_script__ = script;
