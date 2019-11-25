@@ -85,6 +85,6 @@ streamWebResource(candidateData)
   .then(convertCsv)
   .then(simplify)
   .then(summarise)
-  .then(writeToFile('./dist/data/constituencies.json'))
+  .then(writeToFile('./data/constituencies.json'))
   .then(() => console.log('Done!'));
 

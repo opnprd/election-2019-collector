@@ -1,14 +1,20 @@
+// import Vue from 'vue';
+import App from './App.vue'
+import router from './router';
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+import { components } from 'aws-amplify-vue';
 import { get } from './util/http';
-import { router } from './router.js';
-import navigation from './components/navigation.vue';
 
 import './style.scss';
 
-export async function init({
-  constituencyData
+Amplify.configure(aws_exports)
+
+async function init({
+  constituencyData,
 }) {
   const [
-    constituencies
+    constituencies,
   ] = await Promise.all([
     get(constituencyData),
   ]);
@@ -16,13 +22,17 @@ export async function init({
   const app = new Vue({
     el: '#app',
     router,
+    template: '<App/>',
     components: {
-      'app-navigation': navigation,
+      App,
+      ...components,
     },
     data() {
       return {
-        constituencies
-      }
-    }
-  });  
+        constituencies,
+      };
+    },
+  });
 }
+
+init({ constituencyData: 'data/constituencies.json' });
