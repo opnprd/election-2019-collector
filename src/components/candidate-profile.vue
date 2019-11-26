@@ -7,7 +7,8 @@ export default {
   <section>
     <p class="image"><img :src="image"></p>
     <p>{{ name }}</p>
-    <p>{{ party }}</p>
+    <p class="party">{{ party }}</p>
+    <slot></slot>
   </section>
 </template>
 <style scoped>
@@ -16,9 +17,11 @@ export default {
     margin-bottom: 1rem;
     display: grid;
     grid-template-columns: 5em auto;
-    grid-template-rows: minmax(1em, auto);
     grid-column-gap: 1rem;
     grid-row-gap: 0.5rem;
+    align-items: center;
+    outline: 2px solid #aaa;
+    padding: 0.2em;
   }
   p, img {
     padding: 0;
@@ -31,5 +34,11 @@ export default {
   img {
     width: 100%;
     height: auto;
+  }
+  .party {
+    font-size: smaller;
+  }
+  .wide {
+    grid-column-start: span 2;
   }
 </style>
