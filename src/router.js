@@ -3,6 +3,7 @@ import { components, AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue';
 
 import constituencyResults from './components/constituency-results.vue';
 import constituencySelector from './components/constituency-selector.vue';
+import confirmResults from './components/confirm-results.vue';
 import home from './components/home.vue';
 import liveMap from './components/live-map.vue';
 import AmplifyStore from './store';
@@ -16,6 +17,7 @@ const router = new VueRouter({
     { name: 'home', path: '/', component: home, meta: { requiresAuth: false } },
     { name: 'search', path: '/select', component: constituencySelector, meta: { requiresAuth: true } },
     { name: 'record', path: '/constituency/:id', component: constituencyResults, meta: { requiresAuth: true } },
+    { name: 'confirm', path: '/confirm', component: confirmResults, meta: { requiresAuth: true } },
     { name: 'live-map', path: '/live', component: liveMap, meta: { requiresAuth: true } },
     { name: 'auth', path: '/live', component: components.Authenticator },
   ],
