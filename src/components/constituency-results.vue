@@ -43,14 +43,14 @@ export default {
     <p>ID: {{ constituency.id }}</p>
     <form v-on:submit.prevent="storeResult">
       <section id="overall">
-        <label for="ballots">Ballots cast</label> <input id="ballots" type="number" v-model="ballots"/>
-        <label for="spoiled">Spoiled ballots</label> <input id="spoiled" type="number" v-model="spoiled"/>
+        <label for="ballots">Ballots cast</label> <input class="brand-border" id="ballots" type="number" v-model="ballots"/>
+        <label for="spoiled">Spoiled ballots</label> <input class="brand-border" id="spoiled" type="number" v-model="spoiled"/>
       </section>
       <candidate-profile v-for="{ name, party_name, id, image } in candidates"
         :key="id" :name="name" :party="party_name" :image="image">
-        <label :for="id">Votes</label> <input :id="id" type="number" v-model="votes[id]"/>
+        <label :for="id">Votes</label> <input class="brand-border" :id="id" type="number" v-model="votes[id]"/>
         </candidate-profile>
-      <input type="submit" value="Save Result">
+      <input type="submit" value="Save Result" class="brand-background">
     </form>
   </article>
 </template>
@@ -66,14 +66,9 @@ export default {
     color: #888;
   }
   input {
-    width: 95%;
-    outline: 2px solid #c1002a;
-    box-sizing: border-box;
+    width: 100%;
   };
-  input[type="submit"] {
-    background-color: #c1002a;
-    color: #fff;
-    cursor: pointer;
-    padding: 0.5em;
+  input[type="number"] {
+    border-width: 2px;
   }
 </style>

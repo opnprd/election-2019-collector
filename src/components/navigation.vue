@@ -18,11 +18,6 @@ li {
 a {
   padding: 0.5rem;
   border-radius: 10px 10px 0 0;
-  background: #c1002a;
-  color: #fff;
   margin-right: 0.25em;
-}
-.router-link-active {
-  background: #e2001a;
 }
 </style>

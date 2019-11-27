@@ -19,13 +19,23 @@ body, input {
 }
 
 #app {
-  padding: 1em;
+  padding: 0.5em;
   header {
     @extend %centralise;
     padding-top: 0.5em;
+    nav {
+      a {
+        @extend .brand-background;
+      }
+      .router-link-active {
+        background: #e2001a;
+      }      
+    }
   }
   > article {
     @extend %centralise;
+    @extend .brand-border;
+    border-width: 0.2rem 0 0.2rem 0;
     h1 {
       font-size: 1.5em;
       font-weight: bold;
@@ -35,7 +45,30 @@ body, input {
       margin-bottom: 0.5em;
     }
     background: #f5f5f5;
-    padding: 1em;
+    padding: 0.5em;
     color: hsl(0, 0%, 10%);
   }
+}
+
+.brand-border {
+  border-color: #c1002a;
+  border-style: solid;
+}
+
+.brand-background {
+  background-color: #c1002a;
+  color: #fff;
+}
+
+input {
+  box-sizing: border-box;
+  &[type="submit"] {
+    cursor: pointer;
+    padding: 0.5em;
+  }
+}
+
+input[type="number"], input[type="submit"] {
+  -webkit-appearance: none;
+  border-radius: 0;
 }
