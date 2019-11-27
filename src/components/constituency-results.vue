@@ -1,5 +1,6 @@
 <script>
 import candidateProfile from './candidate-profile.vue';
+import AmplifyStore from '../store';
 import { alphaSort } from '../util/array.js';
 
 export default {
@@ -30,7 +31,7 @@ export default {
         },
         votes: this.votes,
       };
-      console.dir(result);
+      AmplifyStore.commit('setResult', result);
     }
   }
 }
@@ -45,7 +46,7 @@ export default {
         <label for="spoiled">Spoiled ballots</label> <input id="spoiled" type="text" v-model="spoiled"/>
       </section>
       <candidate-profile v-for="{ name, party_name, id, image } in candidates"
-        :key="id":name="name" :party="party_name" :image="image">
+        :key="id" :name="name" :party="party_name" :image="image">
         <label :for="id">Votes</label> <input :id="id" type="text" v-model="votes[id]"/>
         </candidate-profile>
       <input type="submit" value="Save Result">
