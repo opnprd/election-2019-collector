@@ -34,13 +34,19 @@
       </tbody>
     </table>
 
-    <a target='tweet' :href="twitterUrl">Tweet it!</a>
+    <a class="action brand-background" v-if="published === false" v-on:click="$store.dispatch('publish')">Publish</a>
+    <a class="action brand-background" v-if="published === true" target='tweet' :href="twitterUrl">Tweet it!</a>
   </article>
 </template>
 <style scoped>
 table {
   width: 100%;
   font-size: 0.7em;
+}
+.action {
+  padding: 0.5em;
+  box-sizing: border-box;
+  display: block;
 }
 </style>
 </style>
@@ -86,7 +92,10 @@ export default {
     },
     twitterUrl() {
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(this.summary) }`;
-    }    
+    },
+    published() {
+      return this.$store.state.published;
+    } 
   },
   methods: {
     proportion(value) {
