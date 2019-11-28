@@ -11,7 +11,8 @@ export default {
     return {
       constituency: this.$root.constituencies.find(x => x.id === this.$route.params.id),
       votes: {},
-      ballots: undefined,
+      total: undefined,
+      valid: undefined,
       spoiled: undefined,
     }
   },
@@ -26,7 +27,8 @@ export default {
         id: this.constituency.id,
         name: this.constituency.name,
         ballots: {
-          cast: this.ballots,
+          total: this.total,
+          valid: this.valid,
           spoiled: this.spoiled,
         },
         votes: this.votes,
@@ -43,7 +45,8 @@ export default {
     <p>ID: {{ constituency.id }}</p>
     <form v-on:submit.prevent="storeResult">
       <section id="overall">
-        <label for="ballots">Ballots cast</label> <input class="brand-border" id="ballots" type="number" v-model="ballots"/>
+        <label for="ballots">Total votes cast</label> <input class="brand-border" id="total" type="number" v-model="total"/>
+        <label for="ballots">Valid votes cast</label> <input class="brand-border" id="valid" type="number" v-model="valid"/>
         <label for="spoiled">Spoiled ballots</label> <input class="brand-border" id="spoiled" type="number" v-model="spoiled"/>
       </section>
       <candidate-profile v-for="{ name, party_name, id, image } in candidates"
