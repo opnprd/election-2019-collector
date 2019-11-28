@@ -1,6 +1,5 @@
 <script>
 import candidateProfile from './candidate-profile.vue';
-import AmplifyStore from '../store';
 import { alphaSort } from '../util/array.js';
 
 export default {
@@ -33,7 +32,7 @@ export default {
         },
         votes: this.votes,
       };
-      AmplifyStore.commit('setResult', result);
+      this.$store.commit('setResult', result);
       this.$router.push({ name: 'confirm' });
     }
   }

@@ -1,3 +1,5 @@
+import Vue from 'vue';
+import Router from 'vue-router';
 import Amplify, * as AmplifyModules from 'aws-amplify';
 import { components, AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue';
 
@@ -10,9 +12,10 @@ import AmplifyStore from './store';
 
 const DEBUG=true;
 
+Vue.use(Router);
 Vue.use(AmplifyPlugin, AmplifyModules);
 
-const router = new VueRouter({
+const router = new Router({
   routes: [
     { name: 'home', path: '/', component: home, meta: { requiresAuth: false } },
     { name: 'search', path: '/select', component: constituencySelector, meta: { requiresAuth: true } },

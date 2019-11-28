@@ -15,16 +15,17 @@
   </article>
 </template>
 <script>
-import AmplifyStore from '../store';
 
 export default {
   data () {
     return {
-      result: AmplifyStore.state.result,
       tweet: ''
     };
   },
   computed: {
+    result() {
+      return this.$store.state.result;
+    },
     votes() {
       return Object.entries(this.result.votes)
         .reduce((a, [id, votes = null]) => {
