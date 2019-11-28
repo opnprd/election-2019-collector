@@ -1,0 +1,70 @@
+[
+  {
+    "code": "Con",
+    "title": "Conservative",
+    "id": [51, 52]
+  },
+  {
+    "code": "Lab",
+    "title": "Labour",
+    "id": 53,
+    "aliases": ["Labour/Co-operative"]
+  },
+  {
+    "code": "LD",
+    "title": "Lib Dem",
+    "aliases": ["Liberal Democrat"],
+    "id": 90
+  },
+  {
+    "code": "Green",
+    "id": [63, 305, 130]
+  },
+  {
+    "code": "Brexit",
+    "id": 7931
+  },
+  {
+    "code": "SNP",
+    "aliases": ["Scottish National Party"],
+    "id": 102
+  },
+  {
+    "code": "UKIP", "id": [85, 84]
+  },
+  { "code": "PC", "title": "Plaid Cymru", "id": 77 },
+  { "code": "YP", "title": "Yorkshire", "id": 2055 },
+  { "code": "Christian", "title": "Christian Peoples", "id": 79 },
+  { "code": "Monster", "title": "Monster Raving Loony", "id": 66 },
+  {
+    "code": "SDP",
+    "id": 243
+  },
+  {
+    "code": "Liberal",
+    "id": 54
+  },
+  {
+    "code": "Alliance",
+    "id": 103
+  },
+  {
+    "code": "WE",
+    "title": "Women's Equality Party",
+    "id": 2755
+  },
+  {
+    "code": "DUP",
+    "id": 70
+  },
+  {
+    "code": "SDLP",
+    "id": 55
+  },
+  { "code": "SF", "title": "Sinn Féin", "id": 39 },
+  {
+    "code": "UUP", "id": 83
+  },
+  { "code": "Ind", "title": "Independent", "id": 2 },
+  { "code": "Spk", "title": "Speaker", "id": 12522 }
+]
