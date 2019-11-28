@@ -3,13 +3,15 @@
     <p>Results for {{ result.name }}.</p>
     <p>Ballots cast {{ result.ballots.cast }}</p>
     <section>
-      <p>{{ winner.party_name }} win {{ result.name }} by {{ margin }} votes</p>
+      <p>{{ summary }}</p>
       <p><img :src="winner.image" :alt="winner.name">{{ winner.name }}</p>
     </section>
     <ol>
       <li v-for="r in votes" :key="r.id">{{ r.name }} ({{r.party_name}}) {{ r.votes }} votes</li>
     </ol>
     <p v-if="result.spoiled > 0">There were {{ result.spoiled }} spoiled ballots</p>
+
+    <a target='tweet' :href="twitterUrl">Tweet it!</a>
   </article>
 </template>
 <script>
@@ -19,6 +21,7 @@ export default {
   data () {
     return {
       result: AmplifyStore.state.result,
+      tweet: ''
     };
   },
   computed: {
@@ -42,7 +45,13 @@ export default {
     },
     margin() {
       return this.votes[0].votes - this.votes[1].votes;
-    }
+    },
+    summary() {
+      return `${ this.winner.party_name } win ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
+    },
+    twitterUrl() {
+      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(this.summary) }`;
+    }    
   }
 }
 </script>
