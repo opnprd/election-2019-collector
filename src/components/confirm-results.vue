@@ -1,26 +1,60 @@
 <template>
   <article>
     <p>Results for {{ result.name }}.</p>
-    <p>Ballots cast {{ result.ballots.cast }}</p>
-    <section>
-      <p>{{ summary }}</p>
-      <p><img :src="winner.image" :alt="winner.name">{{ winner.name }}</p>
-    </section>
-    <ol>
-      <li v-for="r in votes" :key="r.id">{{ r.name }} ({{r.party_name}}) {{ r.votes }} votes</li>
-    </ol>
-    <p v-if="result.spoiled > 0">There were {{ result.spoiled }} spoiled ballots</p>
+    <h1>{{ summary }}</h1>
+    <candidate-profile :image="winner.image" :name="winner.name" :party="winner.party_name" >
+    </candidate-profile>
+
+    <h2>Overall voting pattern</h2>
+    <table>
+      <thead>
+        <tr><th>Measure</th><th>Votes</th><th>% of Total</th></tr>
+      </thead>
+
+      <tbody>
+        <tr><td>Total</td><td>{{ result.ballots.total }}</td><td>&mdash;</td></tr>
+        <tr><td>Valid</td><td>{{ result.ballots.valid }}</td><td>{{ proportion(result.ballots.valid) }}</td></tr>
+        <tr><td>Margin</td><td>{{ margin }}</td><td>{{ proportion(margin) }}</td></tr>
+        <tr><td>Spoiled</td><td>{{ result.ballots.spoiled }}</td><td>{{ proportion(result.ballots.spoiled) }}</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Candidate votes</h2>
+    <table>
+      <thead>
+        <tr><th>Candidate</th><th>Party</th><th>Votes</th><th>Share</th></tr>
+      </thead>
+      <tbody>
+        <tr v-for="r in votes" :key="r.id">
+          <td>{{ r.name }}</td>
+          <td>{{r.party_code}}</td>
+          <td>{{ r.votes }}</td>
+          <td>{{ proportion(r.votes) }}</td>
+        </tr>
+      </tbody>
+    </table>
 
     <a target='tweet' :href="twitterUrl">Tweet it!</a>
   </article>
 </template>
+<style scoped>
+table {
+  width: 100%;
+  font-size: 0.7em;
+}
+</style>
+</style>
 <script>
+import candidateProfile from './candidate-profile.vue';
 
 export default {
   data () {
     return {
       tweet: ''
     };
+  },
+  components: {
+    candidateProfile
   },
   computed: {
     result() {
@@ -53,6 +87,11 @@ export default {
     twitterUrl() {
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(this.summary) }`;
     }    
+  },
+  methods: {
+    proportion(value) {
+      return Math.round(100 * value / this.result.ballots.total) + '%';
+    }
   }
 }
 </script>
