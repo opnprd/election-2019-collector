@@ -5,7 +5,7 @@
     <candidate-profile :image="winner.image" :name="winner.name" :party="winner.party.title" >
     </candidate-profile>
     <h2>Overall voting pattern</h2>
-    <table>
+    <table class="fixed centred">
       <thead>
         <tr><th>Measure</th><th>Votes</th><th>% of Total</th></tr>
       </thead>
@@ -26,9 +26,9 @@
       <tbody>
         <tr v-for="r in candidates" :key="r.id">
           <td>{{ r.name }}</td>
-          <td>{{ r.party.code }}</td>
-          <td>{{ r.votes }}</td>
-          <td>{{ proportion(r.votes) }}</td>
+          <td class="centred">{{ r.party.code }}</td>
+          <td class="centred">{{ r.votes }}</td>
+          <td class="centred">{{ proportion(r.votes) }}</td>
         </tr>
       </tbody>
     </table>
@@ -41,6 +41,19 @@
 table {
   width: 100%;
   font-size: 0.7em;
+}
+.fixed {
+  table-layout: fixed;
+}
+th {
+  background-color: #aaa;
+}
+td, th {
+  border: 1px solid #aaa;
+  padding: 0.3em;
+}
+.centred {
+  text-align: center;
 }
 .action {
   padding: 0.5em;
@@ -63,7 +76,9 @@ export default {
   },
   computed: {
     result() {
-      return this.$store.state.result;
+      const result = this.$store.state.result;
+      if (!result.id) this.$router.push({ name: 'home' });
+      return result;
     },
     candidates() {
       return this.result.candidates.sort((a, b) => b.votes - a.votes);
