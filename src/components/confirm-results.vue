@@ -33,8 +33,16 @@
       </tbody>
     </table>
 
-    <a class="action brand-background" v-if="published === false" v-on:click="$store.dispatch('publish')">Publish</a>
-    <a class="action brand-background" v-if="published === true" target='tweet' :href="twitterUrl">Tweet it!</a>
+    <section id="actions">
+      <a class="action brand-background" v-if="published === false" v-on:click="$store.dispatch('publish')">Publish</a>
+      <router-link v-if="published === false" :to="{ name: 'record', params: { id: result.id }}" v-slot="{ href }">
+        <a class="action secondary-action" :href="href">Amend</a>
+      </router-link>
+      <router-link v-if="published === true" :to="{ name: 'search' }" v-slot="{ href }">
+        <a class="action brand-background" :href="href">Done</a>
+      </router-link>
+      <a class="action secondary-action" v-if="published === true" target='tweet' :href="twitterUrl">Tweet</a>
+    </section>
   </article>
 </template>
 <style scoped>
@@ -55,10 +63,21 @@ td, th {
 .centred {
   text-align: center;
 }
+#actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5em;
+}
 .action {
+  text-align: center;
   padding: 0.5em;
   box-sizing: border-box;
   display: block;
+  text-decoration: none;
+}
+.secondary-action {
+  background-color: #888;
+  color: #fff;
 }
 </style>
 </style>
