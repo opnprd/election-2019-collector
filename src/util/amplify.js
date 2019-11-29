@@ -9,6 +9,4 @@ import awsconfig from '../aws-exports.js';
 Amplify.configure(awsconfig);
 Vue.use(AmplifyPlugin, AmplifyModules);
 
-console.dir(components);
-
 export const amplifyComponents = components;
