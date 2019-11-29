@@ -8,7 +8,7 @@ export default {
   },
   data() {
     return {
-      constituency: this.$store.state.constituencies.find(x => x.id === this.$route.params.id),
+      constituency: this.$store.getters.getConstituency(this.$route.params.id),
       votes: {},
       total: undefined,
       valid: undefined,

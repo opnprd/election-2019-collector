@@ -22,6 +22,11 @@ const store = new Vuex.Store({
       commit('setConstituency', data);
     },
   },
+  getters: {
+    getConstituency: (state) => (id) => {
+      return state.constituencies.find(constituency => constituency.id === id);
+    },
+  },
   mutations: {
     setConstituency(state, constituencies) {
       state.constituencies = constituencies;
