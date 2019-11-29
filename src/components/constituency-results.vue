@@ -2,6 +2,11 @@
 import candidateProfile from './candidate-profile.vue';
 import { alphaSort } from '../util/array.js';
 
+const makeNumber = (v) => {
+  const num = parseInt(v);
+  return Number.isNaN(num) ? undefined : num;
+}
+
 export default {
   components: {
     'candidate-profile': candidateProfile,
@@ -10,18 +15,31 @@ export default {
     candidates() {
       return this.result.candidates.sort(alphaSort('name'));
     },
+    candidateVotes() {
+      return this.candidates.filter(x => x.votes).reduce((a, { votes }) => a + votes, 0);
+    },
     result() {
       return this.$store.state.result;
+    },
+    errors() {
+      const { votes: { total, valid, invalid }, candidates } = this.result;
+      const errors = []
+      const diff = makeNumber(total - valid - invalid);
+      if ( valid > total ) errors.push({ message: 'Valid votes greater than total votes' });
+      if ( invalid > total ) errors.push({ message: 'Invalid votes greater than total '});
+      if ( this.candidateVotes > 0 && this.candidateVotes != valid ) errors.push({ warning: true, message: `Valid votes not equal to votes for candidates (${this.candidateVotes})` });
+      if ( diff ) errors.push({ warning: true, message: `Total is not sum of valid and invalid votes (difference is ${diff})` });
+
+      return errors;
+    },
+    preventSubmit() {
+      return this.errors.filter(x => x.warning != true).length > 0;
     },
   },
   methods: {
     updateVotes: function (e) {
       const result = this.result;
       const { id, value } = e.target
-      const makeNumber = (v) => {
-        const num = parseInt(v);
-        return Number.isNaN(num) ? undefined : num;
-      }
       if (['total', 'valid', 'invalid'].includes(id)){
         result.votes[id] = makeNumber(value);
       } else {
@@ -37,6 +55,11 @@ export default {
   <article>
     <h1>{{ result.name }}</h1>
     <p>ID: {{ result.id }}</p>
+
+    <ul class="errors" v-if="errors.length > 0">
+      <li v-for="({ message }, index) in errors" :key="index">{{ message }}</li>
+    </ul>
+
     <form v-on:submit.prevent="storeResult">
       <section id="overall">
         <label for="ballots">Total votes cast</label>
@@ -51,7 +74,7 @@ export default {
         <label :for="id">Votes</label>
         <input class="brand-border" :id="id" type="number" :value="candidates[index].votes"  @input="updateVotes"/>
         </candidate-profile>
-      <router-link :to="{ name: 'confirm' }" v-slot="{ href }"><a class="action brand-background" :href="href">Save Result</a></router-link> 
+      <router-link v-if="!preventSubmit" :to="{ name: 'confirm' }" v-slot="{ href }"><a class="action brand-background" :href="href">Save Result</a></router-link> 
     </form>
   </article>
 </template>
@@ -71,5 +94,10 @@ export default {
   };
   input[type="number"] {
     border-width: 2px;
+  }
+  .errors {
+    border: solid 2px red;
+    padding: 0.5rem;
+    font-size: 0.8em;
   }
 </style>
