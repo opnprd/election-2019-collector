@@ -1,19 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Amplify, * as AmplifyModules from 'aws-amplify';
-import { components, AmplifyPlugin, AmplifyEventBus } from 'aws-amplify-vue';
+import { amplifyComponents, AmplifyEventBus } from './util/amplify';
 
 import constituencyResults from './components/constituency-results.vue';
 import constituencySelector from './components/constituency-selector.vue';
 import confirmResults from './components/confirm-results.vue';
 import home from './components/home.vue';
 import liveMap from './components/live-map.vue';
-import AmplifyStore from './store';
+import store from './store';
 
 const DEBUG=true;
 
 Vue.use(Router);
-Vue.use(AmplifyPlugin, AmplifyModules);
 
 const router = new Router({
   routes: [
@@ -27,13 +25,13 @@ const router = new Router({
         requiresAuth: true
       },
       beforeEnter: (to, from, next) => {
-        AmplifyStore.commit('setupResult', to.params.id);
+        store.commit('setupResult', to.params.id);
         next();
       },
     },
     { name: 'confirm', path: '/confirm', component: confirmResults, meta: { requiresAuth: true } },
     { name: 'live-map', path: '/live', component: liveMap, meta: { requiresAuth: true } },
-    { name: 'auth', path: '/live', component: components.Authenticator },
+    { name: 'auth', path: '/live', component: amplifyComponents.Authenticator },
   ],
 });
 
@@ -43,11 +41,11 @@ async function getUser() {
   try {
     const data = Vue.prototype.$Amplify.Auth.currentAuthenticatedUser();
     if (data && data.signInUserSession) {
-      AmplifyStore.commit('setUser', data);
+      store.commit('setUser', data);
       return data;
     }
   } catch(e) {
-    AmplifyStore.commit('setUser', null);
+    store.commit('setUser', null);
     return null;
   }
 }
@@ -61,7 +59,7 @@ getUser().then((user, error) => {
 AmplifyEventBus.$on('authState', async (state) => {
   if (state === 'signedOut'){
     user = null;
-    AmplifyStore.commit('setUser', null);
+    store.commit('setUser', null);
     router.push({path: '/auth'});
   } else if (state === 'signedIn') {
     user = await getUser();
@@ -84,6 +82,6 @@ router.beforeResolve(async (to, from, next) => {
     return next();
   }
   return next();
-})
+});
 
 export default router;
