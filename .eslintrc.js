@@ -16,4 +16,12 @@ module.exports = {
     'comma-dangle': ['warn', 'always-multiline'],
     'quote-props': ['warn', 'as-needed'],
   },
+  overrides: [
+    {
+      files: ['webpack.config.js'],
+      env: {
+        node: true,
+      },
+    },
+  ],
 };

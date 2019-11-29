@@ -1,14 +1,28 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 	mode: 'development',
 	entry: './src/main.js',
+	plugins: [
+		// new CleanWebpackPlugin(),
+		new HtmlWebpackPlugin({
+			title: 'GE2019 Data Collector',
+			template: 'src/index.html',
+		}),
+		new CopyWebpackPlugin([
+			'data/**/constituencies.json',
+		]),
+		new webpack.HotModuleReplacementPlugin(),
+		new VueLoaderPlugin(),
+	],
 	output: {
 		filename: '[name].bundle.js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'dist'),
 	},
 	module: {
 		rules: [
@@ -18,7 +32,7 @@ module.exports = {
 			},
 			{
 				test: /\.js$/,
-				exclude: /node_modules/
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.s*[ac]ss$/i,
@@ -35,12 +49,9 @@ module.exports = {
 		overlay: true,
 		hot: true,
 	},
-	plugins: [
-		new CopyWebpackPlugin([
-			'index.html',
-			'data/**/constituencies.json',
-		]),
-		new webpack.HotModuleReplacementPlugin(),
-		new VueLoaderPlugin(),
-	],
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
+	},
 };
