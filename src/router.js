@@ -19,7 +19,18 @@ const router = new Router({
   routes: [
     { name: 'home', path: '/', component: home, meta: { requiresAuth: false } },
     { name: 'search', path: '/select', component: constituencySelector, meta: { requiresAuth: true } },
-    { name: 'record', path: '/constituency/:id', component: constituencyResults, meta: { requiresAuth: true } },
+    {
+      name: 'record',
+      path: '/constituency/:id',
+      component: constituencyResults,
+      meta: {
+        requiresAuth: true
+      },
+      beforeEnter: (to, from, next) => {
+        AmplifyStore.commit('setupResult', to.params.id);
+        next();
+      },
+    },
     { name: 'confirm', path: '/confirm', component: confirmResults, meta: { requiresAuth: true } },
     { name: 'live-map', path: '/live', component: liveMap, meta: { requiresAuth: true } },
     { name: 'auth', path: '/live', component: components.Authenticator },

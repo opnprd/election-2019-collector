@@ -2,9 +2,8 @@
   <article>
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
-    <candidate-profile :image="winner.image" :name="winner.name" :party="winner.party_name" >
+    <candidate-profile :image="winner.image" :name="winner.name" :party="winner.party.title" >
     </candidate-profile>
-
     <h2>Overall voting pattern</h2>
     <table>
       <thead>
@@ -12,10 +11,10 @@
       </thead>
 
       <tbody>
-        <tr><td>Total</td><td>{{ result.ballots.total }}</td><td>&mdash;</td></tr>
-        <tr><td>Valid</td><td>{{ result.ballots.valid }}</td><td>{{ proportion(result.ballots.valid) }}</td></tr>
+        <tr><td>Total</td><td>{{ result.votes.total }}</td><td>&mdash;</td></tr>
+        <tr><td>Valid</td><td>{{ result.votes.valid }}</td><td>{{ proportion(result.votes.valid) }}</td></tr>
         <tr><td>Margin</td><td>{{ margin }}</td><td>{{ proportion(margin) }}</td></tr>
-        <tr><td>Spoiled</td><td>{{ result.ballots.spoiled }}</td><td>{{ proportion(result.ballots.spoiled) }}</td></tr>
+        <tr><td>Spoiled</td><td>{{ result.votes.invalid }}</td><td>{{ proportion(result.votes.invalid) }}</td></tr>
       </tbody>
     </table>
 
@@ -25,9 +24,9 @@
         <tr><th>Candidate</th><th>Party</th><th>Votes</th><th>Share</th></tr>
       </thead>
       <tbody>
-        <tr v-for="r in votes" :key="r.id">
+        <tr v-for="r in candidates" :key="r.id">
           <td>{{ r.name }}</td>
-          <td>{{r.party_code}}</td>
+          <td>{{ r.party.code }}</td>
           <td>{{ r.votes }}</td>
           <td>{{ proportion(r.votes) }}</td>
         </tr>
@@ -66,29 +65,18 @@ export default {
     result() {
       return this.$store.state.result;
     },
-    votes() {
-      return Object.entries(this.result.votes)
-        .reduce((a, [id, votes = null]) => {
-          const theCandidate = this.candidates[id];
-          a.push({ ...theCandidate, id, votes });
-          return a;
-        }, [])
-        .sort((a, b) => b.votes - a.votes);
-    },
     candidates() {
-      return this.$store.getters.getConstituency(this.result.id).candidates.reduce((a, v) => {
-        a[v.id] = v;
-        return a;
-      }, {});    
+      return this.result.candidates.sort((a, b) => b.votes - a.votes);
     },
     winner() {
-      return this.votes[0];
+      return this.candidates[0];
     },
     margin() {
-      return this.votes[0].votes - this.votes[1].votes;
+      const votes = this.candidates.map(x => x.votes).sort((a, b) => b.votes - a.votes);
+      return this.candidates[0].votes - this.candidates[1].votes;
     },
     summary() {
-      return `${ this.winner.party_name } win ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
+      return `${ this.winner.party.title } win ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
     },
     twitterUrl() {
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(this.summary) }`;
@@ -99,7 +87,7 @@ export default {
   },
   methods: {
     proportion(value) {
-      return Math.round(100 * value / this.result.ballots.total) + '%';
+      return Math.round(100 * value / this.result.votes.total) + '%';
     }
   }
 }
