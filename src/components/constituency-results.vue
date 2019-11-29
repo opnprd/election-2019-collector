@@ -15,12 +15,23 @@ export default {
     },
   },
   methods: {
-    storeResult: function () {
-      this.$store.commit('setResult', this.result);
-      this.$router.push({ name: 'confirm' });
-    }
-  }
-}
+    updateVotes: function (e) {
+      const result = this.result;
+      const { id, value } = e.target
+      const makeNumber = (v) => {
+        const num = parseInt(v);
+        return Number.isNaN(num) ? undefined : num;
+      }
+      if (['total', 'valid', 'invalid'].includes(id)){
+        result.votes[id] = makeNumber(value);
+      } else {
+        const index = result.candidates.findIndex(x => x.id === id);
+        result.candidates[index].votes = makeNumber(value);
+      }
+      this.$store.commit('setResult', result);
+    },
+  },
+};
 </script>
 <template>
   <article>
@@ -28,15 +39,19 @@ export default {
     <p>ID: {{ result.id }}</p>
     <form v-on:submit.prevent="storeResult">
       <section id="overall">
-        <label for="ballots">Total votes cast</label> <input class="brand-border" id="total" type="number" v-model="result.votes.total"/>
-        <label for="ballots">Valid votes cast</label> <input class="brand-border" id="valid" type="number" v-model="result.votes.valid"/>
-        <label for="spoiled">Invalid votes cast</label> <input class="brand-border" id="invalid" type="number" v-model="result.votes.invalid"/>
+        <label for="ballots">Total votes cast</label>
+        <input class="brand-border" id="total" type="number" :value="result.votes.total" @input="updateVotes"/>
+        <label for="ballots">Valid votes cast</label>
+        <input class="brand-border" id="valid" type="number" :value="result.votes.valid" @input="updateVotes"/>
+        <label for="spoiled">Invalid votes cast</label>
+        <input class="brand-border" id="invalid" type="number" :value="result.votes.invalid" @input="updateVotes"/>
       </section>
       <candidate-profile v-for="({ name, party, id, image }, index) in candidates"
         :key="id" :name="name" :party="party.title" :image="image">
-        <label :for="id">Votes</label> <input class="brand-border" :id="id" type="number" v-model="candidates[index].votes"/>
+        <label :for="id">Votes</label>
+        <input class="brand-border" :id="id" type="number" :value="candidates[index].votes"  @input="updateVotes"/>
         </candidate-profile>
-      <input type="submit" value="Save Result" class="brand-background">
+      <router-link :to="{ name: 'confirm' }" v-slot="{ href }"><a class="action brand-background" :href="href">Save Result</a></router-link> 
     </form>
   </article>
 </template>
