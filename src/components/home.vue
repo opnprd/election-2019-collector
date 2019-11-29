@@ -4,7 +4,7 @@
     <p>This tool enables rapid collection of election results.</p>
     <p>Instructions:</p>
     <ol>
-      <li>Open the <router-link :to="{ name: 'search' }">Locate</router-link> tab</li>
+      <li>Open the <router-link :to="{ name: 'search' }">Search</router-link> tab</li>
       <li>Find the constituency by typing in the Search box</li>
       <li>Enter the results</li>
     </ol>

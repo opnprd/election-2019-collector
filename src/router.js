@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import { amplifyComponents, AmplifyEventBus } from './util/amplify';
 
-import constituencyResults from './components/constituency-results.vue';
-import constituencySelector from './components/constituency-selector.vue';
-import confirmResults from './components/confirm-results.vue';
+import results from './components/results.vue';
+import search from './components/search.vue';
+import confirmResults from './components/confirm.vue';
 import home from './components/home.vue';
-import liveMap from './components/live-map.vue';
+import liveMap from './components/live.vue';
 import store from './store';
 
 const DEBUG=true;
@@ -16,11 +16,11 @@ Vue.use(Router);
 const router = new Router({
   routes: [
     { name: 'home', path: '/', component: home, meta: { requiresAuth: false } },
-    { name: 'search', path: '/select', component: constituencySelector, meta: { requiresAuth: true } },
+    { name: 'search', path: '/search', component: search, meta: { requiresAuth: true } },
     {
       name: 'record',
       path: '/constituency/:id',
-      component: constituencyResults,
+      component: results,
       meta: {
         requiresAuth: true
       },

@@ -2,8 +2,8 @@
   <nav>
     <ol>
       <li><router-link :to="{ name: 'home' }" exact>Home</router-link></li>
-      <li><router-link :to="{ name: 'search' }">Locate</router-link></li>
-      <li><router-link :to="{ name: 'live-map' }">Live Map</router-link></li>
+      <li><router-link :to="{ name: 'search' }">Search</router-link></li>
+      <li><router-link :to="{ name: 'live-map' }">Map</router-link></li>
     </ol>
   </nav>
 </template>
@@ -19,5 +19,6 @@ a {
   padding: 0.5rem;
   border-radius: 10px 10px 0 0;
   margin-right: 0.25em;
+  text-decoration: none;
 }
 </style>
