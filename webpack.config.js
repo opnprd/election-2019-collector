@@ -4,12 +4,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	mode: 'development',
 	entry: './src/main.js',
 	plugins: [
-		// new CleanWebpackPlugin(),
+		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
 			title: 'GE2019 Data Collector',
 			template: 'src/index.html',
@@ -53,5 +54,7 @@ module.exports = {
 		splitChunks: {
 			chunks: 'all',
 		},
+		minimize: true,
+		minimizer: [new TerserPlugin()],
 	},
 };
