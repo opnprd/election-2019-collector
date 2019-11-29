@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { get } from '../util/http';
 
+import * as mutations from './mutations.js';
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
@@ -27,25 +29,7 @@ const store = new Vuex.Store({
       return state.constituencies.find(constituency => constituency.id === id);
     },
   },
-  mutations: {
-    setConstituency(state, constituencies) {
-      state.constituencies = constituencies;
-    },
-    setUser(state, user) {
-      state.user = user;
-    },
-    clearResult(state) {
-      state.published = false;
-      state.result = {};
-    },
-    setResult(state, result) {
-      state.published = false;
-      state.result = result;
-    },
-    published(state) {
-      state.published = true;
-    },
-  },
+  mutations,
 });
 
 export default store;
