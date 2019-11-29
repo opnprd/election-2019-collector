@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { get } from '../util/http';
 
 Vue.use(Vuex);
 
@@ -8,6 +9,7 @@ const store = new Vuex.Store({
     user: null,
     result: {},
     published: false,
+    constituencies: [],
   },
   actions: {
     async publish({ commit }) {
@@ -15,8 +17,15 @@ const store = new Vuex.Store({
       await new Promise(resolve => setTimeout(resolve, 2000));
       commit('published');
     },
+    async initialise({ commit }, constituencyData) {
+      const data = await get(constituencyData);
+      commit('setConstituency', data);
+    },
   },
   mutations: {
+    setConstituency(state, constituencies) {
+      state.constituencies = constituencies;
+    },
     setUser(state, user) {
       state.user = user;
     },

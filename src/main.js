@@ -6,7 +6,6 @@ import store from './store';
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
 import { components } from 'aws-amplify-vue';
-import { get } from './util/http';
 
 import './style.scss';
 
@@ -14,30 +13,16 @@ Vue.config.productionTip = false;
 
 Amplify.configure(aws_exports)
 
-async function init({
-  constituencyData,
-}) {
-  const [
-    constituencies,
-  ] = await Promise.all([
-    get(constituencyData),
-  ]);
-
-  const app = new Vue({
-    el: '#app',
-    router,
-    store,
-    render: (h) => h(App),
-    components: {
-      App,
-      ...components,
-    },
-    data() {
-      return {
-        constituencies,
-      };
-    },
-  });
-}
-
-init({ constituencyData: 'data/constituencies.json' });
+const app = new Vue({
+  el: '#app',
+  router,
+  store,
+  render: (h) => h(App),
+  created() {
+    this.$store.dispatch('initialise', 'data/constituencies.json');
+  },
+  components: {
+    App,
+    ...components,
+  }
+});

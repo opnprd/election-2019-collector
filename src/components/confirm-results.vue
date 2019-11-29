@@ -76,7 +76,7 @@ export default {
         .sort((a, b) => b.votes - a.votes);
     },
     candidates() {
-      return this.$root.constituencies.find(x => x.id === this.result.id).candidates.reduce((a, v) => {
+      return this.$store.state.constituencies.find(x => x.id === this.result.id).candidates.reduce((a, v) => {
         a[v.id] = v;
         return a;
       }, {});    

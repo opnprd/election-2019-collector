@@ -4,7 +4,7 @@ import { alphaSort } from '../util/array.js';
 export default {
   data() {
     return {
-      constituencyLookup: this.$root.constituencies
+      constituencyLookup: this.$store.state.constituencies
         .map(c => ({ value: c.id, label: c.name }))
         .sort(alphaSort('label')),
       searchTerm: null,
