@@ -9,8 +9,8 @@ import home from './components/home.vue';
 import liveMap from './components/live.vue';
 import store from './store';
 
-const DEBUG=true;
-const AUTH=false;
+const DEBUG=false;
+const AUTH=true;
 
 Vue.use(Router);
 
@@ -32,12 +32,14 @@ const router = new Router({
     },
     { name: 'confirm', path: '/confirm', component: confirmResults, meta: { requiresAuth: true } },
     { name: 'live-map', path: '/live', component: liveMap, meta: { requiresAuth: true } },
+    { name: 'auth', path: '/auth', component: amplifyComponents.Authenticator },
+    { name: 'signout', path: '/signout', component: amplifyComponents.SignOut },
   ],
 });
 
 async function getUser() {
   try {
-    const data = Vue.prototype.$Amplify.Auth.currentAuthenticatedUser();
+    const data = await Vue.prototype.$Amplify.Auth.currentAuthenticatedUser();
     if (data && data.signInUserSession) {
       store.commit('setUser', data);
       return data;
@@ -50,8 +52,6 @@ async function getUser() {
 
 if (AUTH) {
   let user;
-
-  router.routes.push({ name: 'auth', path: '/live', component: amplifyComponents.Authenticator });
   
   getUser().then((user, error) => {
     if (error) {

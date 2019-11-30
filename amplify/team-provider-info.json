@@ -8,7 +8,13 @@
             "DeploymentBucketName": "amplify-election-collector-dev-225816-deployment",
             "UnauthRoleName": "amplify-election-collector-dev-225816-unauthRole",
             "StackName": "amplify-election-collector-dev-225816",
-            "StackId": "arn:aws:cloudformation:eu-west-2:998549269020:stack/amplify-election-collector-dev-225816/3b39b1b0-10a0-11ea-ae96-064d74357b0e"
+            "StackId": "arn:aws:cloudformation:eu-west-2:998549269020:stack/amplify-election-collector-dev-225816/3b39b1b0-10a0-11ea-ae96-064d74357b0e",
+            "AmplifyAppId": "d31ficp5sfjf9l"
+        },
+        "categories": {
+            "auth": {
+                "electioncollectora9d07ea7": {}
+            }
         }
     }
 }
