@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "add-to-group"
+    ],
+    "parentResource": "electioncollectord83c17a7",
+    "functionName": "electioncollectord83c17a7PostConfirmation",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "roleName": "electioncollectord83c17a7PostConfirmation",
+    "skipEdit": true,
+    "resourceName": "electioncollectord83c17a7PostConfirmation"
+}

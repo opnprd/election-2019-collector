@@ -33,7 +33,7 @@ const router = new Router({
     { name: 'confirm', path: '/confirm', component: confirmResults, meta: { requiresAuth: true } },
     { name: 'live-map', path: '/live', component: liveMap, meta: { requiresAuth: true } },
     { name: 'auth', path: '/auth', component: amplifyComponents.Authenticator },
-    { name: 'signout', path: '/signout', component: amplifyComponents.SignOut },
+    AUTH ? { name: 'signout', path: '/signout', component: amplifyComponents.SignOut } : undefined,
   ],
 });
 
