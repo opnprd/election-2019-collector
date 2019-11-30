@@ -49,7 +49,9 @@
         "email"
     ],
     "triggers": "{\"PostConfirmation\":[\"add-to-group\"],\"PreSignup\":[\"email-filter-whitelist\"]}",
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "datacollectors"
+    ],
     "parentStack": {
         "Ref": "AWS::StackId"
     },

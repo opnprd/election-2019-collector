@@ -14,7 +14,7 @@
         "categories": {
             "function": {
                 "electioncollectord83c17a7PostConfirmation": {
-                    "GROUP": "data-collectors"
+                    "GROUP": "datacollectors"
                 },
                 "electioncollectord83c17a7PreSignup": {
                     "DOMAINWHITELIST": "odileeds.org"

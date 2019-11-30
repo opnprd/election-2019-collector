@@ -7,8 +7,10 @@
     "functionName": "electioncollectord83c17a7PreSignup",
     "parentStack": "auth",
     "triggerEnvs": "[]",
-    "triggerTemplate": "PreSignup.json.ejs",
+    "triggerDir": "/usr/local/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/utils/../triggers/PreSignup",
     "roleName": "electioncollectord83c17a7PreSignup",
+    "triggerTemplate": "PreSignup.json.ejs",
+    "triggerEventPath": "PreSignup.event.json",
     "skipEdit": true,
     "resourceName": "electioncollectord83c17a7PreSignup"
 }

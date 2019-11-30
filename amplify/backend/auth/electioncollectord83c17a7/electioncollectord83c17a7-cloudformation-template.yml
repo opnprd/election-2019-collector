@@ -113,7 +113,7 @@ Parameters:
                       
   userPoolGroupList:
     Type: CommaDelimitedList
-                        
+            
   parentStack:
     Type: String
                 
@@ -122,7 +122,7 @@ Parameters:
               
   dependsOn:
     Type: CommaDelimitedList
-    
+                
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 

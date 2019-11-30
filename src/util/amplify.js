@@ -6,7 +6,19 @@ export { AmplifyEventBus } from 'aws-amplify-vue';
 
 import awsconfig from '../aws-exports.js';
 
-Amplify.configure(awsconfig);
+const s3config = {
+  Storage: {
+    AWSS3: {
+        bucket: 'odileeds-uk-election-2019', //REQUIRED -  Amazon S3 bucket
+        region: 'eu-west-2', //OPTIONAL -  Amazon service region
+    },
+  },
+};
+
+const config = { ...awsconfig, ...s3config };
+console.dir(config);
+
+Amplify.configure(config);
 Vue.use(AmplifyPlugin, AmplifyModules);
 
 export const amplifyComponents = components;

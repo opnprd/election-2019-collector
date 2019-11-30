@@ -1,4 +1,1 @@
-{
-    "modules": "email-filter-whitelist",
-    "resourceName": "electioncollectord83c17a7PreSignup"
-}
+{"modules":"email-filter-whitelist"}

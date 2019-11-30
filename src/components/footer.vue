@@ -9,7 +9,7 @@ export default {
   computed: {
     user() {
       const user = this.$store.state.user;
-      if (user) return user.username;
+      if (user) return user.attributes.email;
       return undefined;
     }
   }

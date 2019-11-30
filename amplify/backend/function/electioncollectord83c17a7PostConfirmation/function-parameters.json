@@ -7,8 +7,10 @@
     "functionName": "electioncollectord83c17a7PostConfirmation",
     "parentStack": "auth",
     "triggerEnvs": "[]",
-    "triggerTemplate": "PostConfirmation.json.ejs",
+    "triggerDir": "/usr/local/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/utils/../triggers/PostConfirmation",
     "roleName": "electioncollectord83c17a7PostConfirmation",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "triggerEventPath": "PostConfirmation.event.json",
     "skipEdit": true,
     "resourceName": "electioncollectord83c17a7PostConfirmation"
 }
