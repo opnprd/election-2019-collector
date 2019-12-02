@@ -110,7 +110,7 @@ export default {
       return `${ this.winner.party.title } win ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
     },
     twitterUrl() {
-      const tweet = `${this.summary} #GeneralElection2019`;
+      const tweet = `${this.summary} #GeneralElection2019 https://britainelects.newstatesman.com/2019-results/`;
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }`;
     },
     published() {
