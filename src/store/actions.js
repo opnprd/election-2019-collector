@@ -29,6 +29,7 @@ export async function setupResult({commit, state, getters}, id) {
       valid: undefined,
       invalid: undefined,
     },
+    events: [],
   };
   let existingResult = {};
   try {
@@ -44,8 +45,11 @@ export async function setupResult({commit, state, getters}, id) {
 }
 
 
-export async function publish({ commit, state }) {
+export async function publish({ commit, state }, message = 'Updated') {
+  console.log(message);
   const { result } = state;
+  const date = new Date().toISOString();
+  result.events.unshift({ date, message });
   const objectKey = getObjectKey(result);
   try {
     await Storage.put(objectKey, JSON.stringify(result, null, 2));

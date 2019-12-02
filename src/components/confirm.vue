@@ -34,7 +34,7 @@
     </table>
 
     <section id="actions">
-      <a class="action brand-background" v-if="published === false" v-on:click="$store.dispatch('publish')">Publish</a>
+      <a class="action brand-background" v-if="published === false" v-on:click="publish(summary)">Publish</a>
       <router-link v-if="published === false" :to="{ name: 'record', params: { id: result.id }}" v-slot="{ href }">
         <a class="action secondary-action" :href="href">Amend</a>
       </router-link>
@@ -83,6 +83,7 @@ td, th {
 </style>
 </style>
 <script>
+import { mapActions } from 'vuex';
 import candidateProfile from './candidate-profile.vue';
 
 export default {
@@ -117,6 +118,9 @@ export default {
     } 
   },
   methods: {
+    ...mapActions([
+      'publish',
+    ]),
     proportion(value) {
       return Math.round(100 * value / this.result.votes.valid) + '%';
     }
