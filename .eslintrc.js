@@ -2,9 +2,10 @@ module.exports = {
   env: { 
     jest: true,
     browser: true,
+    es6: true,
   },
   parserOptions: {
-    ecmaVersion: 8,
+    ecmaVersion: 2018,
     sourceType: 'module',
   },
   extends: [
@@ -18,7 +19,10 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['webpack.config.js'],
+      files: [
+        '*.config.js',
+        'process/**/*.js',
+      ],
       env: {
         node: true,
       },

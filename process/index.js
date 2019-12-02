@@ -1,5 +1,5 @@
 const axios = require('axios');
-const csv = require('csv-parser')
+const csv = require('csv-parser');
 const fs = require('fs');
 const { promisify } = require('util');
 const { getParty, getByDemoclubId } = require('./party-lookups.js');
@@ -10,7 +10,7 @@ async function streamWebResource(url) {
     url,
     responseType: 'stream',
   })
-    .then(response => response.data)
+    .then(response => response.data);
 }
 
 async function convertCsv(stream) {
@@ -22,10 +22,10 @@ async function convertCsv(stream) {
       .on('end', () => {
         resolve(results);
       });
-  })
+  });
 }
 
-const stripNamespace = (id) => id.replace(/.*\:/, '');
+const stripNamespace = (id) => id.replace(/.*:/, '');
 
 function writeToFile(path, pretty = false) {
   return async (data) => {
@@ -39,7 +39,7 @@ function simplify(data) {
   const missing = {};
   const simplified = data.map(x => {
     const {
-      id, name, honorific_prefix, honorific_suffix, image_url,
+      id, name, image_url,
       party_id, party_name,
       post_id, post_label,
      } = x;
@@ -51,7 +51,7 @@ function simplify(data) {
       });
     } catch(err) {
 
-      missing[err.party.id] = { count: 0, longName: new Set(), ...missing[err.party.id] }
+      missing[err.party.id] = { count: 0, longName: new Set(), ...missing[err.party.id] };
       missing[err.party.id].count++;
       missing[err.party.id].longName = err.party.longName;
       party = err.party;
@@ -78,14 +78,13 @@ function summarise(data) {
       candidate_id,
       candidate_name,
       candidate_image,
-      party_id,
       party_name,
       party_code,
     } = c;
     if (!Object.prototype.hasOwnProperty.call(a, constituency_id)) {
       a[constituency_id] = {
         id: constituency_id,
-        name: constituency_name, candidates: []
+        name: constituency_name, candidates: [],
       };   
     }
     a[constituency_id].candidates.push({
@@ -105,7 +104,7 @@ async function getIncumbents(data) {
   return data.map(c => {
     const i = incumbent.find(x => x.Constituency === c.name);
     if (!i) throw new Error (`Constituency not found ${c.name}`);
-    const party = getParty(i.Party)
+    const party = getParty(i.Party);
     c.incumbent = {
       mp: [i['First name'], i['Last name']].join(' '),
       party: { code: party.code, title: party.title },
