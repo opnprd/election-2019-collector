@@ -2,7 +2,7 @@
   <article>
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
-    <candidate-profile :image="winner.image" :name="winner.name" :party="winner.party.title" >
+    <candidate-profile :image="winner.img" :name="winner.name" :party="winner.party.title" >
     </candidate-profile>
     <h2>Overall voting pattern</h2>
     <table class="fixed centred">
@@ -11,10 +11,10 @@
       </thead>
 
       <tbody>
-        <tr><td>Total</td><td>{{ result.votes.total }}</td><td>&mdash;</td></tr>
-        <tr><td>Valid</td><td>{{ result.votes.valid }}</td><td>{{ proportion(result.votes.valid) }}</td></tr>
+        <tr><td>Total</td><td>{{ votes.total }}</td><td>&mdash;</td></tr>
+        <tr><td>Valid</td><td>{{ votes.valid }}</td><td>{{ proportion(votes.valid) }}</td></tr>
         <tr><td>Margin</td><td>{{ margin }}</td><td>{{ proportion(margin) }}</td></tr>
-        <tr><td>Spoiled</td><td>{{ result.votes.invalid }}</td><td>{{ proportion(result.votes.invalid) }}</td></tr>
+        <tr><td>Spoiled</td><td>{{ votes.invalid }}</td><td>{{ proportion(votes.invalid) }}</td></tr>
       </tbody>
     </table>
 
@@ -97,7 +97,10 @@ export default {
       return result;
     },
     candidates() {
-      return this.result.candidates.sort((a, b) => b.votes - a.votes);
+      return this.result.elections['2019'].candidates.sort((a, b) => b.votes - a.votes);
+    },
+    votes() {
+      return this.result.elections['2019'].votes;
     },
     winner() {
       return this.candidates[0];
@@ -109,7 +112,7 @@ export default {
     summary() {
       const { winner } = this;
       if ( winner.party.code == 'Spk' ) return `${winner.name} relected to ${this.result.name} as speaker`;
-      const { incumbent } = this.result;
+      const { incumbent } = this.result.elections['2019'];
       const winType = incumbent.party.code == winner.party.code ? 'holds' : 'gains';
       return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
     },
@@ -126,7 +129,7 @@ export default {
       'publish',
     ]),
     proportion(value) {
-      return Math.round(100 * value / this.result.votes.valid) + '%';
+      return Math.round(100 * value / this.votes.valid) + '%';
     }
   }
 }

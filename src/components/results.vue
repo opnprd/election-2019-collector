@@ -12,17 +12,20 @@ export default {
     'candidate-profile': candidateProfile,
   },
   computed: {
+    result() {
+      return this.$store.state.result;
+    },
     candidates() {
-      return this.result.candidates.sort(alphaSort('name'));
+      return this.result.elections['2019'].candidates.sort(alphaSort('name'));
+    },
+    votes() {
+      return this.result.elections['2019'].votes;
     },
     candidateVotes() {
       return this.candidates.filter(x => x.votes).reduce((a, { votes }) => a + votes, 0);
     },
-    result() {
-      return this.$store.state.result;
-    },
     errors() {
-      const { votes: { total, valid, invalid }, candidates } = this.result;
+      const { total, valid, invalid } = this.votes;
       const errors = []
       const diff = makeNumber(total - valid - invalid);
       if ( valid > total ) errors.push({ message: 'Valid votes greater than total votes' });
@@ -41,12 +44,12 @@ export default {
       const result = this.result;
       const { id, value } = e.target
       if (['total', 'invalid'].includes(id)){
-        result.votes[id] = makeNumber(value);
+        result.elections['2019'].votes[id] = makeNumber(value);
       } else {
-        const index = result.candidates.findIndex(x => x.id === id);
-        result.candidates[index].votes = makeNumber(value);
+        const index = result.elections['2019'].candidates.findIndex(x => x.id === id);
+        result.elections['2019'].candidates[index].votes = makeNumber(value);
       }
-      result.votes['valid'] = result.candidates.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
+      result.elections['2019'].votes['valid'] = result.elections['2019'].candidates.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
       this.$store.commit('setResult', result);
     },
   },
@@ -58,19 +61,19 @@ export default {
     <p>ID: {{ result.id }}</p>
 
     <form v-on:submit.prevent="storeResult">
-      <candidate-profile v-for="({ name, party, id, image }, index) in candidates"
-        :key="id" :name="name" :party="party.title" :image="image">
+      <candidate-profile v-for="({ name, party, id, img }, index) in candidates"
+        :key="id" :name="name" :party="party.title" :image="img">
         <label :for="id">Votes</label>
         <input class="brand-border" :id="id" type="number" :value="candidates[index].votes"  @input="updateVotes"/>
       </candidate-profile>
 
       <section id="overall">
         <label for="ballots">Valid votes cast</label>
-        <input class="brand-border" id="valid" disabled="true" type="number" :value="result.votes.valid"/>
+        <input class="brand-border" id="valid" disabled="true" type="number" :value="votes.valid"/>
         <label for="spoiled">Invalid votes cast</label>
-        <input class="brand-border" id="invalid" type="number" :value="result.votes.invalid" @input="updateVotes"/>
+        <input class="brand-border" id="invalid" type="number" :value="votes.invalid" @input="updateVotes"/>
         <label for="ballots">Total votes cast</label>
-        <input class="brand-border" id="total" type="number" :value="result.votes.total" @input="updateVotes"/>
+        <input class="brand-border" id="total" type="number" :value="votes.total" @input="updateVotes"/>
       </section>
 
       <ul class="errors" v-if="errors.length > 0">
