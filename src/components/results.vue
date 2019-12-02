@@ -56,24 +56,26 @@ export default {
     <h1>{{ result.name }}</h1>
     <p>ID: {{ result.id }}</p>
 
-    <ul class="errors" v-if="errors.length > 0">
-      <li v-for="({ message }, index) in errors" :key="index">{{ message }}</li>
-    </ul>
-
     <form v-on:submit.prevent="storeResult">
-      <section id="overall">
-        <label for="ballots">Total votes cast</label>
-        <input class="brand-border" id="total" type="number" :value="result.votes.total" @input="updateVotes"/>
-        <label for="ballots">Valid votes cast</label>
-        <input class="brand-border" id="valid" type="number" :value="result.votes.valid" @input="updateVotes"/>
-        <label for="spoiled">Invalid votes cast</label>
-        <input class="brand-border" id="invalid" type="number" :value="result.votes.invalid" @input="updateVotes"/>
-      </section>
       <candidate-profile v-for="({ name, party, id, image }, index) in candidates"
         :key="id" :name="name" :party="party.title" :image="image">
         <label :for="id">Votes</label>
         <input class="brand-border" :id="id" type="number" :value="candidates[index].votes"  @input="updateVotes"/>
-        </candidate-profile>
+      </candidate-profile>
+
+      <section id="overall">
+        <label for="ballots">Valid votes cast</label>
+        <input class="brand-border" id="valid" disabled="true" type="number" :value="result.votes.valid"/>
+        <label for="spoiled">Invalid votes cast</label>
+        <input class="brand-border" id="invalid" type="number" :value="result.votes.invalid" @input="updateVotes"/>
+        <label for="ballots">Total votes cast</label>
+        <input class="brand-border" id="total" type="number" :value="result.votes.total" @input="updateVotes"/>
+      </section>
+
+      <ul class="errors" v-if="errors.length > 0">
+        <li v-for="({ message }, index) in errors" :key="index">{{ message }}</li>
+      </ul>
+
       <router-link v-if="!preventSubmit" :to="{ name: 'confirm' }" v-slot="{ href }"><a class="action brand-background" :href="href">Save Result</a></router-link> 
     </form>
   </article>
@@ -84,6 +86,7 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-gap: 0.5em 0.5em;
     align-items: center;
+    padding-bottom: 1em;
   }
   label {
     font-size: smaller;
