@@ -107,7 +107,11 @@ export default {
       return this.candidates[0].votes - this.candidates[1].votes;
     },
     summary() {
-      return `${ this.winner.party.title } win ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
+      const { winner } = this;
+      if ( winner.party.code == 'Spk' ) return `${winner.name} relected to ${this.result.name} as speaker`;
+      const { incumbent } = this.result;
+      const winType = incumbent.party.code == winner.party.code ? 'holds' : 'gains';
+      return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
     },
     twitterUrl() {
       const tweet = `${this.summary} #GeneralElection2019 https://britainelects.newstatesman.com/2019-results/`;
