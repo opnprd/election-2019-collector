@@ -40,12 +40,13 @@ export default {
     updateVotes: function (e) {
       const result = this.result;
       const { id, value } = e.target
-      if (['total', 'valid', 'invalid'].includes(id)){
+      if (['total', 'invalid'].includes(id)){
         result.votes[id] = makeNumber(value);
       } else {
         const index = result.candidates.findIndex(x => x.id === id);
         result.candidates[index].votes = makeNumber(value);
       }
+      result.votes['valid'] = result.candidates.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
       this.$store.commit('setResult', result);
     },
   },
