@@ -86,11 +86,6 @@ td, th {
 import candidateProfile from './candidate-profile.vue';
 
 export default {
-  data () {
-    return {
-      tweet: ''
-    };
-  },
   components: {
     candidateProfile
   },
@@ -123,7 +118,7 @@ export default {
   },
   methods: {
     proportion(value) {
-      return Math.round(100 * value / this.result.votes.total) + '%';
+      return Math.round(100 * value / this.result.votes.valid) + '%';
     }
   }
 }
