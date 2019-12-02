@@ -25,8 +25,8 @@ const router = new Router({
       meta: {
         requiresAuth: true,
       },
-      beforeEnter: (to, from, next) => {
-        store.commit('setupResult', to.params.id);
+      beforeEnter: async (to, from, next) => {
+        await store.dispatch('setupResult', to.params.id);
         next();
       },
     },

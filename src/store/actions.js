@@ -7,6 +7,43 @@ function getObjectKey(result) {
   return `results/${id}.json`;
 }
 
+export async function setupResult({commit, state, getters}, id) {
+  if ( state.result.id === id && !state.published ) return;
+  const { name, candidates, incumbent } = getters.getConstituency(id);
+  const baseResult = {
+    id,
+    name,
+    candidates: candidates.map(x => ({
+      id: x.id,
+      name: x.name,
+      image: x.image,
+      party: {
+        code: x.party_code,
+        title: x.party_name,
+      },
+      votes: undefined,
+    })),
+    incumbent,
+    votes: {
+      total: undefined,
+      valid: undefined,
+      invalid: undefined,
+    },
+  };
+  let existingResult = {};
+  try {
+    const objectKey = getObjectKey(baseResult);
+    const url = await Storage.get(objectKey);
+    console.debug(url);
+    existingResult = await get(url);
+  } catch( error ) {
+    console.error(error);
+  }
+
+  commit('setResult', { ...baseResult, ...existingResult });
+}
+
+
 export async function publish({ commit, state }) {
   const { result } = state;
   const objectKey = getObjectKey(result);
