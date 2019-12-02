@@ -2,6 +2,10 @@
 
 $ns-red: hsl(347, 100%, 38%);
 
+:root {
+  --brand-color: #{$ns-red};
+}
+
 html, body {
   width: 100%;
   height: 100%;
