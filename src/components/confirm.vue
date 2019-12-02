@@ -74,6 +74,7 @@ td, th {
   box-sizing: border-box;
   display: block;
   text-decoration: none;
+  cursor: pointer;
 }
 .secondary-action {
   background-color: #888;
