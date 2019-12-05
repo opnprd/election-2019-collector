@@ -77,7 +77,6 @@ function summarise(data) {
       constituency_name,
       candidate_id,
       candidate_name,
-      candidate_image,
       party_name,
       party_code,
     } = c;
@@ -87,10 +86,11 @@ function summarise(data) {
         name: constituency_name, candidates: [],
       };   
     }
+    const image = `https://odileeds-uk-election-2019.s3.eu-west-2.amazonaws.com/thumbnails/${candidate_id}.jpg`;
     a[constituency_id].candidates.push({
       id: candidate_id,
       name: candidate_name,
-      image: candidate_image,
+      image,
       party_name,
       party_code,
     });
