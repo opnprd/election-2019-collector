@@ -25,11 +25,14 @@ export default {
       return this.candidates.filter(x => x.votes).reduce((a, { votes }) => a + votes, 0);
     },
     errors() {
-      const { total, valid, invalid } = this.votes;
+      const { total, valid, invalid, electorate } = this.votes;
       const errors = []
       const diff = makeNumber(total - valid - invalid);
       if ( valid > total ) errors.push({ message: 'Valid votes greater than total votes' });
       if ( invalid > total ) errors.push({ message: 'Invalid votes greater than total '});
+      if ( valid > electorate ) errors.push({ message: 'Valid votes greater than electorate'});
+      if ( invalid > electorate ) errors.push({ message: 'Valid votes greater than electorate'});
+      if ( total > electorate ) errors.push({ message: 'Total votes greater than electorate'});
       if ( this.candidateVotes > 0 && this.candidateVotes != valid ) errors.push({ warning: true, message: `Valid votes not equal to votes for candidates (${this.candidateVotes})` });
       if ( diff ) errors.push({ warning: true, message: `Total is not sum of valid and invalid votes (difference is ${diff})` });
 
@@ -43,7 +46,7 @@ export default {
     updateVotes: function (e) {
       const result = this.result;
       const { id, value } = e.target
-      if (['total', 'invalid'].includes(id)){
+      if (['total', 'invalid', 'electorate'].includes(id)){
         result.votes[id] = makeNumber(value);
       } else {
         const index = result.candidates.findIndex(x => x.id === id);
@@ -68,12 +71,14 @@ export default {
       </candidate-profile>
 
       <section id="overall">
-        <label for="ballots">Valid votes cast</label>
+        <label for="valid">Valid votes cast</label>
         <input class="brand-border" id="valid" disabled="true" type="number" :value="votes.valid"/>
-        <label for="spoiled">Invalid votes cast</label>
+        <label for="invalid">Invalid votes cast</label>
         <input class="brand-border" id="invalid" type="number" :value="votes.invalid" @input="updateVotes"/>
-        <label for="ballots">Total votes cast</label>
+        <label for="total">Total votes cast</label>
         <input class="brand-border" id="total" type="number" :value="votes.total" @input="updateVotes"/>
+        <label for="electorate">Electorate</label>
+        <input class="brand-border" id="electorate" type="number" :value="votes.electorate" @input="updateVotes"/>
       </section>
 
       <ul class="errors" v-if="errors.length > 0">

@@ -7,28 +7,29 @@
     <h2>Overall voting pattern</h2>
     <table class="fixed centred">
       <thead>
-        <tr><th>Measure</th><th>Votes</th><th>% of Total</th></tr>
+        <tr><th>Measure</th><th>Value</th><th>Comments</th></tr>
       </thead>
 
       <tbody>
-        <tr><td>Total</td><td>{{ votes.total }}</td><td>&mdash;</td></tr>
-        <tr><td>Valid</td><td>{{ votes.valid }}</td><td>{{ proportion(votes.valid) }}</td></tr>
-        <tr><td>Margin</td><td>{{ margin }}</td><td>{{ proportion(margin) }}</td></tr>
-        <tr><td>Spoiled</td><td>{{ votes.invalid }}</td><td>{{ proportion(votes.invalid) }}</td></tr>
+        <tr><td>Electorate</td><td>{{ votes.electorate }}</td><td>Voters on electoral roll</td></tr>
+        <tr><td>Turnout</td><td>{{ proportion(votes.valid, votes.electorate) }} ({{ votes.valid }})</td><td>Valid votes relative to electorate</td></tr>
+        <tr><td>Majority</td><td>{{ proportion(margin, votes.valid) }} ({{ margin }})</td><td>Winning margin as proporton of valid votes</td></tr>
+        <tr><td>Spoiled Ballots</td><td>{{ proportion(votes.invalid, votes.valid) }} ({{ votes.invalid || '-'}})</td><td>Number of invalid votes</td></tr>
+        <tr><td>Total Votes Cast</td><td>{{ proportion(votes.total, votes.electorate) }} ({{ votes.total || '-' }})</td><td>Valid + invalid votes</td></tr>
       </tbody>
     </table>
 
     <h2>Candidate votes</h2>
     <table>
       <thead>
-        <tr><th>Candidate</th><th>Party</th><th>Votes</th><th>Share</th></tr>
+        <tr><th>Candidate</th><th>Party</th><th>Share</th><th>Votes</th></tr>
       </thead>
       <tbody>
         <tr v-for="r in candidates" :key="r.id">
           <td>{{ r.name }}</td>
           <td class="centred">{{ r.party.code }}</td>
+          <td class="centred">{{ proportion(r.votes, votes.valid)}}</td>
           <td class="centred">{{ r.votes }}</td>
-          <td class="centred">{{ proportion(r.votes) }}</td>
         </tr>
       </tbody>
     </table>
@@ -135,8 +136,8 @@ ${this.summary}
     ...mapActions([
       'publish',
     ]),
-    proportion(value) {
-      return Math.round(100 * value / this.votes.valid) + '%';
+    proportion(value, baseline) {
+      return value && baseline ? Math.round(100 * value / baseline) + '%' : 'N/A';
     }
   }
 }

@@ -28,6 +28,7 @@ export async function setupResult({commit, state, getters}, id) {
       total: undefined,
       valid: undefined,
       invalid: undefined,
+      electorate: undefined,
     },
     events: [],
   };
