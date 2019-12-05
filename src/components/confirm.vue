@@ -117,8 +117,15 @@ export default {
       return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
     },
     twitterUrl() {
-      const tweet = `${this.summary} #GeneralElection2019 https://britainelects.newstatesman.com/2019-results/`;
-      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }`;
+      const { name: constituencyName } = this.result;
+      const url = 'https://britainelects.newstatesman.com/live-results/';
+      const hashtags = 'GE2019';;
+      // TODO: Ben to provide desired tweet format.
+      const tweet = `Results for ${constituencyName}:
+      
+${this.summary}
+`;
+      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&url=${url}&hashtags=${hashtags}`;
     },
     published() {
       return this.$store.state.published;
