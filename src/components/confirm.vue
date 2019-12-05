@@ -2,7 +2,7 @@
   <article>
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
-    <candidate-profile :image="winner.img" :name="winner.name" :party="winner.party.title" >
+    <candidate-profile :image="result.winner.img" :name="result.winner.name" :party="result.winner.party.title" >
     </candidate-profile>
     <h2>Overall voting pattern</h2>
     <table class="fixed centred">
@@ -103,15 +103,12 @@ export default {
     votes() {
       return this.result.votes;
     },
-    winner() {
-      return this.candidates[0];
-    },
     margin() {
       const votes = this.candidates.map(x => x.votes).sort((a, b) => b.votes - a.votes);
       return this.candidates[0].votes - this.candidates[1].votes;
     },
     summary() {
-      const { winner } = this;
+      const { winner } = this.result;
       if ( winner.party.code == 'Spk' ) return `${winner.name} relected to ${this.result.name} as speaker`;
       const { incumbent } = this.result;
       const winType = incumbent.party.code == winner.party.code ? 'holds' : 'gains';

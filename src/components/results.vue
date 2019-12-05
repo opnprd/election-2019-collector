@@ -54,6 +54,9 @@ export default {
         result.candidates[index].votes = makeNumber(value);
       }
       result.votes['valid'] = result.candidates.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
+      const winner = result.candidates.sort((a, b) => b.votes - a.votes);
+      result.winner = winner[0];
+      result.votes.margin = winner[0].votes - winner[1].votes;
       this.$store.commit('setResult', result);
     },
   },
@@ -68,18 +71,18 @@ export default {
       <candidate-profile v-for="({ name, party, id, img }, index) in candidates"
         :key="id" :name="name" :party="party.title" :image="img">
         <label :for="id">Votes</label>
-        <input class="brand-border" :id="id" type="number" :value="candidates[index].votes"  @input="updateVotes"/>
+        <input class="brand-border" :id="id" type="number" min="0" max="1000000" :value="candidates[index].votes"  @input="updateVotes"/>
       </candidate-profile>
 
       <section id="overall">
         <label for="valid">Valid votes cast</label>
         <input class="brand-border" id="valid" disabled="true" type="number" :value="votes.valid"/>
         <label for="invalid">Invalid votes cast</label>
-        <input class="brand-border" id="invalid" type="number" :value="votes.invalid" @input="updateVotes"/>
+        <input class="brand-border" id="invalid" type="number" min="0" max="1000000" :value="votes.invalid" @input="updateVotes"/>
         <label for="total">Total votes cast</label>
-        <input class="brand-border" id="total" type="number" :value="votes.total" @input="updateVotes"/>
+        <input class="brand-border" id="total" type="number" min="0" max="1000000" :value="votes.total" @input="updateVotes"/>
         <label for="electorate">Electorate</label>
-        <input class="brand-border" id="electorate" type="number" :value="votes.electorate" @input="updateVotes"/>
+        <input class="brand-border" id="electorate" type="number" min="0" max="1000000" :value="votes.electorate" @input="updateVotes"/>
       </section>
 
       <ul class="errors" v-if="errors.length > 0">

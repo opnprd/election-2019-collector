@@ -24,11 +24,13 @@ export async function setupResult({commit, state, getters}, id) {
       votes: undefined,
     })),
     incumbent,
+    winner: undefined,
     votes: {
       total: undefined,
       valid: undefined,
       invalid: undefined,
       electorate: undefined,
+      margin: undefined,
     },
     events: [],
   };
