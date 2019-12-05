@@ -63,6 +63,23 @@ export async function publish({ commit, state }, message = 'Updated') {
   }
 }
 
+export function updateVotes({ commit, state }, { id, value }) {
+  const result = state.result;
+  console.log(id, value);
+  if (['total', 'invalid', 'electorate'].includes(id)){
+    result.votes[id] = value;
+  } else {
+    const index = result.candidates.findIndex(x => x.id === id);
+    result.candidates[index].votes = value;
+  }
+  const candidatesWithVotes = result.candidates.filter(x => x.votes);
+  result.votes['valid'] = candidatesWithVotes.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
+  const winner = candidatesWithVotes.filter(x => x.votes).sort((a, b) => b.votes - a.votes);
+  result.winner = winner[0];
+  result.votes.margin = (winner.length > 1) ? winner[0].votes - winner[1].votes : undefined;
+  commit('setResult', result);
+}
+
 export async function initialise({ commit }, constituencyData) {
   const data = await get(constituencyData);
   commit('setConstituency', data);
