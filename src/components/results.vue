@@ -30,9 +30,10 @@ export default {
       const diff = makeNumber(total - valid - invalid);
       if ( valid > total ) errors.push({ message: 'Valid votes greater than total votes' });
       if ( invalid > total ) errors.push({ message: 'Invalid votes greater than total '});
-      if ( valid > electorate ) errors.push({ message: 'Valid votes greater than electorate'});
-      if ( invalid > electorate ) errors.push({ message: 'Valid votes greater than electorate'});
-      if ( total > electorate ) errors.push({ message: 'Total votes greater than electorate'});
+      if ( valid > electorate ) errors.push({ warning: true, message: 'Valid votes greater than electorate'});
+      if ( invalid > electorate ) errors.push({ warning: true, message: 'Valid votes greater than electorate'});
+      if ( total > electorate ) errors.push({ warning: true, message: 'Total votes greater than electorate'});
+      if ( (valid + invalid) > electorate ) errors.push({ warning: true, message: 'Sum of valid and invalid votes greater than electorate'});
       if ( this.candidateVotes > 0 && this.candidateVotes != valid ) errors.push({ warning: true, message: `Valid votes not equal to votes for candidates (${this.candidateVotes})` });
       if ( diff ) errors.push({ warning: true, message: `Total is not sum of valid and invalid votes (difference is ${diff})` });
 
