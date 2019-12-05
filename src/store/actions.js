@@ -13,27 +13,21 @@ export async function setupResult({commit, state, getters}, id) {
   const baseResult = {
     id,
     name,
-    elections: {
-      2019: {    
-        candidates: candidates.map(x => ({
-          id: x.id,
-          name: x.name,
-          party: {
-            code: x.party_code,
-            title: x.party_name,
-          },
-          img: x.image,
-          votes: undefined,
-        })),
-        incumbent,
-        votes: {
-          total: undefined,
-          valid: undefined,
-          invalid: undefined,
-        },
+    candidates: candidates.map(x => ({
+      id: x.id,
+      name: x.name,
+      party: {
+        code: x.party_code,
+        title: x.party_name,
       },
-      2017: {},
-      2015: {},
+      img: x.image,
+      votes: undefined,
+    })),
+    incumbent,
+    votes: {
+      total: undefined,
+      valid: undefined,
+      invalid: undefined,
     },
     events: [],
   };

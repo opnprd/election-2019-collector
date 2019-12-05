@@ -97,10 +97,10 @@ export default {
       return result;
     },
     candidates() {
-      return this.result.elections['2019'].candidates.sort((a, b) => b.votes - a.votes);
+      return this.result.candidates.sort((a, b) => b.votes - a.votes);
     },
     votes() {
-      return this.result.elections['2019'].votes;
+      return this.result.votes;
     },
     winner() {
       return this.candidates[0];
@@ -112,7 +112,7 @@ export default {
     summary() {
       const { winner } = this;
       if ( winner.party.code == 'Spk' ) return `${winner.name} relected to ${this.result.name} as speaker`;
-      const { incumbent } = this.result.elections['2019'];
+      const { incumbent } = this.result;
       const winType = incumbent.party.code == winner.party.code ? 'holds' : 'gains';
       return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
     },
