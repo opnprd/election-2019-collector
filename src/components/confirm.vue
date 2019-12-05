@@ -122,7 +122,7 @@ export default {
     twitterUrl() {
       const { name: constituencyName } = this.result;
       const url = 'https://britainelects.newstatesman.com/live-results/';
-      const hashtags = 'GE2019';;
+      const hashtags = 'GE2019';
       // TODO: Ben to provide desired tweet format.
       const tweet = `Results for ${constituencyName}:
       
