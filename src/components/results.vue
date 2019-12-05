@@ -28,10 +28,12 @@ export default {
       const { total, valid, invalid, electorate } = this.votes;
       const errors = []
       const diff = makeNumber(total - valid - invalid);
+      if ( valid === 0 || !valid ) errors.push({ message: 'No votes recorded' });
       if ( valid > total ) errors.push({ message: 'Valid votes greater than total votes' });
       if ( invalid > total ) errors.push({ message: 'Invalid votes greater than total '});
+      if ( electorate === undefined ) errors.push({ warning: true, message: 'No electorate size information'});
       if ( valid > electorate ) errors.push({ warning: true, message: 'Valid votes greater than electorate'});
-      if ( invalid > electorate ) errors.push({ warning: true, message: 'Valid votes greater than electorate'});
+      if ( invalid > electorate ) errors.push({ warning: true, message: 'Inalid votes greater than electorate'});
       if ( total > electorate ) errors.push({ warning: true, message: 'Total votes greater than electorate'});
       if ( (valid + invalid) > electorate ) errors.push({ warning: true, message: 'Sum of valid and invalid votes greater than electorate'});
       if ( this.candidateVotes > 0 && this.candidateVotes != valid ) errors.push({ warning: true, message: `Valid votes not equal to votes for candidates (${this.candidateVotes})` });
@@ -53,10 +55,11 @@ export default {
         const index = result.candidates.findIndex(x => x.id === id);
         result.candidates[index].votes = makeNumber(value);
       }
-      result.votes['valid'] = result.candidates.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
-      const winner = result.candidates.sort((a, b) => b.votes - a.votes);
+      const candidatesWithVotes = result.candidates.filter(x => x.votes);
+      result.votes['valid'] = candidatesWithVotes.map(x => x.votes).filter(x => x).reduce((a,b) => a+b, 0);
+      const winner = candidatesWithVotes.filter(x => x.votes).sort((a, b) => b.votes - a.votes);
       result.winner = winner[0];
-      result.votes.margin = winner[0].votes - winner[1].votes;
+      result.votes.margin = (winner.length > 1) ? winner[0].votes - winner[1].votes : undefined;
       this.$store.commit('setResult', result);
     },
   },

@@ -13,7 +13,7 @@
       <tbody>
         <tr><td>Electorate</td><td>{{ votes.electorate }}</td><td>Voters on electoral roll</td></tr>
         <tr><td>Turnout</td><td>{{ proportion(votes.valid, votes.electorate) }} ({{ votes.valid }})</td><td>Valid votes relative to electorate</td></tr>
-        <tr><td>Majority</td><td>{{ proportion(margin, votes.valid) }} ({{ margin }})</td><td>Winning margin as proporton of valid votes</td></tr>
+        <tr><td>Majority</td><td>{{ proportion(votes.margin, votes.valid) }} ({{ votes.margin }})</td><td>Winning margin as proporton of valid votes</td></tr>
         <tr><td>Spoiled Ballots</td><td>{{ proportion(votes.invalid, votes.valid) }} ({{ votes.invalid || '-'}})</td><td>Number of invalid votes</td></tr>
         <tr><td>Total Votes Cast</td><td>{{ proportion(votes.total, votes.electorate) }} ({{ votes.total || '-' }})</td><td>Valid + invalid votes</td></tr>
       </tbody>
@@ -30,6 +30,12 @@
           <td class="centred">{{ r.party.code }}</td>
           <td class="centred">{{ proportion(r.votes, votes.valid)}}</td>
           <td class="centred">{{ r.votes }}</td>
+        </tr>
+        <tr v-for="r in candidatesWithNoVotes" :key="r.id">
+          <td>{{ r.name }}</td>
+          <td class="centred">{{ r.party.code }}</td>
+          <td class="centred"></td>
+          <td class="centred"></td>
         </tr>
       </tbody>
     </table>
@@ -98,21 +104,20 @@ export default {
       return result;
     },
     candidates() {
-      return this.result.candidates.sort((a, b) => b.votes - a.votes);
+      return this.result.candidates.filter(x => x.votes).sort((a, b) => b.votes - a.votes);
+    },
+    candidatesWithNoVotes() {
+      return this.result.candidates.filter(x => !x.votes);
     },
     votes() {
       return this.result.votes;
-    },
-    margin() {
-      const votes = this.candidates.map(x => x.votes).sort((a, b) => b.votes - a.votes);
-      return this.candidates[0].votes - this.candidates[1].votes;
     },
     summary() {
       const { winner } = this.result;
       if ( winner.party.code == 'Spk' ) return `${winner.name} relected to ${this.result.name} as speaker`;
       const { incumbent } = this.result;
       const winType = incumbent.party.code == winner.party.code ? 'holds' : 'gains';
-      return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.margin } vote${this.margin === 1 ? '' : 's'}`;
+      return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.votes.margin } vote${this.votes.margin === 1 ? '' : 's'}`;
     },
     twitterUrl() {
       const { name: constituencyName } = this.result;
