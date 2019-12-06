@@ -18,6 +18,20 @@ const store = new Vuex.Store({
     getConstituency: (state) => (id) => {
       return state.constituencies.find(constituency => constituency.id === id);
     },
+    winner: (state) => {
+      return state.result.candidates.filter(x => x.votes).sort((a, b) => b.votes - a.votes)[0];
+    },
+    votes: (state) => {
+      const candidateVotes = state.result.candidates.map(x => x.votes).filter(x => x).sort((a, b) => b - a);
+      const votes = state.result.votes;
+      const valid = candidateVotes.reduce((a, c) => a + c, null);
+      const margin = candidateVotes[0] - candidateVotes[1];
+      return {
+        ...votes,
+        valid,
+        margin,
+      };
+    },
   },
   mutations,
 });

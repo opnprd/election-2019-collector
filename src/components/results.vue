@@ -16,13 +16,15 @@ export default {
       return this.$store.state.result;
     },
     errors() {
-      const { votes: { total, valid, invalid, electorate }, candidates } = this.$store.state.result;
+      const { total, valid, invalid, margin, electorate } = this.votes;
       const errors = []
       const diff = makeNumber(total - valid - invalid);
 
       if ( valid === 0 || !valid ) errors.push({ message: 'No votes recorded' });
       if ( valid > total ) errors.push({ message: 'Valid votes greater than total votes' });
       if ( invalid > total ) errors.push({ message: 'Invalid votes greater than total '});
+      if ( margin === 0 ) errors.push({ message: 'No clear winner' });
+
       if ( electorate === undefined ) errors.push({ warning: true, message: 'No electorate size information'});
       if ( valid > electorate ) errors.push({ warning: true, message: 'Valid votes greater than electorate'});
       if ( invalid > electorate ) errors.push({ warning: true, message: 'Inalid votes greater than electorate'});
@@ -35,6 +37,9 @@ export default {
     preventSubmit() {
       return this.errors.filter(x => x.warning != true).length > 0;
     },
+    votes() {
+      return this.$store.getters.votes;
+    }
   },
   methods: {
     updateVotes: function (e) {
@@ -58,13 +63,13 @@ export default {
 
       <section id="overall">
         <label for="valid">Valid votes cast</label>
-        <input class="brand-border" id="valid" disabled="true" type="number" :value="result.votes.valid"/>
+        <input class="brand-border" id="valid" disabled="true" type="number" :value="votes.valid"/>
         <label for="invalid">Invalid votes cast</label>
-        <input class="brand-border" id="invalid" type="number" min="0" max="1000000" :value="result.votes.invalid" @input="updateVotes"/>
+        <input class="brand-border" id="invalid" type="number" min="0" max="1000000" :value="votes.invalid" @input="updateVotes"/>
         <label for="total">Total votes cast</label>
-        <input class="brand-border" id="total" type="number" min="0" max="1000000" :value="result.votes.total" @input="updateVotes"/>
+        <input class="brand-border" id="total" type="number" min="0" max="1000000" :value="votes.total" @input="updateVotes"/>
         <label for="electorate">Electorate</label>
-        <input class="brand-border" id="electorate" type="number" min="0" max="1000000" :value="result.votes.electorate" @input="updateVotes"/>
+        <input class="brand-border" id="electorate" type="number" min="0" max="1000000" :value="votes.electorate" @input="updateVotes"/>
       </section>
 
       <ul class="errors" v-if="errors.length > 0">

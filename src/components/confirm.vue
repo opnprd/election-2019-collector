@@ -2,7 +2,7 @@
   <article>
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
-    <candidate-profile :image="result.winner.img" :name="result.winner.name" :party="result.winner.party.title" >
+    <candidate-profile :image="winner.img" :name="winner.name" :party="winner.party.title" >
     </candidate-profile>
     <h2>Overall voting pattern</h2>
     <table class="fixed centred">
@@ -104,20 +104,19 @@ export default {
       return result;
     },
     candidates() {
-      return this.result.candidates.filter(x => x.votes).sort((a, b) => b.votes - a.votes);
+      return this.$store.state.result.candidates.filter(x => x.votes).sort((a, b) => b.votes - a.votes);
     },
     candidatesWithNoVotes() {
-      return this.result.candidates.filter(x => !x.votes);
+      return this.$store.state.result.candidates.filter(x => !x.votes);
     },
     votes() {
-      return this.result.votes;
+      return this.$store.getters.votes;
     },
     summary() {
-      const { winner } = this.result;
-      if ( winner.party.code == 'Spk' ) return `${winner.name} relected to ${this.result.name} as speaker`;
+      if ( this.winner.party.code == 'Spk' ) return `${this.winner.name} relected to ${this.result.name} as speaker`;
       const { incumbent } = this.result;
-      const winType = incumbent.party.code == winner.party.code ? 'holds' : 'gains';
-      return `${ winner.party.title } ${winType} ${ this.result.name } by ${ this.votes.margin } vote${this.votes.margin === 1 ? '' : 's'}`;
+      const winType = incumbent.party.code == this.winner.party.code ? 'holds' : 'gains';
+      return `${ this.winner.party.title } ${winType} ${ this.result.name } by ${ this.votes.margin } vote${this.votes.margin === 1 ? '' : 's'}`;
     },
     twitterUrl() {
       const { name: constituencyName } = this.result;
@@ -132,7 +131,10 @@ ${this.summary}
     },
     published() {
       return this.$store.state.published;
-    } 
+    },
+    winner() {
+      return this.$store.getters.winner;
+    }
   },
   methods: {
     ...mapActions([

@@ -24,13 +24,10 @@ export async function setupResult({commit, state, getters}, id) {
       votes: undefined,
     })),
     incumbent,
-    winner: undefined,
     votes: {
       total: undefined,
-      valid: undefined,
       invalid: undefined,
       electorate: undefined,
-      margin: undefined,
     },
     events: [],
   };
@@ -38,22 +35,26 @@ export async function setupResult({commit, state, getters}, id) {
   try {
     const objectKey = getObjectKey(baseResult);
     const url = await Storage.get(objectKey);
-    console.debug(url);
     existingResult = await get(url);
   } catch( error ) {
-    console.error(error);
+    console.error(error.message);
   }
 
   commit('setResult', { ...baseResult, ...existingResult });
 }
 
 
-export async function publish({ commit, state }, message = 'Updated') {
-  console.log(message);
+export async function publish({ commit, state, getters }, message = 'Updated') {
   const { result } = state;
+
+  result.winner = getters.winner;
+  result.votes = getters.votes;
+
   const date = new Date().toISOString();
   result.events.unshift({ date, message });
+
   const objectKey = getObjectKey(result);
+
   try {
     await Storage.put(objectKey, JSON.stringify(result, null, 2));
     commit('published');
