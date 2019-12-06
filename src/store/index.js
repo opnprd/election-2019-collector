@@ -26,7 +26,11 @@ const store = new Vuex.Store({
       const votes = state.result.votes;
       const valid = candidateVotes.reduce((a, c) => a + c, null);
       const margin = candidateVotes[0] - candidateVotes[1];
+      const total = votes.invalid ? votes.invalid + valid : undefined;
+      const invalid = votes.total ? votes.total - valid : undefined;
       return {
+        total,
+        invalid,
         ...votes,
         valid,
         margin,
