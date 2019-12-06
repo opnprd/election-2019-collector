@@ -19,3 +19,12 @@ export function clearResult(state) {
 export function published(state) {
   state.published = true;
 }
+
+export function updateVotes(state, { id, value }) {
+  if (['total', 'invalid', 'electorate'].includes(id)){
+    state.result.votes[id] = value;
+  } else {
+    const index = state.result.candidates.findIndex(x => x.id === id);
+    state.result.candidates[index].votes = value;
+  }
+}

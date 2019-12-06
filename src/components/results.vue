@@ -44,7 +44,7 @@ export default {
   methods: {
     updateVotes: function (e) {
       const { id, value } = e.target
-      this.$store.dispatch('updateVotes', { id, value: makeNumber(value) });
+      this.$store.commit('updateVotes', { id, value: makeNumber(value) });
     },
   },
 };
