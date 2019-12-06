@@ -68,6 +68,10 @@ export async function publish({ commit, state, getters }, message = 'Updated') {
 }
 
 export async function initialise({ commit }, constituencyData) {
-  const data = await get(constituencyData);
+  const [data, version] = await Promise.all([
+    get(constituencyData),
+    get('./VERSION', false),
+  ]);
   commit('setConstituency', data);
+  commit('setVersion', version);
 }

@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     result: {},
     published: false,
     constituencies: [],
+    version: null,
   },
   actions,
   getters: {

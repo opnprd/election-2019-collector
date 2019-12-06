@@ -11,6 +11,10 @@ export function setResult(state, result) {
   state.result = result;
 }
 
+export function setVersion(state, version) {
+  state.version = version;
+}
+
 export function clearResult(state) {
   state.published = false;
   state.result = {};

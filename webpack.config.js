@@ -1,11 +1,12 @@
 const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-
+ 
 module.exports = {
 	mode: 'development',
 	entry: './src/main.js',
@@ -20,6 +21,7 @@ module.exports = {
 		]),
 		new webpack.HotModuleReplacementPlugin(),
 		new VueLoaderPlugin(),
+    new GitRevisionPlugin(),
 	],
 	output: {
 		filename: '[name].bundle.js',
