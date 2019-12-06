@@ -21,6 +21,7 @@ export function published(state) {
 }
 
 export function updateVotes(state, { id, value }) {
+  if ( value < 0 ) throw new Error('Negative count provided');
   if (['total', 'invalid', 'electorate'].includes(id)){
     state.result.votes[id] = value;
   } else {

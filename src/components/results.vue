@@ -44,7 +44,12 @@ export default {
   methods: {
     updateVotes: function (e) {
       const { id, value } = e.target
-      this.$store.commit('updateVotes', { id, value: makeNumber(value) });
+      try {
+        this.$store.commit('updateVotes', { id, value: makeNumber(value) });
+      } catch({ message }) {
+        console.error(message);
+        this.$forceUpdate();
+      }
     },
   },
 };
