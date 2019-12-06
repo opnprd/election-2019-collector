@@ -121,5 +121,5 @@ streamWebResource(candidateData)
   .then(simplify)
   .then(summarise)
   .then(getIncumbents)
-  .then(writeToFile('./data/constituencies.json', true))
+  .then(writeToFile('./data/constituencies.json'))
   .catch(console.error);
