@@ -36,8 +36,10 @@ export default {
       if (user) return user.attributes.email;
       return undefined;
     },
-    version() {
-      return this.$store.state.version;
+  },
+  data() {
+    return {
+      version: VERSION,
     }
   }
 }

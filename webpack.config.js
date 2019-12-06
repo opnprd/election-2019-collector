@@ -6,7 +6,9 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
- 
+
+const gitRevisionPlugin = new GitRevisionPlugin();
+
 module.exports = {
 	mode: 'development',
 	entry: './src/main.js',
@@ -21,7 +23,10 @@ module.exports = {
 		]),
 		new webpack.HotModuleReplacementPlugin(),
 		new VueLoaderPlugin(),
-    new GitRevisionPlugin(),
+		gitRevisionPlugin,
+		new webpack.DefinePlugin({
+			VERSION: JSON.stringify(gitRevisionPlugin.version()),
+		}),
 	],
 	output: {
 		filename: '[name].bundle.js',
