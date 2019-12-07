@@ -114,20 +114,31 @@ export default {
     },
     summary() {
       if ( this.winner.party.code == 'Spk' ) return `${this.winner.name} relected to ${this.result.name} as speaker`;
-      const { incumbent } = this.result;
-      const winType = incumbent.party.code == this.winner.party.code ? 'holds' : 'gains';
-      return `${ this.winner.party.title } ${winType} ${ this.result.name } by ${ this.votes.margin } vote${this.votes.margin === 1 ? '' : 's'}`;
+      return `${ this.result.name }: ${ this.winner.party.code } ${this.$store.getters.winType}`;
     },
     twitterUrl() {
-      const { name: constituencyName } = this.result;
+      const { name: constituencyName, ge2017Party, winner: { party: { code } } } = this.result;
       const url = 'https://britainelects.newstatesman.com/live-results/';
       const hashtags = 'GE2019';
+      const partyResults = this.candidates
+        .map(x => `${x.party.code}: ${(x.votes/this.votes.valid * 100).toFixed(1)}% (SWING)`)
+        .join('\n');
+      const swing = this.$store.getters.winType === 'GAIN' ? `${ge2017Party} to ${code} (SWING%)` : 'SWING%';
       // TODO: Ben to provide desired tweet format.
-      const tweet = `Results for ${constituencyName}:
-      
-${this.summary}
-`;
-      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&url=${url}&hashtags=${hashtags}`;
+      // TODO: Map party codes to short names
+      const tweet = `${this.summary}
+
+TODO FINISH THIS
+${partyResults}
+
+CON: 60.4% (+1.3)
+LAB: 25.5% (+7.0)
+LDEM: 10.8% (-6.5)
+
+Swing: ${swing}
+Turnout: ${this.turnout}
+Full results: ${url}`;
+      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&hashtags=${hashtags}`;
     },
     published() {
       return this.$store.state.published;

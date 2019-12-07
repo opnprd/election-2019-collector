@@ -21,6 +21,10 @@ const store = new Vuex.Store({
     winner: (state) => {
       return state.result.candidates.filter(x => x.votes).sort((a, b) => b.votes - a.votes)[0];
     },
+    winType: (state, getters) => {
+      const [ HOLD, GAIN ] = [ 'HOLD', 'GAIN' ];
+      return (getters.winner.party.code === state.result.ge2017Party) ? HOLD : GAIN;
+    },
     votes: (state) => {
       const candidateVotes = state.result.candidates.map(x => x.votes).filter(x => x).sort((a, b) => b - a);
       const votes = state.result.votes;
