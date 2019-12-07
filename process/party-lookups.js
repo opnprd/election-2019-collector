@@ -1,4 +1,5 @@
 const parties = require('./parties.json');
+const ge2017 = require('./ge2017.json');
 
 function getParty(name) {
   const matcher = (p) => {
@@ -31,7 +32,12 @@ function getByDemoclubId({ party_id, party_name }) {
   return theParty;
 }
 
+function get2017Party(id) {
+  return ge2017.find(x => x.id === id).currentParty;
+}
+
 module.exports = {
   getParty,
   getByDemoclubId,
+  get2017Party,
 };

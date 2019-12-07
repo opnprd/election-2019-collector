@@ -2,7 +2,7 @@ const axios = require('axios');
 const csv = require('csv-parser');
 const fs = require('fs');
 const { promisify } = require('util');
-const { getParty, getByDemoclubId } = require('./party-lookups.js');
+const { getParty, getByDemoclubId, get2017Party } = require('./party-lookups.js');
 
 async function streamWebResource(url) {
   return axios({
@@ -109,6 +109,7 @@ async function getIncumbents(data) {
       mp: [i['First name'], i['Last name']].join(' '),
       party: { code: party.code, title: party.title },
     };
+    c.ge2017Party = get2017Party(c.id);
     return c;
   });
 }
