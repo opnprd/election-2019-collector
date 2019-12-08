@@ -117,13 +117,13 @@ export default {
       return `${ this.result.name }: ${ this.winner.party.code } ${this.$store.getters.winType}`;
     },
     twitterUrl() {
-      const { name: constituencyName, ge2017Party, winner: { party: { code } } } = this.result;
+      const { name: constituencyName, results2017, winner: { party: { code } } } = this.result;
       const url = 'https://britainelects.newstatesman.com/live-results/';
       const hashtags = 'GE2019';
       const partyResults = this.candidates
         .map(x => `${x.party.code}: ${(x.votes/this.votes.valid * 100).toFixed(1)}% (SWING)`)
         .join('\n');
-      const swing = this.$store.getters.winType === 'GAIN' ? `${ge2017Party} to ${code} (SWING%)` : 'SWING%';
+      const swing = this.$store.getters.winType === 'GAIN' ? `${results2017.party} to ${code} (SWING%)` : 'SWING%';
       // TODO: Ben to provide desired tweet format.
       // TODO: Map party codes to short names
       const tweet = `${this.summary}

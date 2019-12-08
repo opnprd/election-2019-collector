@@ -33,7 +33,7 @@ function getByDemoclubId({ party_id, party_name }) {
 }
 
 function get2017Party(id) {
-  return ge2017.find(x => x.id === id).currentParty;
+  return ge2017.find(x => x.id === id);
 }
 
 module.exports = {

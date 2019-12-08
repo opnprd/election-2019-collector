@@ -109,7 +109,17 @@ async function getIncumbents(data) {
       mp: [i['First name'], i['Last name']].join(' '),
       party: { code: party.code, title: party.title },
     };
-    c.ge2017Party = get2017Party(c.id);
+    return c;
+  });
+}
+
+function add2017data(data) {
+  return data.map(c => {
+    const { winner, candidates, valid } = get2017Party(c.id);
+    c.results2017 = {
+      party: winner,
+      votes: candidates.map(x => ({ party: x.code, pc: (x.votes * 100 / valid).toFixed(1) })),
+    };
     return c;
   });
 }
@@ -122,5 +132,6 @@ streamWebResource(candidateData)
   .then(simplify)
   .then(summarise)
   .then(getIncumbents)
+  .then(add2017data)
   .then(writeToFile('./data/constituencies.json'))
   .catch(console.error);
