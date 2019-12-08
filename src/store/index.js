@@ -40,6 +40,21 @@ const store = new Vuex.Store({
         margin,
       };
     },
+    stats: (state, getters) => {
+      const { results2017, winner } = state.results;
+      const votes = getters.votes;
+      const turnout = (votes.valid / votes.electorate * 100).toFixed(1);
+      const ge19WinnerShare = (winner.votes/votes.valid*100)
+      const ge17WinnerShare = results2017.votes.find(x => x.party === results2017.party).pc;
+      const swing = (ge19WinnerShare - ge17WinnerShare).toFixed(1);
+      const plusify = (v) => `${v > 0 ? '+' : ''}${v}`;
+      const swingStatement = getters.winType === 'GAIN' ? `${results2017.party} to ${winner.party.code} (${plusify(swing)})` : plusify(swing);
+      return {
+        turnout,
+        swing,
+        swingStatement,
+      };
+    },
   },
   mutations,
 });

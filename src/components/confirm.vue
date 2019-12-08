@@ -121,22 +121,29 @@ export default {
       const url = 'https://britainelects.newstatesman.com/live-results/';
       const hashtags = 'GE2019';
       const partyResults = this.candidates
-        .map(x => `${x.party.code}: ${(x.votes/this.votes.valid * 100).toFixed(1)}% (SWING)`)
+        .map(x => {
+          const pc = (x.votes/this.votes.valid * 100).toFixed(1);
+          const ge17 = this.result.results2017.votes.find(v => v.party === x.party.code);
+          if (ge17) {
+            const swingVal = (pc - ge17.pc).toFixed(1);
+            var swing = ` (${swingVal > 0 ? '+' : ''}${swingVal})`;
+          } else {
+            var swing = '';
+          }
+          return `${x.party.code}: ${pc}%${swing}`;
+        })
         .join('\n');
-      const swing = this.$store.getters.winType === 'GAIN' ? `${results2017.party} to ${code} (SWING%)` : 'SWING%';
-      // TODO: Ben to provide desired tweet format.
       // TODO: Map party codes to short names
+
+      const { turnout, swingStatement } = this.$store.getters.stats;
       const tweet = `${this.summary}
 
-TODO FINISH THIS
+TODO CODES FOR PARTY NAMES
+
 ${partyResults}
 
-CON: 60.4% (+1.3)
-LAB: 25.5% (+7.0)
-LDEM: 10.8% (-6.5)
-
-Swing: ${swing}
-Turnout: ${this.turnout}
+Swing: ${swingStatement}
+Turnout: ${turnout}%
 Full results: ${url}`;
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&hashtags=${hashtags}`;
     },
