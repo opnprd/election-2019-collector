@@ -41,10 +41,11 @@ const store = new Vuex.Store({
       };
     },
     stats: (state, getters) => {
-      const { results2017, winner, candidates } = state.result;
+      const { results2017, candidates } = state.result;
       const votes = getters.votes;
       const pcify = (v, base = votes.valid) => (v/base*100);
       const turnout = pcify(votes.valid, votes.electorate).toFixed(1);
+      const winner = getters.winner;
       const get2017pc = (p) => {
         try {
           return results2017.votes.find(x => x.party === p).pc;
