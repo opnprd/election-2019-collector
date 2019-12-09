@@ -1,6 +1,6 @@
 <template>
   <article>
-    <iframe src="https://odileeds.org/projects/hexmaps/ge2019/ns" ></iframe>
+    <iframe src="https://odileeds.org/projects/hexmaps/ge2019/nsdev" ></iframe>
   </article>
 </template>
 <style lang="scss" scoped>
