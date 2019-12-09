@@ -43,9 +43,9 @@ const store = new Vuex.Store({
     stats: (state, getters) => {
       const { results2017, candidates } = state.result;
       const votes = getters.votes;
-      const pcify = (v, base = votes.valid) => (v/base*100);
-      const turnout = pcify(votes.valid, votes.electorate).toFixed(1);
       const winner = getters.winner;
+      const percentify = (v, base = votes.valid) => (v/base*100);
+      const turnout = percentify(votes.valid, votes.electorate).toFixed(1);
       const get2017pc = (p) => {
         try {
           return results2017.votes.find(x => x.party === p).pc;
@@ -63,8 +63,8 @@ const store = new Vuex.Store({
         .map(({ id, party: { code: party }, votes }) => ({ id, party, votes })).sort((a, b) => b.votes - a.votes)
         .map(x => ({
           ...x,
-          share: pcify(x.votes).toFixed(1),
-          swing: (pcify(x.votes)-get2017pc(x.party)).toFixed(1), 
+          share: percentify(x.votes).toFixed(1),
+          swing: (percentify(x.votes)-get2017pc(x.party)).toFixed(1), 
         }));
       const majority = (votes.margin / votes.valid * 100).toFixed(1);
       return {
