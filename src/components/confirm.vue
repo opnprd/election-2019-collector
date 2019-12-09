@@ -94,6 +94,31 @@ td, th {
 import { mapActions } from 'vuex';
 import candidateProfile from './candidate-profile.vue';
 
+const codes = {
+  Con: 'Con',
+  Lab: 'Lab',
+  LD: 'LDem',
+  Green: 'Grn',
+  Brexit: 'Brex',
+  SNP: 'SNP',
+  UKIP: 'UKIP',
+  PC: 'PC',
+  Ind: 'Ind',
+  DUP: 'DUP',
+  UUP: 'UUP',
+  SF: 'SF',
+  SDLP: 'SDLP',
+  Alliance: 'Alln',
+  Spk: 'Spk',
+  XSpk: 'Ex-Spk',
+  Monster: 'Mon',
+};
+
+function partyCode(code) {
+  if (!Object.keys(codes).includes(code)) return 'Oth';
+  return codes[code];
+}
+
 export default {
   components: {
     candidateProfile
@@ -122,34 +147,30 @@ export default {
     },
     twitterUrl() {
       const { name: constituencyName, results2017, winner: { party: { code } } } = this.result;
+      const { turnout, swingStatement, party } = this.stats;
       const url = 'https://britainelects.newstatesman.com/live-results/';
       const hashtags = 'GE2019';
       const partyResults = this.candidates
         .map(x => {
+          const stats = party.find(v => v.party === x.party.code);
           const pc = (x.votes/this.votes.valid * 100).toFixed(1);
           const ge17 = this.result.results2017.votes.find(v => v.party === x.party.code);
-          if (ge17) {
-            const swingVal = (pc - ge17.pc).toFixed(1);
-            var swing = ` (${swingVal > 0 ? '+' : ''}${swingVal})`;
+          if (stats.swing) {
+            var swingText = ` (${stats.swing > 0 ? '+' : ''}${stats.swing})`;
           } else {
-            var swing = '';
+            var swingText = '';
           }
-          return `${x.party.code}: ${pc}%${swing}`;
+          return `${partyCode(x.party.code).toUpperCase()}: ${stats.share}%${swingText}`;
         })
         .join('\n');
-      // TODO: Map party codes to short names
-
-      const { turnout, swingStatement } = this.$store.getters.stats;
       const tweet = `${this.summary}
-
-TODO CODES FOR PARTY NAMES
 
 ${partyResults}
 
 Swing: ${swingStatement}
 Turnout: ${turnout}%
-Full results: ${url}`;
-      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&hashtags=${hashtags}`;
+Full results:`;
+      return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&url=${url}&hashtags=${hashtags}`;
     },
     published() {
       return this.$store.state.published;
