@@ -2,6 +2,7 @@
   <article>
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
+    <p>Swing: {{ stats.swingStatement }}</p>
     <candidate-profile :image="winner.img" :name="winner.name" :party="winner.party.title" >
     </candidate-profile>
     <h2>Overall voting pattern</h2>
@@ -12,8 +13,8 @@
 
       <tbody>
         <tr><td>Electorate</td><td>{{ votes.electorate }}</td><td>Voters on electoral roll</td></tr>
-        <tr><td>Turnout</td><td>{{ proportion(votes.valid, votes.electorate) }} ({{ votes.valid }})</td><td>Valid votes relative to electorate</td></tr>
-        <tr><td>Majority</td><td>{{ proportion(votes.margin, votes.valid) }} ({{ votes.margin }})</td><td>Winning margin as proporton of valid votes</td></tr>
+        <tr><td>Turnout</td><td>{{ stats.turnout }}% ({{ votes.valid }})</td><td>Valid votes relative to electorate</td></tr>
+        <tr><td>Majority</td><td>{{ stats.majority }}% ({{ votes.margin }})</td><td>Winning margin as proporton of valid votes</td></tr>
         <tr><td>Spoiled Ballots</td><td>{{ proportion(votes.invalid, votes.valid) }} ({{ votes.invalid || '-'}})</td><td>Number of invalid votes</td></tr>
         <tr><td>Total Votes Cast</td><td>{{ proportion(votes.total, votes.electorate) }} ({{ votes.total || '-' }})</td><td>Valid + invalid votes</td></tr>
       </tbody>
@@ -108,6 +109,9 @@ export default {
     },
     candidatesWithNoVotes() {
       return this.$store.state.result.candidates.filter(x => !x.votes);
+    },
+    stats() {
+      return this.$store.getters.stats;
     },
     votes() {
       return this.$store.getters.votes;
