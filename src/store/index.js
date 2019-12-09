@@ -43,20 +43,35 @@ const store = new Vuex.Store({
     stats: (state, getters) => {
       const { results2017, winner, candidates } = state.result;
       const votes = getters.votes;
-      const turnout = (votes.valid / votes.electorate * 100).toFixed(1);
+      const pcify = (v, base = votes.valid) => (v/base*100);
+      const turnout = pcify(votes.valid, votes.electorate).toFixed(1);
+      const get2017pc = (p) => {
+        try {
+          return results2017.votes.find(x => x.party === p).pc;
+        } catch({}) {
+          console.error(`${p} not found in 2017 results`);
+          return null;
+        }
+      };
       const ge19WinnerShare = (winner.votes/votes.valid*100);
       const ge17WinnerShare = results2017.votes.find(x => x.party === results2017.party).pc;
       const swing = (ge19WinnerShare - ge17WinnerShare).toFixed(1);
       const plusify = (v) => `${v > 0 ? '+' : ''}${v}`;
       const swingStatement = getters.winType === 'GAIN' ? `${results2017.party} to ${winner.party.code} (${plusify(swing)})` : plusify(swing);
-      const candidateVotes = candidates.filter(x => x.votes)
-        .map(({ id, party: { code }, votes }) => ({ id, code, votes })).sort((a, b) => b.votes - a.votes);
+      const party = candidates.filter(x => x.votes)
+        .map(({ id, party: { code: party }, votes }) => ({ id, party, votes })).sort((a, b) => b.votes - a.votes)
+        .map(x => ({
+          ...x,
+          share: pcify(x.votes).toFixed(1),
+          swing: (pcify(x.votes)-get2017pc(x.party)).toFixed(1), 
+        }));
       const majority = (votes.margin / votes.valid * 100).toFixed(1);
       return {
         turnout,
         swing,
         swingStatement,
         majority,
+        party,
       };
     },
   },

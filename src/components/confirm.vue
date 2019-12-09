@@ -23,14 +23,14 @@
     <h2>Candidate votes</h2>
     <table>
       <thead>
-        <tr><th>Candidate</th><th>Party</th><th>Share</th><th>Votes</th></tr>
+        <tr><th>Candidate</th><th>Party</th><th>Share</th><th>Swing</th></tr>
       </thead>
       <tbody>
         <tr v-for="r in candidates" :key="r.id">
           <td>{{ r.name }}</td>
           <td class="centred">{{ r.party.code }}</td>
-          <td class="centred">{{ proportion(r.votes, votes.valid)}}</td>
-          <td class="centred">{{ r.votes }}</td>
+          <td class="centred">{{ stats.party.find(x => x.party === r.party.code ).share }}% ({{ r.votes }})</td>
+          <td class="centred">{{ stats.party.find(x => x.party === r.party.code ).swing }}</td>
         </tr>
         <tr v-for="r in candidatesWithNoVotes" :key="r.id">
           <td>{{ r.name }}</td>
