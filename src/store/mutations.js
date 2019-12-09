@@ -11,7 +11,6 @@ export function setUser(state, user) {
 }
 
 export function setResult(state, result) {
-  state.published = false;
   state.result = result;
 }
 
@@ -22,6 +21,10 @@ export function clearResult(state) {
 
 export function published(state) {
   state.published = true;
+}
+
+export function unpublished(state) {
+  state.published = false;
 }
 
 export function  updateVotes(state, { id, value }) {

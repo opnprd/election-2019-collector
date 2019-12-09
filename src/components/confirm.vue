@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article v-if="loaded">
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
     <p>Swing: {{ stats.swingStatement }}</p>
@@ -43,15 +43,13 @@
 
     <section id="actions">
       <a class="action brand-background" v-if="published === false" v-on:click="publish(summary)">Publish</a>
-      <router-link v-if="published === false" :to="{ name: 'record', params: { id: result.id }}" v-slot="{ href }">
+      <a class="action secondary-action" v-if="published === true" target='tweet' :href="twitterUrl">Tweet</a>
+      <router-link :to="{ name: 'record', params: { id: result.id }}" v-slot="{ href }">
         <a class="action secondary-action" :href="href">Amend</a>
       </router-link>
-      <router-link v-if="published === true" :to="{ name: 'search' }" v-slot="{ href }">
-        <a class="action brand-background" :href="href">Done</a>
-      </router-link>
-      <a class="action secondary-action" v-if="published === true" target='tweet' :href="twitterUrl">Tweet</a>
     </section>
   </article>
+  <article v-else>Loading...</article>
 </template>
 <style scoped>
 table {
@@ -124,9 +122,20 @@ export default {
     candidateProfile
   },
   computed: {
+    loaded() {
+      const result = this.$store.state.result;
+      if (!result) return false
+      const { result: { id, candidates } = {}} = this.$store.state;
+      if (id !== this.$route.params.id) return false;
+      if (candidates.filter(x => x.votes).length == 0) {
+        this.$router.push({ name: 'record', params: { id: this.$route.params.id }});
+        this.$store.commit('unpublished');
+        return false;
+      }
+      return true;
+    },
     result() {
       const result = this.$store.state.result;
-      if (!result.id) this.$router.push({ name: 'home' });
       return result;
     },
     candidates() {

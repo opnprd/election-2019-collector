@@ -9,6 +9,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     user: null,
+    selectedConstituency: null, 
     result: {},
     published: false,
     constituencies: [],
@@ -42,6 +43,7 @@ const store = new Vuex.Store({
     },
     stats: (state, getters) => {
       const { results2017, candidates } = state.result;
+      if ( !candidates ) return null;
       const votes = getters.votes;
       const winner = getters.winner;
       const percentify = (v, base = votes.valid) => (v/base*100);

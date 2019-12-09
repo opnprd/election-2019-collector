@@ -41,6 +41,9 @@ export default {
       return this.$store.getters.votes;
     }
   },
+  beforeMount() {
+    this.$store.commit('unpublished');
+  },
   methods: {
     updateVotes: function (e) {
       const { id, value } = e.target

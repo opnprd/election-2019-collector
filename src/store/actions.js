@@ -11,6 +11,7 @@ export async function setupResult({commit, state, getters}, id) {
   if ( state.result.id === id && !state.published ) return;
   const { name, candidates, incumbent, results2017 } = getters.getConstituency(id);
   let existingResult = {};
+  commit('published');
   try {
     const objectKey = getObjectKey({ id });
     const url = await Storage.get(objectKey);

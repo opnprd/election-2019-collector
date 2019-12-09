@@ -26,7 +26,7 @@ export default {
     <input id="search" type="text" v-model="searchTerm"/>
     <ol>
       <li v-for="{value, label} in matches" :key="value" >
-        <router-link :to="{ name: 'record', params: { id: value }}">{{ label }}</router-link>
+        <router-link :to="{ name: 'confirm', params: { id: value }}">{{ label }}</router-link>
       </li>
     </ol>
   </article>

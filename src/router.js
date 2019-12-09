@@ -20,17 +20,23 @@ const router = new Router({
     { name: 'search', path: '/search', component: search, meta: { requiresAuth: true } },
     {
       name: 'record',
-      path: '/constituency/:id',
+      path: '/constituency/:id/edit',
       component: results,
       meta: {
         requiresAuth: true,
       },
       beforeEnter: async (to, from, next) => {
+        if (!(store.state.result && store.state.result.id === to.params.id)) next(false);
+        // await store.dispatch('setupResult', to.params.id);
+        else next();
+      },
+    },
+    { name: 'confirm', path: '/constituency/:id', component: confirmResults, meta: { requiresAuth: true },
+      beforeEnter: async (to, from, next) => {
         await store.dispatch('setupResult', to.params.id);
         next();
       },
     },
-    { name: 'confirm', path: '/confirm', component: confirmResults, meta: { requiresAuth: true } },
     { name: 'live-map', path: '/live', component: liveMap, meta: { requiresAuth: true } },
     { name: 'auth', path: '/auth', component: amplifyComponents.Authenticator },
   ],
