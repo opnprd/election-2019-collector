@@ -155,8 +155,9 @@ export default {
       return `${ this.result.name }: ${ this.winner.party.code } ${this.$store.getters.winType}`;
     },
     twitterUrl() {
-      const { name: constituencyName, results2017, winner: { party: { code } } } = this.result;
+      const { name: constituencyName, results2017 } = this.result;
       const { turnout, swingStatement, party } = this.stats;
+      const { party: { code } } = this.winner
       const url = 'https://britainelects.newstatesman.com/live-results/';
       const hashtags = 'GE2019';
       const partyResults = this.candidates

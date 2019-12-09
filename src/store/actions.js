@@ -9,7 +9,7 @@ function getObjectKey(result) {
 
 export async function setupResult({commit, state, getters}, id) {
   if ( state.result.id === id && !state.published ) return;
-  const { name, candidates, incumbent, results2017 } = getters.getConstituency(id);
+  const { name, candidates, incumbent, results2017, electorate } = getters.getConstituency(id);
   let existingResult = {};
   commit('published');
   try {
@@ -20,27 +20,30 @@ export async function setupResult({commit, state, getters}, id) {
     console.error(error.message);
   }
 
+  const { events = [] } = existingResult;
+
   const result = {
     id,
     name,
-    candidates: candidates.map(x => ({
-      id: x.id,
-      name: x.name,
-      party: {
-        code: x.party_code,
-        title: x.party_name,
-      },
-      img: x.image,
-      votes: undefined,
-    })),
     incumbent,
     results2017,
-    events: [],
-    ...existingResult,
+    events,
+    candidates: candidates.map(c => ({
+      id: c.id,
+      name: c.name,
+      party: {
+        code: c.party_code,
+        title: c.party_name,
+      },
+      img: c.image,
+      votes: undefined,
+      pc: undefined,
+      ...existingResult.candidates.find(e => e.id === c.id),
+    })),
     votes: {
       total: undefined,
       invalid: undefined,
-      electorate: undefined,
+      electorate,
       ...existingResult.votes,
     },
   };
@@ -51,9 +54,16 @@ export async function setupResult({commit, state, getters}, id) {
 
 export async function publish({ commit, state, getters }, message = 'Updated') {
   const { result } = state;
+  const stats = getters.stats;
 
   result.winner = getters.winner;
   result.votes = getters.votes;
+  result.candidates = result.candidates.map(c => {
+    const cStats = stats.party.find(x => x.id === c.id);
+    c.share = parseFloat(cStats.share);
+    c.change = parseFloat(cStats.swing);
+    return c;
+  });
 
   const date = new Date().toISOString();
   result.events.unshift({ date, message });
