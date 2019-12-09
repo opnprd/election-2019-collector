@@ -4,6 +4,8 @@ const fs = require('fs');
 const { promisify } = require('util');
 const { getParty, getByDemoclubId, get2017Party } = require('./party-lookups.js');
 
+const registeredVoters = require('./registered.json');
+
 async function streamWebResource(url) {
   return axios({
     method: 'get',
@@ -124,6 +126,19 @@ function add2017data(data) {
   });
 }
 
+function addElectorate(data) {
+  return data.map(c => {
+    try {
+      c.electorate = parseInt(registeredVoters.find(x => x.c === c.name).v);
+    } catch(e) {
+      const [ testName ] = c.name.split(/\b/);
+      const possibleHits = registeredVoters.filter(x => x.c.replace(/(North|South|East|West|St|Mid|Central)/g, '').match(testName)).map(x => x.c);
+      console.error(`Can't find ${c.name}.\nCould be   ${possibleHits}`);
+    }
+    return c;
+  });
+}
+
 const candidateData = 'https://candidates.democracyclub.org.uk/media/candidates-parl.2019-12-12.csv';
 const incumbentData = 'https://www.theyworkforyou.com/mps/?f=csv&date=2019-11-06';
 
@@ -133,5 +148,6 @@ streamWebResource(candidateData)
   .then(summarise)
   .then(getIncumbents)
   .then(add2017data)
+  .then(addElectorate)
   .then(writeToFile('./data/constituencies.json'))
   .catch(console.error);

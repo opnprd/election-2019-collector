@@ -1,0 +1,986 @@
+[
+  {
+    "c": "Southampton, Test",
+    "v": "79509"
+  },
+  {
+    "c": "Nottingham South",
+    "v": "79485"
+  },
+  {
+    "c": "Faversham and Mid Kent",
+    "v": "73404"
+  },
+  {
+    "c": "Southampton, Itchen",
+    "v": "79006"
+  },
+  {
+    "c": "Hackney North and Stoke Newington",
+    "v": "92451"
+  },
+  {
+    "c": "Dulwich and West Norwood",
+    "v": "84675"
+  },
+  {
+    "c": "Vauxhall",
+    "v": "88600"
+  },
+  {
+    "c": "Streatham",
+    "v": "84763"
+  },
+  {
+    "c": "Hackney South and Shoreditch",
+    "v": "89380"
+  },
+  {
+    "c": "Nottingham East",
+    "v": "66262"
+  },
+  {
+    "c": "West Ham",
+    "v": "98871"
+  },
+  {
+    "c": "Kensington",
+    "v": "64609"
+  },
+  {
+    "c": "East Ham",
+    "v": "89369"
+  },
+  {
+    "c": "Portsmouth South",
+    "v": "74186"
+  },
+  {
+    "c": "East Devon",
+    "v": "87133"
+  },
+  {
+    "c": "Salford and Eccles",
+    "v": "82202"
+  },
+  {
+    "c": "Liverpool, Riverside",
+    "v": "80310"
+  },
+  {
+    "c": "Norwich South",
+    "v": "77845"
+  },
+  {
+    "c": "Wells",
+    "v": "86522"
+  },
+  {
+    "c": "Eddisbury",
+    "v": "73700"
+  },
+  {
+    "c": "Saffron Walden",
+    "v": "87117"
+  },
+  {
+    "c": "North West Leicestershire",
+    "v": "78935"
+  },
+  {
+    "c": "Bradford West",
+    "v": "70694"
+  },
+  {
+    "c": "Brent Central",
+    "v": "84204"
+  },
+  {
+    "c": "Newcastle upon Tyne Central",
+    "v": "57845"
+  },
+  {
+    "c": "City of Chester",
+    "v": "76057"
+  },
+  {
+    "c": "Lancaster and Fleetwood",
+    "v": "70059"
+  },
+  {
+    "c": "Chatham and Aylesford",
+    "v": "73305"
+  },
+  {
+    "c": "Shrewsbury and Atcham",
+    "v": "82237"
+  },
+  {
+    "c": "Harwich and North Essex",
+    "v": "74153"
+  },
+  {
+    "c": "Bradford East",
+    "v": "73206"
+  },
+  {
+    "c": "Newcastle-under-Lyme",
+    "v": "68209"
+  },
+  {
+    "c": "South Norfolk",
+    "v": "86214"
+  },
+  {
+    "c": "Corby",
+    "v": "86151"
+  },
+  {
+    "c": "Penrith and The Border",
+    "v": "67555"
+  },
+  {
+    "c": "North Herefordshire",
+    "v": "70252"
+  },
+  {
+    "c": "Newcastle upon Tyne North",
+    "v": "68486"
+  },
+  {
+    "c": "North East Bedfordshire",
+    "v": "90679"
+  },
+  {
+    "c": "Cities of London and Westminster",
+    "v": "63700"
+  },
+  {
+    "c": "Clacton",
+    "v": "70930"
+  },
+  {
+    "c": "Walthamstow",
+    "v": "70268"
+  },
+  {
+    "c": "Ashton-under-Lyne",
+    "v": "67978"
+  },
+  {
+    "c": "North Shropshire",
+    "v": "83257"
+  },
+  {
+    "c": "Colchester",
+    "v": "82625"
+  },
+  {
+    "c": "Eastleigh",
+    "v": "83880"
+  },
+  {
+    "c": "Preston",
+    "v": "59672"
+  },
+  {
+    "c": "Guildford",
+    "v": "77729"
+  },
+  {
+    "c": "Suffolk Coastal",
+    "v": "81910"
+  },
+  {
+    "c": "Luton South",
+    "v": "69338"
+  },
+  {
+    "c": "Rushcliffe",
+    "v": "77116"
+  },
+  {
+    "c": "Tewkesbury",
+    "v": "83958"
+  },
+  {
+    "c": "New Forest West",
+    "v": "70892"
+  },
+  {
+    "c": "The Wrekin",
+    "v": "70693"
+  },
+  {
+    "c": "Thirsk and Malton",
+    "v": "80979"
+  },
+  {
+    "c": "Newcastle upon Tyne East",
+    "v": "63796"
+  },
+  {
+    "c": "Rochford and Southend East",
+    "v": "75624"
+  },
+  {
+    "c": "Warwick and Leamington",
+    "v": "76373"
+  },
+  {
+    "c": "Mid Worcestershire",
+    "v": "78221"
+  },
+  {
+    "c": "Hastings and Rye",
+    "v": "80524"
+  },
+  {
+    "c": "Knowsley",
+    "v": "84060"
+  },
+  {
+    "c": "Kenilworth and Southam",
+    "v": "68156"
+  },
+  {
+    "c": "Tiverton and Honiton",
+    "v": "82953"
+  },
+  {
+    "c": "Welwyn Hatfield",
+    "v": "74892"
+  },
+  {
+    "c": "Cheltenham",
+    "v": "81043"
+  },
+  {
+    "c": "Rochdale",
+    "v": "80168"
+  },
+  {
+    "c": "Bootle",
+    "v": "74832"
+  },
+  {
+    "c": "Westminster North",
+    "v": "65519"
+  },
+  {
+    "c": "Canterbury",
+    "v": "80203"
+  },
+  {
+    "c": "Reading East",
+    "v": "77465"
+  },
+  {
+    "c": "West Worcestershire",
+    "v": "76267"
+  },
+  {
+    "c": "Waveney",
+    "v": "82791"
+  },
+  {
+    "c": "Ashford",
+    "v": "89550"
+  },
+  {
+    "c": "Mid Norfolk",
+    "v": "81992"
+  },
+  {
+    "c": "Bromley and Chislehurst",
+    "v": "66711"
+  },
+  {
+    "c": "Ellesmere Port and Neston",
+    "v": "70327"
+  },
+  {
+    "c": "Dover",
+    "v": "76355"
+  },
+  {
+    "c": "South Cambridgeshire",
+    "v": "87288"
+  },
+  {
+    "c": "Thornbury and Yate",
+    "v": "69492"
+  },
+  {
+    "c": "Bolsover",
+    "v": "75157"
+  },
+  {
+    "c": "Stalybridge and Hyde",
+    "v": "73064"
+  },
+  {
+    "c": "Sherwood",
+    "v": "77948"
+  },
+  {
+    "c": "Weaver Vale",
+    "v": "70551"
+  },
+  {
+    "c": "Bognor Regis and Littlehampton",
+    "v": "77488"
+  },
+  {
+    "c": "Wimbledon",
+    "v": "68232"
+  },
+  {
+    "c": "Filton and Bradley Stoke",
+    "v": "74016"
+  },
+  {
+    "c": "Thurrock",
+    "v": "79798"
+  },
+  {
+    "c": "Worsley and Eccles South",
+    "v": "75219"
+  },
+  {
+    "c": "Southport",
+    "v": "70837"
+  },
+  {
+    "c": "Ludlow",
+    "v": "69442"
+  },
+  {
+    "c": "Luton North",
+    "v": "68185"
+  },
+  {
+    "c": "Southend West",
+    "v": "69043"
+  },
+  {
+    "c": "Bury South",
+    "v": "75152"
+  },
+  {
+    "c": "Bradford South",
+    "v": "69046"
+  },
+  {
+    "c": "Mitcham and Morden",
+    "v": "70014"
+  },
+  {
+    "c": "Bassetlaw",
+    "v": "80035"
+  },
+  {
+    "c": "Keighley",
+    "v": "72778"
+  },
+  {
+    "c": "Don Valley",
+    "v": "75356"
+  },
+  {
+    "c": "Witham",
+    "v": "70402"
+  },
+  {
+    "c": "Bury North",
+    "v": "68802"
+  },
+  {
+    "c": "Ealing Central and Acton",
+    "v": "75510"
+  },
+  {
+    "c": "Croydon Central",
+    "v": "81410"
+  },
+  {
+    "c": "Stockton South",
+    "v": "76895"
+  },
+  {
+    "c": "Liverpool, Wavertree",
+    "v": "63458"
+  },
+  {
+    "c": "Barnsley Central",
+    "v": "65277"
+  },
+  {
+    "c": "Warrington South",
+    "v": "86895"
+  },
+  {
+    "c": "Brent North",
+    "v": "83772"
+  },
+  {
+    "c": "Orpington",
+    "v": "68884"
+  },
+  {
+    "c": "Hereford and South Herefordshire",
+    "v": "72085"
+  },
+  {
+    "c": "Totnes",
+    "v": "69863"
+  },
+  {
+    "c": "New Forest East",
+    "v": "73579"
+  },
+  {
+    "c": "South Thanet",
+    "v": "73302"
+  },
+  {
+    "c": "Basingstoke",
+    "v": "82926"
+  },
+  {
+    "c": "St Albans",
+    "v": "73721"
+  },
+  {
+    "c": "South Basildon and East Thurrock",
+    "v": "74441"
+  },
+  {
+    "c": "Shipley",
+    "v": "74029"
+  },
+  {
+    "c": "Telford",
+    "v": "68921"
+  },
+  {
+    "c": "Garston and Halewood",
+    "v": "76116"
+  },
+  {
+    "c": "Croydon North",
+    "v": "88466"
+  },
+  {
+    "c": "Beckenham",
+    "v": "68671"
+  },
+  {
+    "c": "Basildon and Billericay",
+    "v": "69906"
+  },
+  {
+    "c": "Sefton Central",
+    "v": "69760"
+  },
+  {
+    "c": "Broadland",
+    "v": "78151"
+  },
+  {
+    "c": "Maidstone and The Weald",
+    "v": "76110"
+  },
+  {
+    "c": "Gillingham and Rainham",
+    "v": "73631"
+  },
+  {
+    "c": "Halifax",
+    "v": "71904"
+  },
+  {
+    "c": "Oldham West and Royton",
+    "v": "73063"
+  },
+  {
+    "c": "Walsall South",
+    "v": "68024"
+  },
+  {
+    "c": "Warrington North",
+    "v": "72565"
+  },
+  {
+    "c": "Morecambe and Lunesdale",
+    "v": "67397"
+  },
+  {
+    "c": "South Dorset",
+    "v": "72924"
+  },
+  {
+    "c": "Blackburn",
+    "v": "71228"
+  },
+  {
+    "c": "Lewes",
+    "v": "71503"
+  },
+  {
+    "c": "Stretford and Urmston",
+    "v": "72386"
+  },
+  {
+    "c": "Great Yarmouth",
+    "v": "71957"
+  },
+  {
+    "c": "South East Cambridgeshire",
+    "v": "86769"
+  },
+  {
+    "c": "Bishop Auckland",
+    "v": "68170"
+  },
+  {
+    "c": "Central Devon",
+    "v": "74926"
+  },
+  {
+    "c": "Liverpool, West Derby",
+    "v": "65640"
+  },
+  {
+    "c": "Surrey Heath",
+    "v": "81349"
+  },
+  {
+    "c": "Eastbourne",
+    "v": "79307"
+  },
+  {
+    "c": "Sedgefield",
+    "v": "64325"
+  },
+  {
+    "c": "Chichester",
+    "v": "85499"
+  },
+  {
+    "c": "Gainsborough",
+    "v": "76343"
+  },
+  {
+    "c": "Stockton North",
+    "v": "66676"
+  },
+  {
+    "c": "Harlow",
+    "v": "68078"
+  },
+  {
+    "c": "Hertsmere",
+    "v": "73971"
+  },
+  {
+    "c": "Croydon South",
+    "v": "83977"
+  },
+  {
+    "c": "Hitchin and Harpenden",
+    "v": "76321"
+  },
+  {
+    "c": "Huntingdon",
+    "v": "84686"
+  },
+  {
+    "c": "Kingston and Surbiton",
+    "v": "81975"
+  },
+  {
+    "c": "Newark",
+    "v": "75855"
+  },
+  {
+    "c": "Barnsley East",
+    "v": "69504"
+  },
+  {
+    "c": "Wyre Forest",
+    "v": "78079"
+  },
+  {
+    "c": "Gravesham",
+    "v": "73234"
+  },
+  {
+    "c": "Tamworth",
+    "v": "71580"
+  },
+  {
+    "c": "Norwich North",
+    "v": "67172"
+  },
+  {
+    "c": "North West Durham",
+    "v": "72166"
+  },
+  {
+    "c": "Calder Valley",
+    "v": "79287"
+  },
+  {
+    "c": "Sevenoaks",
+    "v": "71777"
+  },
+  {
+    "c": "Reigate",
+    "v": "74842"
+  },
+  {
+    "c": "Bexleyheath and Crayford",
+    "v": "65466"
+  },
+  {
+    "c": "Rugby",
+    "v": "72341"
+  },
+  {
+    "c": "North Thanet",
+    "v": "72811"
+  },
+  {
+    "c": "City of Durham",
+    "v": "71271"
+  },
+  {
+    "c": "Hartlepool",
+    "v": "70855"
+  },
+  {
+    "c": "Richmond Park",
+    "v": "80161"
+  },
+  {
+    "c": "Ashfield",
+    "v": "78204"
+  },
+  {
+    "c": "Old Bexley and Sidcup",
+    "v": "66104"
+  },
+  {
+    "c": "Reading West",
+    "v": "74623"
+  },
+  {
+    "c": "Darlington",
+    "v": "66395"
+  },
+  {
+    "c": "North Devon",
+    "v": "75862"
+  },
+  {
+    "c": "St Helens South",
+    "v": "79058"
+  },
+  {
+    "c": "Enfield North",
+    "v": "68066"
+  },
+  {
+    "c": "North Tyneside",
+    "v": "78902"
+  },
+  {
+    "c": "Oldham East and Saddleworth",
+    "v": "72173"
+  },
+  {
+    "c": "Doncaster North",
+    "v": "72363"
+  },
+  {
+    "c": "Tonbridge and Malling",
+    "v": "77380"
+  },
+  {
+    "c": "Copeland",
+    "v": "61693"
+  },
+  {
+    "c": "Portsmouth North",
+    "v": "71299"
+  },
+  {
+    "c": "Altrincham and Sale West",
+    "v": "73146"
+  },
+  {
+    "c": "Dewsbury",
+    "v": "81253"
+  },
+  {
+    "c": "Braintree",
+    "v": "75208"
+  },
+  {
+    "c": "Bosworth",
+    "v": "81537"
+  },
+  {
+    "c": "Liverpool, Walton",
+    "v": "62628"
+  },
+  {
+    "c": "Ipswich",
+    "v": "75525"
+  },
+  {
+    "c": "Walsall North",
+    "v": "67177"
+  },
+  {
+    "c": "Tynemouth",
+    "v": "77261"
+  },
+  {
+    "c": "Enfield, Southgate",
+    "v": "65055"
+  },
+  {
+    "c": "Colne Valley",
+    "v": "84174"
+  },
+  {
+    "c": "North Durham",
+    "v": "66796"
+  },
+  {
+    "c": "Edmonton",
+    "v": "65568"
+  },
+  {
+    "c": "Bedford",
+    "v": "71579"
+  },
+  {
+    "c": "Aldridge-Brownhills",
+    "v": "60138"
+  },
+  {
+    "c": "Ealing North",
+    "v": "74473"
+  },
+  {
+    "c": "Leyton and Wanstead",
+    "v": "64852"
+  },
+  {
+    "c": "Doncaster Central",
+    "v": "71387"
+  },
+  {
+    "c": "Havant",
+    "v": "72130"
+  },
+  {
+    "c": "Wentworth and Dearne",
+    "v": "74536"
+  },
+  {
+    "c": "North Dorset",
+    "v": "75956"
+  },
+  {
+    "c": "Middlesbrough",
+    "v": "60759"
+  },
+  {
+    "c": "Oxford East",
+    "v": "77947"
+  },
+  {
+    "c": "Rother Valley",
+    "v": "74802"
+  },
+  {
+    "c": "Kingswood",
+    "v": "68972"
+  },
+  {
+    "c": "Nottingham North",
+    "v": "66495"
+  },
+  {
+    "c": "Twickenham",
+    "v": "82866"
+  },
+  {
+    "c": "St Helens North",
+    "v": "75593"
+  },
+  {
+    "c": "Rochester and Strood",
+    "v": "82156"
+  },
+  {
+    "c": "Worcester",
+    "v": "73403"
+  },
+  {
+    "c": "Wirral South",
+    "v": "57280"
+  },
+  {
+    "c": "Batley and Spen",
+    "v": "79558"
+  },
+  {
+    "c": "South West Hertfordshire",
+    "v": "80449"
+  },
+  {
+    "c": "Wirral West",
+    "v": "55550"
+  },
+  {
+    "c": "Gosport",
+    "v": "73541"
+  },
+  {
+    "c": "South Holland and The Deepings",
+    "v": "75728"
+  },
+  {
+    "c": "Chingford and Woodford Green",
+    "v": "65393"
+  },
+  {
+    "c": "Blaydon",
+    "v": "67853"
+  },
+  {
+    "c": "Ealing, Southall",
+    "v": "64580"
+  },
+  {
+    "c": "Birkenhead",
+    "v": "63762"
+  },
+  {
+    "c": "Gateshead",
+    "v": "64449"
+  },
+  {
+    "c": "Torbay",
+    "v": "75054"
+  },
+  {
+    "c": "Heywood and Middleton",
+    "v": "78916"
+  },
+  {
+    "c": "Chesterfield",
+    "v": "71030"
+  },
+  {
+    "c": "West Dorset",
+    "v": "80963"
+  },
+  {
+    "c": "York Outer",
+    "v": "74586"
+  },
+  {
+    "c": "Wallasey",
+    "v": "66310"
+  },
+  {
+    "c": "Easington",
+    "v": "61182"
+  },
+  {
+    "c": "Gloucester",
+    "v": "81332"
+  },
+  {
+    "c": "Warley",
+    "v": "62421"
+  },
+  {
+    "c": "West Bromwich West",
+    "v": "64576"
+  },
+  {
+    "c": "Denton and Reddish",
+    "v": "66234"
+  },
+  {
+    "c": "Huddersfield",
+    "v": "65525"
+  },
+  {
+    "c": "Spelthorne",
+    "v": "70929"
+  },
+  {
+    "c": "Rotherham",
+    "v": "61688"
+  },
+  {
+    "c": "West Bromwich East",
+    "v": "62111"
+  },
+  {
+    "c": "Hyndburn",
+    "v": "70910"
+  },
+  {
+    "c": "York Central",
+    "v": "74801"
+  },
+  {
+    "c": "Birmingham, Edgbaston",
+    "v": "68828"
+  },
+  {
+    "c": "Birmingham, Erdington",
+    "v": "66148"
+  },
+  {
+    "c": "Birmingham, Hall Green",
+    "v": "80283"
+  },
+  {
+    "c": "Birmingham, Hodge Hill",
+    "v": "78295"
+  },
+  {
+    "c": "Birmingham, Ladywood",
+    "v": "74912"
+  },
+  {
+    "c": "Birmingham, Northfield",
+    "v": "73694"
+  },
+  {
+    "c": "Birmingham, Perry Barr",
+    "v": "72006"
+  },
+  {
+    "c": "Birmingham, Selly Oak",
+    "v": "82665"
+  },
+  {
+    "c": "Birmingham, Yardley",
+    "v": "74704"
+  },
+  {
+    "c": "Sutton Coldfield",
+    "v": "75638"
+  }
+]
