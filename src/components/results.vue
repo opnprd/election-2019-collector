@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     updateVotes: function (e) {
-      const { id, value } = e.target
+      const { dataset: { id }, value } = e.target
       try {
         this.$store.commit('updateVotes', { id, value: value });
       } catch({ message }) {
@@ -66,18 +66,18 @@ export default {
       <candidate-profile v-for="({ name, party, id, img, votes }) in result.candidates"
         :key="id" :name="name" :party="party.title" :image="img">
         <label :for="id">Votes</label>
-        <input class="brand-border" :id="id" :value="votes"  @input="updateVotes"/>
+        <input class="brand-border" :id="'candidate-'+id" :data-id="id" :value="votes"  @input="updateVotes"/>
       </candidate-profile>
 
       <section id="overall">
         <label for="valid">Valid votes cast</label>
         <input class="brand-border" id="valid" disabled="true" :value="votes.valid"/>
         <label for="invalid">Invalid votes cast</label>
-        <input class="brand-border" id="invalid" :value="votes.invalid" @input="updateVotes"/>
+        <input class="brand-border" id="invalid" data-id="invalid" :value="votes.invalid" @input="updateVotes"/>
         <label for="total">Total votes cast</label>
-        <input class="brand-border" id="total" :value="votes.total" @input="updateVotes"/>
+        <input class="brand-border" id="total" data-id="total" :value="votes.total" @input="updateVotes"/>
         <label for="electorate">Electorate</label>
-        <input class="brand-border" id="electorate" :value="votes.electorate" @input="updateVotes"/>
+        <input class="brand-border" id="electorate" data-id="electorate" :value="votes.electorate" @input="updateVotes"/>
       </section>
 
       <ul class="errors" v-if="errors.length > 0">
