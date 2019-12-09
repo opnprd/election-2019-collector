@@ -60,8 +60,10 @@ export async function publish({ commit, state, getters }, message = 'Updated') {
   result.votes = getters.votes;
   result.candidates = result.candidates.map(c => {
     const cStats = stats.party.find(x => x.id === c.id);
-    c.share = parseFloat(cStats.share);
-    c.change = parseFloat(cStats.swing);
+    if (cStats) {
+      c.share = parseFloat(cStats.share);
+      c.change = parseFloat(cStats.swing);  
+    }
     return c;
   });
 
