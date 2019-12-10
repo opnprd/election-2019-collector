@@ -66,7 +66,7 @@ const store = new Vuex.Store({
         .map(x => ({
           ...x,
           share: percentify(x.votes).toFixed(1),
-          swing: (percentify(x.votes)-get2017pc(x.party)).toFixed(1), 
+          change: (percentify(x.votes)-get2017pc(x.party)).toFixed(1), 
         }));
       const majority = (votes.margin / votes.valid * 100).toFixed(1);
       return {
