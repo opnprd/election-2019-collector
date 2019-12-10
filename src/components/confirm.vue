@@ -29,8 +29,8 @@
         <tr v-for="r in candidates" :key="r.id">
           <td>{{ r.name }}</td>
           <td class="centred">{{ r.party.code }}</td>
-          <td class="centred">{{ stats.party.find(x => x.party === r.party.code ).share }}% ({{ r.votes }})</td>
-          <td class="centred">{{ stats.party.find(x => x.party === r.party.code ).swing }}</td>
+          <td class="centred">{{ stats.party.find(x => x.id === r.id ).share }}% ({{ r.votes }})</td>
+          <td class="centred">{{ stats.party.find(x => x.id === r.id ).swing }}</td>
         </tr>
         <tr v-for="r in candidatesWithNoVotes" :key="r.id">
           <td>{{ r.name }}</td>
@@ -162,9 +162,7 @@ export default {
       const hashtags = 'GE2019';
       const partyResults = this.candidates
         .map(x => {
-          const stats = party.find(v => v.party === x.party.code);
-          const pc = (x.votes/this.votes.valid * 100).toFixed(1);
-          const ge17 = this.result.results2017.votes.find(v => v.party === x.party.code);
+          const stats = party.find(v => v.id === x.id);
           if (stats.swing) {
             var swingText = ` (${stats.swing > 0 ? '+' : ''}${stats.swing})`;
           } else {
