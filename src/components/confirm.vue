@@ -23,14 +23,14 @@
     <h2>Candidate votes</h2>
     <table>
       <thead>
-        <tr><th>Candidate</th><th>Party</th><th>Share</th><th>Swing</th></tr>
+        <tr><th>Candidate</th><th>Party</th><th>Share</th><th>Change (GE17)</th></tr>
       </thead>
       <tbody>
         <tr v-for="r in candidates" :key="r.id">
           <td>{{ r.name }}</td>
           <td class="centred">{{ r.party.code }}</td>
           <td class="centred">{{ stats.party.find(x => x.id === r.id ).share }}% ({{ r.votes }})</td>
-          <td class="centred">{{ stats.party.find(x => x.id === r.id ).swing }}</td>
+          <td class="centred">{{ stats.party.find(x => x.id === r.id ).change }}</td>
         </tr>
         <tr v-for="r in candidatesWithNoVotes" :key="r.id">
           <td>{{ r.name }}</td>
@@ -158,17 +158,25 @@ export default {
       const { name: constituencyName, results2017 } = this.result;
       const { turnout, swingStatement, party } = this.stats;
       const { party: { code } } = this.winner
-      const url = 'https://britainelects.newstatesman.com/live-results/';
+      const getUrl = () => {
+        // TODO Add twitter cards
+        if (this.$store.getters.winType === 'GAIN') {
+          if (code === 'Lab') return 'https://static.ge2019.opnprd.com/card/lab';
+        }
+        return 'https://britainelects.newstatesman.com/live-results/';
+      }
+      const url = getUrl();
       const hashtags = 'GE2019';
       const partyResults = this.candidates
         .map(x => {
+          // TODO aggregate IND, OTH, etc and hide change?
           const stats = party.find(v => v.id === x.id);
-          if (stats.swing) {
-            var swingText = ` (${stats.swing > 0 ? '+' : ''}${stats.swing})`;
+          if (stats.change) {
+            var changeText = ` (${stats.change > 0 ? '+' : ''}${stats.change})`;
           } else {
-            var swingText = '';
+            var changeText = '';
           }
-          return `${partyCode(x.party.code).toUpperCase()}: ${stats.share}%${swingText}`;
+          return `${partyCode(x.party.code).toUpperCase()}: ${stats.share}%${changeText}`;
         })
         .join('\n');
       const tweet = `${this.summary}
