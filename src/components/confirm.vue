@@ -160,8 +160,9 @@ export default {
       const { party: { code } } = this.winner
       const getUrl = () => {
         // TODO Add twitter cards
-        if (this.$store.getters.winType === 'GAIN') {
-          if (code === 'Lab') return 'https://static.ge2019.opnprd.com/card/lab';
+        const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
+        if (this.$store.getters.winType === 'GAIN' && carded.includes(code)) {
+          return `https://static.ge2019.opnprd.com/card/${code}`;
         }
         return 'https://britainelects.newstatesman.com/live-results/';
       }
