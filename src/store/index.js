@@ -51,16 +51,19 @@ const store = new Vuex.Store({
       const get2017pc = (p) => {
         try {
           return results2017.votes.find(x => x.party === p).pc;
-        } catch({}) {
+        } catch({}) { 
           console.error(`${p} not found in 2017 results`);
           return null;
         }
       };
-      const ge19WinnerShare = (winner.votes/votes.valid*100);
-      const ge17WinnerShare = results2017.votes.find(x => x.party === results2017.party).pc;
-      const swing = (ge19WinnerShare - ge17WinnerShare).toFixed(1);
+      const lastWinnerResults = candidates.filter(x => x.party.code === results2017.party);
+      let swing = null;
+      if ( getters.winType === 'GAIN' && lastWinnerResults.length === 1 ) {
+        const winner2017change = lastWinnerResults[0].share - get2017pc(results2017.party);
+        swing = ((winner.change - winner2017change) / 2).toFixed(1);
+      }
       const plusify = (v) => `${v > 0 ? '+' : ''}${v}`;
-      const swingStatement = getters.winType === 'GAIN' ? `${results2017.party} to ${winner.party.code} (${plusify(swing)})` : plusify(swing);
+      const swingStatement = swing ? `${results2017.party} to ${winner.party.code} (${plusify(swing)})` : plusify(winner.change);
       const party = candidates.filter(x => x.votes)
         .map(({ id, party: { code: party }, votes }) => ({ id, party, votes })).sort((a, b) => b.votes - a.votes)
         .map(x => ({

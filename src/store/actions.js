@@ -38,6 +38,7 @@ export async function setupResult({commit, state, getters}, id) {
       img: c.image,
       votes: undefined,
       pc: undefined,
+      change: undefined,
       ...existingResult.candidates.find(e => e.id === c.id),
     })),
     votes: {
@@ -62,7 +63,7 @@ export async function publish({ commit, state, getters }, message = 'Updated') {
     const cStats = stats.party.find(x => x.id === c.id);
     if (cStats) {
       c.share = parseFloat(cStats.share);
-      c.change = parseFloat(cStats.swing);  
+      c.change = parseFloat(cStats.change);  
     }
     return c;
   });
