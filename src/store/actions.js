@@ -10,7 +10,7 @@ function getObjectKey(result) {
 export async function setupResult({commit, state, getters}, id) {
   if ( state.result.id === id && !state.published ) return;
   const { name, candidates, incumbent, results2017, electorate } = getters.getConstituency(id);
-  let existingResult = {};
+  let existingResult = { candidates: [] };
   commit('published');
   try {
     const objectKey = getObjectKey({ id });

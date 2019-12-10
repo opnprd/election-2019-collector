@@ -13,7 +13,7 @@ export default {
   computed: {
     matches() {
       if (!this.searchTerm) return [];
-      const searchRegExp = new RegExp(this.searchTerm, 'i');
+      const searchRegExp = new RegExp(this.searchTerm.replace(/([\(\)])/, '\\$1'), 'i');
       const matches = this.constituencyLookup.filter(c => c.label.search(searchRegExp) !== -1);
       return matches;
     }
