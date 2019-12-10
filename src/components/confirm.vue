@@ -158,11 +158,12 @@ export default {
       const { name: constituencyName, results2017 } = this.result;
       const { turnout, swingStatement, party } = this.stats;
       const { party: { code } } = this.winner
+      const displayCode = partyCode(code);
       const getUrl = () => {
         // TODO Add twitter cards
         const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
-        if (this.$store.getters.winType === 'GAIN' && carded.includes(code)) {
-          return `https://static.ge2019.opnprd.com/card/${code}`;
+        if (this.$store.getters.winType === 'GAIN' && carded.includes(displayCode)) {
+          return `https://static.ge2019.opnprd.com/card/${displayCode}`;
         }
         return 'https://britainelects.newstatesman.com/live-results/';
       }
