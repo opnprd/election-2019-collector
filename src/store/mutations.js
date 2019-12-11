@@ -27,8 +27,8 @@ export function unpublished(state) {
   state.published = false;
 }
 
-export function  updateVotes(state, { id, value }) {
-  const MAX_NUMBER = 1e6;
+export function updateVotes(state, { id, value }) {
+  const MAX_NUMBER = 150000;
   const invalidNumber = isNull(value.match(/^[0-9]*$/));
   if ( invalidNumber ) throw new Error('Invalid number');
   const number = makeNumber(value);
