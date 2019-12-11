@@ -151,7 +151,7 @@ export default {
       return this.$store.getters.votes;
     },
     summary() {
-      if ( this.winner.party.code == 'Spk' ) return `${this.winner.name} relected to ${this.result.name} as speaker`;
+      if ( this.winner.party.code == 'Spk' ) return `${this.winner.name} re-elected to ${this.result.name} as speaker`;
       return `${ this.result.name }: ${ this.winner.party.code } ${this.$store.getters.winType}`;
     },
     twitterUrl() {
