@@ -162,7 +162,7 @@ export default {
       const getUrl = () => {
         const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'Lab', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
         if (this.$store.getters.winType === 'GAIN' && carded.includes(displayCode)) {
-          return `https://static.ge2019.opnprd.com/card/${displayCode}`;
+          return `https://ge2019.odileeds.org/card/${displayCode}`;
         }
         return 'https://britainelects.newstatesman.com/live-results/';
       }

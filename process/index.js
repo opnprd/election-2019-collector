@@ -88,7 +88,7 @@ function summarise(data) {
         name: constituency_name, candidates: [],
       };   
     }
-    const image = `https://static.ge2019.opnprd.com/candidate/${candidate_id}.jpg`;
+    const image = `https://ge2019.odileeds.org/candidate/${candidate_id}.jpg`;
     a[constituency_id].candidates.push({
       id: candidate_id,
       name: candidate_name,
