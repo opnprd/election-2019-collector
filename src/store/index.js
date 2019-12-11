@@ -51,7 +51,7 @@ const store = new Vuex.Store({
       const get2017pc = (p) => {
         try {
           return results2017.votes.find(x => x.party === p).pc;
-        } catch({}) { 
+        } catch(error) { 
           console.error(`${p} not found in 2017 results`);
           return null;
         }
@@ -61,6 +61,7 @@ const store = new Vuex.Store({
       if ( getters.winType === 'GAIN' && lastWinnerResults.length === 1 ) {
         const winner2017change = lastWinnerResults[0].share - get2017pc(results2017.party);
         swing = ((winner.change - winner2017change) / 2).toFixed(1);
+        if (isNaN(swing)) swing = null;
       }
       const plusify = (v) => `${v > 0 ? '+' : ''}${v}`;
       const swingStatement = swing ? `${results2017.party} to ${winner.party.code} (${plusify(swing)})` : plusify(winner.change);
