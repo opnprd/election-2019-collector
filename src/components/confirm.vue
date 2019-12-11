@@ -160,7 +160,7 @@ export default {
       const { party: { code } } = this.winner
       const displayCode = partyCode(code);
       const getUrl = () => {
-        const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
+        const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'Lab', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
         if (this.$store.getters.winType === 'GAIN' && carded.includes(displayCode)) {
           return `https://static.ge2019.opnprd.com/card/${displayCode}`;
         }
