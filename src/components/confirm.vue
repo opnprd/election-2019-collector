@@ -160,7 +160,6 @@ export default {
       const { party: { code } } = this.winner
       const displayCode = partyCode(code);
       const getUrl = () => {
-        // TODO Add twitter cards
         const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
         if (this.$store.getters.winType === 'GAIN' && carded.includes(displayCode)) {
           return `https://static.ge2019.opnprd.com/card/${displayCode}`;
@@ -173,12 +172,29 @@ export default {
         .map(x => {
           // TODO aggregate IND, OTH, etc and hide change?
           const stats = party.find(v => v.id === x.id);
-          if (stats.change) {
-            var changeText = ` (${stats.change > 0 ? '+' : ''}${stats.change})`;
+          return {
+            name: x.name.split(/\s+/).reverse()[0],
+            partyName: x.party.title,
+            code: x.party.code,
+            share: stats.share,
+            change: stats.change,
+          }
+        })
+        .sort((a, b) => b.share - a.share)
+        .filter((v, i) => i < 5)
+        .map(data => {
+          const { code, change, name, share } = data
+          const minorityParties = ['Ind', 'Oth'];;
+          if (change && !minorityParties.includes(code)) {
+            var changeText = ` (${change > 0 ? '+' : ''}${change})`;
           } else {
             var changeText = '';
           }
-          return `${partyCode(x.party.code).toUpperCase()}: ${stats.share}%${changeText}`;
+          let partyText = partyCode(code).toUpperCase();
+          if (minorityParties.includes(code)) {
+            partyText += ` (${name})`;
+          }
+          return `${partyText}: ${share}%${changeText}`;
         })
         .join('\n');
       const tweet = `${this.summary}
