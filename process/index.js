@@ -129,11 +129,9 @@ function add2017data(data) {
 function addElectorate(data) {
   return data.map(c => {
     try {
-      c.electorate = parseInt(registeredVoters.find(x => x.c === c.name).v);
+      c.electorate = parseInt(registeredVoters.find(x => x.id === c.id).voters.replace(/,/g, ''));
     } catch(e) {
-      const [ testName ] = c.name.split(/\b/);
-      const possibleHits = registeredVoters.filter(x => x.c.replace(/(North|South|East|West|St|Mid|Central)/g, '').match(testName)).map(x => x.c);
-      console.error(`Can't find ${c.name}.\nCould be   ${possibleHits}`);
+      console.log(`Can't find ${c.id} ${c.name}.`);
     }
     return c;
   });
