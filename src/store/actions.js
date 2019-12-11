@@ -52,7 +52,6 @@ export async function setupResult({commit, state, getters}, id) {
   commit('setResult', result);
 }
 
-
 export async function publish({ commit, state, getters }, message = 'Updated') {
   const { result } = state;
   const stats = getters.stats;
