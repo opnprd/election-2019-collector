@@ -2,7 +2,7 @@
   <article v-if="loaded">
     <p>Results for {{ result.name }}.</p>
     <h1>{{ summary }}</h1>
-    <p>Swing: {{ stats.swingStatement }}</p>
+    <p>Swing: {{ stats.swingStatement }} (Updates when published)</p>
     <candidate-profile :image="winner.img" :name="winner.name" :party="winner.party.title" >
     </candidate-profile>
     <h2>Overall voting pattern</h2>
@@ -89,7 +89,7 @@ td, th {
 </style>
 </style>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import candidateProfile from './candidate-profile.vue';
 
 const codes = {
@@ -122,6 +122,15 @@ export default {
     candidateProfile
   },
   computed: {
+    ...mapState([
+      'result',
+      'published',
+    ]),
+    ...mapGetters([
+      'stats',
+      'votes',
+      'winner',
+    ]),
     loaded() {
       const result = this.$store.state.result;
       if (!result) return false
@@ -134,21 +143,14 @@ export default {
       }
       return true;
     },
-    result() {
-      const result = this.$store.state.result;
-      return result;
-    },
     candidates() {
       return this.$store.state.result.candidates.filter(x => x.votes).sort((a, b) => b.votes - a.votes);
     },
     candidatesWithNoVotes() {
       return this.$store.state.result.candidates.filter(x => !x.votes);
     },
-    stats() {
-      return this.$store.getters.stats;
-    },
-    votes() {
-      return this.$store.getters.votes;
+    swing() {
+      return this.$store.getters.stats.swing;
     },
     summary() {
       if ( this.winner.party.code == 'Spk' ) return `${this.winner.name} re-elected to ${this.result.name} as speaker`;
@@ -206,12 +208,11 @@ Turnout: ${turnout}%
 Full results:`;
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&url=${url}&hashtags=${hashtags}`;
     },
-    published() {
-      return this.$store.state.published;
-    },
-    winner() {
-      return this.$store.getters.winner;
-    }
+  },
+  data() {
+    return {
+      componentKey: 0,
+    };
   },
   methods: {
     ...mapActions([
@@ -219,7 +220,10 @@ Full results:`;
     ]),
     proportion(value, baseline) {
       return value && baseline ? Math.round(100 * value / baseline) + '%' : 'N/A';
-    }
+    },
+  },
+  mounted() {
+    console.log(this.$store.state);
   }
 }
 </script>
