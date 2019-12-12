@@ -41,3 +41,7 @@ export function updateVotes(state, { id, value }) {
     state.result.candidates[index].votes = number;
   }
 }
+
+export function setResultList(state, resultList) {
+  state.resultList = resultList;
+}

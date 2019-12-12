@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex';
 import { alphaSort } from '../util/array.js';
 
 export default {
@@ -16,7 +17,13 @@ export default {
       const searchRegExp = new RegExp(this.searchTerm.replace(/([\(\)])/, '\\$1'), 'i');
       const matches = this.constituencyLookup.filter(c => c.label.search(searchRegExp) !== -1);
       return matches;
-    }
+    },
+    ...mapState([
+      'resultList',
+    ]),
+  },
+  created() {
+    this.$store.dispatch('updateResultList');
   }
 }
 </script>
@@ -28,6 +35,10 @@ export default {
       <li v-for="{value, label} in matches" :key="value" >
         <router-link :to="{ name: 'confirm', params: { id: value }}">{{ label }}</router-link>
       </li>
+    </ol>
+    <h2 v-if="resultList.length > 0">Existing results</h2>
+    <ol class="existing results">
+      <li v-for="{id, name} in resultList" :key="id"><router-link :to="{ name: 'confirm', params: { id }}">{{ name }}</router-link></li>
     </ol>
   </article>
 </template>
@@ -41,6 +52,16 @@ export default {
     margin-bottom: 0.5em;
     line-height: 1.2em;
   }
+  .existing.results {
+    display: flex;
+    font-size: 0.8em;
+    flex-wrap: wrap;
+  }
+  .existing.results li {
+    margin-top: 0;
+    margin-right: 0.5em;
+  }
+
   input {
     width: 100%;
     border: 0;

@@ -1,3 +1,4 @@
+import { basename } from 'path';
 import { get } from '../util/http';
 import { Storage } from '../util/amplify';
 
@@ -86,4 +87,13 @@ export async function initialise({ commit }, constituencyData) {
     get(constituencyData),
   ]);
   commit('setConstituency', data);
+}
+
+export async function updateResultList({ commit, state }) {
+  const keys = await Storage.list('');
+  const resultList = keys
+    .map(x => basename(x, '.json'))
+    .map(x => state.constituencies.find(c => c.id === x))
+    .map(({ id, name }) => ({ id, name }));
+  commit('setResultList', resultList);
 }
