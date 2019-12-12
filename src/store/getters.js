@@ -32,8 +32,11 @@ export function stats(state, getters) {
   if ( !candidates ) return null;
   const votes = getters.votes;
   const winner = getters.winner;
-  const percentify = (v, base = votes.valid) => (v/base*100);
-  const turnout = percentify(votes.valid, votes.electorate).toFixed(1);
+  const percentify = (v, base) => {
+    if (!base) return undefined;
+    return (v/base*100).toFixed(1);
+  };
+  const turnout = percentify(votes.valid, votes.electorate);
   const get2017pc = (p) => {
     try {
       return results2017.votes.find(x => x.party === p).pc;
@@ -55,8 +58,8 @@ export function stats(state, getters) {
     .map(({ id, party: { code: party }, votes }) => ({ id, party, votes })).sort((a, b) => b.votes - a.votes)
     .map(x => ({
       ...x,
-      share: percentify(x.votes).toFixed(1),
-      change: (percentify(x.votes)-get2017pc(x.party)).toFixed(1), 
+      share: percentify(x.votes, votes.valid),
+      change: (percentify(x.votes, votes.valid)-get2017pc(x.party)).toFixed(1), 
     }));
   const majority = (votes.margin / votes.valid * 100).toFixed(1);
   return {

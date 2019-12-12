@@ -199,13 +199,13 @@ export default {
           return `${partyText}: ${share}%${changeText}`;
         })
         .join('\n');
+      const turnoutText = turnout ? `Turnout: ${turnout}%\n` : '';
       const tweet = `${this.summary}
 
 ${partyResults}
 
 Swing: ${swingStatement}
-Turnout: ${turnout}%
-Full results:`;
+${turnoutText}Full results:`;
       return `https://twitter.com/intent/tweet?text=${ encodeURIComponent(tweet) }&url=${url}&hashtags=${hashtags}`;
     },
   },
