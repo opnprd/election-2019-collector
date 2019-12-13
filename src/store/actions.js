@@ -90,9 +90,9 @@ export async function initialise({ commit }, constituencyData) {
 }
 
 export async function updateResultList({ commit, state }) {
-  const keys = await Storage.list('');
+  const keys = await Storage.list('results/');
   const resultList = keys
-    .map(x => basename(x, '.json'))
+    .map(x => basename(x.key, '.json'))
     .map(x => state.constituencies.find(c => c.id === x))
     .map(({ id, name }) => ({ id, name }));
   commit('setResultList', resultList);
