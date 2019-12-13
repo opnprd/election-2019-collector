@@ -162,7 +162,7 @@ export default {
       const { party: { code } } = this.winner
       const displayCode = partyCode(code);
       const getUrl = () => {
-        const carded = [ 'Alli', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'Lab', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
+        const carded = [ 'Alln', 'Brex', 'Con', 'DUP', 'Grn', 'Ind', 'Lab', 'LDem', 'PC', 'SDLP', 'SF', 'SNP' ];
         if (this.$store.getters.winType === 'GAIN' && carded.includes(displayCode)) {
           return `https://ge2019.odileeds.org/card/${displayCode}`;
         }
